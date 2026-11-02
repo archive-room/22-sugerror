@@ -10,7 +10,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=New+Tegomin&display=swap" rel="stylesheet">
 
 <style>
 @font-face{
@@ -28,6 +28,7 @@
   --gold-dark:#89652f;
   --ink:#514435;
   --rounded:"M PLUS Rounded 1c",sans-serif;
+  --horror:"New Tegomin",serif;
   --app-height:100dvh;
 }
 
@@ -44,10 +45,7 @@ html,body{
   -webkit-text-size-adjust:100%;
 }
 
-html{
-  position:fixed;
-  inset:0;
-}
+html{position:fixed;inset:0;}
 
 body{
   position:fixed;
@@ -91,7 +89,7 @@ button:focus-visible{
   overflow:hidden;
 }
 
-/* ERROR PAGE — UNCHANGED */
+/* FIXED 404 ERROR */
 
 #entry{
   position:absolute;
@@ -150,9 +148,7 @@ button:focus-visible{
   min-height:42px;
 }
 
-.entry-button:active{
-  background:#e8e8e8;
-}
+.entry-button:active{background:#e8e8e8;}
 
 #entry.corrupt{
   color:#f3edf1;
@@ -186,9 +182,7 @@ button:focus-visible{
 }
 
 #entry.corrupt .error-description,
-#entry.corrupt .error-code{
-  color:#aaa1ad;
-}
+#entry.corrupt .error-code{color:#aaa1ad;}
 
 #entry.corrupt .entry-button{
   color:#eee;
@@ -214,7 +208,7 @@ button:focus-visible{
   100%{transform:translate(4px,0)}
 }
 
-/* NOISE — UNCHANGED */
+/* FIXED NOISE */
 
 #noise{
   position:absolute;
@@ -227,9 +221,7 @@ button:focus-visible{
   image-rendering:pixelated;
 }
 
-#noise.active{
-  opacity:.65;
-}
+#noise.active{opacity:.65;}
 
 /* ADMISSION */
 
@@ -305,6 +297,104 @@ button:focus-visible{
   pointer-events:none;
 }
 
+/* HORROR EFFECT — NEW */
+
+.horror-shade{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  background:
+    radial-gradient(
+      ellipse at 50% 42%,
+      rgba(30,13,30,.05) 0%,
+      rgba(24,8,25,.6) 65%,
+      rgba(6,4,11,.94) 100%
+    );
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 12s linear;
+}
+
+.ticket-scene.haunted .horror-shade{
+  opacity:1;
+}
+
+.horror-words{
+  position:absolute;
+  inset:0;
+  z-index:6;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.horror-word{
+  position:absolute;
+  max-width:85%;
+  white-space:nowrap;
+  font-family:var(--horror);
+  font-weight:400;
+  line-height:1.2;
+  letter-spacing:.12em;
+  color:#541b35;
+  opacity:0;
+  text-shadow:
+    1px 1px 0 rgba(255,255,255,.18),
+    0 0 8px rgba(89,15,43,.2);
+  animation:horror-word-appear var(--word-duration,1.3s) ease-in-out forwards;
+}
+
+@keyframes horror-word-appear{
+  0%{
+    opacity:0;
+    filter:blur(5px);
+    transform:translate(-50%,-50%) scale(.87);
+  }
+  18%{
+    opacity:.92;
+    filter:blur(0);
+  }
+  75%{
+    opacity:.9;
+    filter:blur(.3px);
+  }
+  100%{
+    opacity:0;
+    filter:blur(7px);
+    transform:translate(-50%,-50%) scale(1.12);
+  }
+}
+
+.ticket-scene.haunted{
+  animation:horror-screen-shake .2s steps(2,end) infinite;
+}
+
+@keyframes horror-screen-shake{
+  0%{translate:0 0;}
+  25%{translate:-1px 1px;}
+  50%{translate:2px -1px;}
+  75%{translate:-2px 0;}
+  100%{translate:1px 1px;}
+}
+
+.ticket-scene.haunted.horror-stage-2{
+  animation-duration:.11s;
+}
+
+.ticket-scene.haunted.horror-stage-3{
+  animation-duration:.065s;
+}
+
+.ticket-scene.haunted.horror-stage-3 .horror-shade{
+  background:
+    radial-gradient(
+      ellipse at 50% 42%,
+      rgba(21,8,20,.4),
+      rgba(7,3,10,.96) 100%
+    );
+}
+
+/* TICKET LABELS */
+
 .ticket-top{
   position:absolute;
   top:calc(8% + env(safe-area-inset-top));
@@ -362,36 +452,18 @@ button:focus-visible{
   flex-shrink:0;
   background:var(--ivory);
   clip-path:polygon(
-    0 0,
-    12% 0,
-    12% 3%,
-    16% 3%,
-    16% 0,
-    100% 0,
-    100% 100%,
-    16% 100%,
-    16% 97%,
-    12% 97%,
-    12% 100%,
-    0 100%
+    0 0,12% 0,12% 3%,16% 3%,16% 0,
+    100% 0,100% 100%,16% 100%,16% 97%,
+    12% 97%,12% 100%,0 100%
   );
   box-shadow:inset 0 0 30px #b5a07b44;
 }
 
 .ticket.torn-edge .ticket-main{
   clip-path:polygon(
-    0 0,
-    12% 0,
-    12% 3%,
-    16% 3%,
-    16% 0,
-    100% 0,
-    100% 100%,
-    16% 100%,
-    16% 97%,
-    12% 97%,
-    12% 100%,
-    0 100%
+    0 0,12% 0,12% 3%,16% 3%,16% 0,
+    100% 0,100% 100%,16% 100%,16% 97%,
+    12% 97%,12% 100%,0 100%
   );
 }
 
@@ -410,10 +482,7 @@ button:focus-visible{
   outline:1px solid var(--gold-light);
   outline-offset:-7px;
   background:linear-gradient(
-    130deg,
-    #fff9e9bb,
-    transparent 55%,
-    #b8a37b22
+    130deg,#fff9e9bb,transparent 55%,#b8a37b22
   );
   display:flex;
   flex-direction:column;
@@ -476,16 +545,8 @@ button:focus-visible{
   cursor:pointer;
   box-shadow:inset 0 0 25px #b5a07b33;
   clip-path:polygon(
-    0 0,
-    100% 0,
-    100% 15%,
-    94% 17%,
-    100% 19%,
-    100% 81%,
-    94% 83%,
-    100% 85%,
-    100% 100%,
-    0 100%
+    0 0,100% 0,100% 15%,94% 17%,100% 19%,
+    100% 81%,94% 83%,100% 85%,100% 100%,0 100%
   );
   transition:
     transform 1.8s cubic-bezier(.25,.48,.3,1),
@@ -622,7 +683,6 @@ button:focus-visible{
 <body>
 <div id="app">
 
-<!-- ERROR OPENING -->
 <section id="entry" class="screen">
   <main class="entry-content">
     <svg class="error-icon" viewBox="0 0 40 45" fill="none" aria-hidden="true">
@@ -631,28 +691,26 @@ button:focus-visible{
       <path d="M13 20H27M13 26H27" stroke="currentColor" stroke-width="2"/>
       <path d="M15 35H25" stroke="currentColor" stroke-width="2"/>
     </svg>
-
     <h1 class="error-heading">This page isn't working</h1>
-
     <div class="error-description">
       The requested page could not be found.<br>
       Please check the address and try again.
     </div>
-
     <div class="error-code">HTTP ERROR 404</div>
-
     <button id="enterButton" class="entry-button">Reload</button>
   </main>
 </section>
 
 <canvas id="noise" aria-hidden="true"></canvas>
 
-<!-- ADMISSION -->
 <section id="admission" class="screen" aria-hidden="true">
   <div class="admission-stack">
 
-    <!-- ORIGINAL PINK TICKET SCREEN -->
     <div class="ticket-scene" id="ticketScene">
+
+      <!-- HORROR OVERLAYS -->
+      <div class="horror-shade" id="horrorShade" aria-hidden="true"></div>
+      <div class="horror-words" id="horrorWords" aria-hidden="true"></div>
 
       <div class="ticket-top">
         SUGERROR LAND<br>
@@ -661,7 +719,6 @@ button:focus-visible{
 
       <div class="ticket-wrap">
         <div class="ticket" id="ticketPaper">
-
           <div class="ticket-main">
             <div class="ticket-frame">
               <div class="ticket-topline">EST. 0000</div>
@@ -683,7 +740,6 @@ button:focus-visible{
               <span class="stub-small">TEAR HERE</span>
             </span>
           </button>
-
         </div>
       </div>
 
@@ -694,7 +750,6 @@ button:focus-visible{
 
     </div>
 
-    <!-- TEMPORARY LOBBY -->
     <div class="lobby-scene">
       <div class="lobby-kicker">WELCOME TO</div>
       <h2 class="lobby-title">SUGERROR LAND</h2>
@@ -710,7 +765,6 @@ button:focus-visible{
 
   </div>
 </section>
-
 </div>
 
 <script>
@@ -719,22 +773,17 @@ function updateViewportHeight(){
   const height=window.visualViewport
     ?window.visualViewport.height
     :window.innerHeight;
-
   document.documentElement.style.setProperty(
     "--app-height",height+"px"
   );
 }
-
 updateViewportHeight();
 window.addEventListener("resize",updateViewportHeight);
-
 if(window.visualViewport){
-  window.visualViewport.addEventListener(
-    "resize",updateViewportHeight
-  );
+  window.visualViewport.addEventListener("resize",updateViewportHeight);
 }
 
-/* SITE ELEMENTS */
+/* ELEMENTS */
 const entry=document.getElementById("entry");
 const enterButton=document.getElementById("enterButton");
 const admission=document.getElementById("admission");
@@ -744,6 +793,7 @@ const ticketPaper=document.getElementById("ticketPaper");
 const replayButton=document.getElementById("replayButton");
 const noise=document.getElementById("noise");
 const ctx=noise.getContext("2d");
+const horrorWords=document.getElementById("horrorWords");
 
 const reducedMotion=window.matchMedia(
   "(prefers-reduced-motion: reduce)"
@@ -762,35 +812,22 @@ let lastFrame=0;
     event.preventDefault();
   },{passive:false});
 });
-
 document.addEventListener("touchstart",event=>{
-  if(event.touches.length>1){
-    event.preventDefault();
-  }
+  if(event.touches.length>1)event.preventDefault();
 },{passive:false});
-
 document.addEventListener("touchmove",event=>{
-  if(event.touches.length>1){
-    event.preventDefault();
-  }
+  if(event.touches.length>1)event.preventDefault();
 },{passive:false});
 
-let lastTapTime=0;
-let lastTapX=0;
-let lastTapY=0;
-
+let lastTapTime=0,lastTapX=0,lastTapY=0;
 document.addEventListener("touchend",event=>{
   if(event.changedTouches.length!==1)return;
-
   const touch=event.changedTouches[0];
-  const now=Date.now();
-  const delta=now-lastTapTime;
-
+  const now=Date.now(),delta=now-lastTapTime;
   const distance=Math.hypot(
     touch.clientX-lastTapX,
     touch.clientY-lastTapY
   );
-
   if(delta>0&&delta<300&&distance<30){
     event.preventDefault();
     lastTapTime=0;
@@ -805,64 +842,39 @@ document.addEventListener("touchend",event=>{
 function resizeNoise(){
   noise.width=190;
   noise.height=Math.max(
-    180,
-    Math.min(
-      420,
-      Math.round(
-        190*innerHeight/Math.max(innerWidth,1)
-      )
+    180,Math.min(
+      420,Math.round(190*innerHeight/Math.max(innerWidth,1))
     )
   );
 }
-
 function drawNoise(time){
   if(!glitchActive)return;
-
   if(time-lastFrame>45){
     lastFrame=time;
-
-    const w=noise.width;
-    const h=noise.height;
-    const data=ctx.createImageData(w,h);
-    const p=data.data;
-
+    const w=noise.width,h=noise.height;
+    const data=ctx.createImageData(w,h),p=data.data;
     for(let i=0;i<p.length;i+=4){
       const v=Math.random()>.52?255:0;
-      p[i]=v;
-      p[i+1]=v;
-      p[i+2]=v;
-      p[i+3]=Math.random()*160;
+      p[i]=v;p[i+1]=v;p[i+2]=v;p[i+3]=Math.random()*160;
     }
-
     ctx.putImageData(data,0,0);
-
     for(let i=0;i<8;i++){
       ctx.fillStyle=Math.random()>.5
         ?"rgba(255,120,177,.65)"
         :"rgba(110,210,230,.65)";
-
-      ctx.fillRect(
-        0,
-        Math.random()*h,
-        w,
-        Math.random()*5+1
-      );
+      ctx.fillRect(0,Math.random()*h,w,Math.random()*5+1);
     }
   }
-
   frameId=requestAnimationFrame(drawNoise);
 }
-
 function startNoise(){
   if(reducedMotion.matches||glitchActive)return;
-
   resizeNoise();
   glitchActive=true;
   lastFrame=0;
   noise.classList.add("active");
   frameId=requestAnimationFrame(drawNoise);
 }
-
 function stopNoise(){
   glitchActive=false;
   cancelAnimationFrame(frameId);
@@ -873,7 +885,6 @@ function stopNoise(){
 /* ERROR ENTRY — UNCHANGED */
 function enterWorld(){
   if(entering)return;
-
   entering=true;
   enterButton.disabled=true;
 
@@ -887,14 +898,148 @@ function enterWorld(){
     entry.style.display="none";
     admission.classList.add("visible");
     admission.setAttribute("aria-hidden","false");
+    scheduleHorror();
   },reducedMotion.matches?100:1100);
 }
-
 enterButton.addEventListener("click",enterWorld);
 
-/* TICKET — UNCHANGED */
+/* HORROR TIMERS — NEW */
+const horrorMessages=[
+  "入場しろ",
+  "タップ",
+  "早く",
+  "まだ？",
+  "早くして",
+  "ここを押せ",
+  "入って",
+  "待っている",
+  "ENTER",
+  "TAP",
+  "HURRY",
+  "OPEN",
+  "どうして",
+  "今すぐ",
+  "入場してください"
+];
+
+let horrorStartTimer=null;
+let horrorWordTimer=null;
+let horrorStageTimer=null;
+let horrorStartTime=0;
+let horrorActive=false;
+
+function scheduleHorror(){
+  stopHorror();
+  if(ticketEntered||replaying)return;
+
+  horrorStartTimer=setTimeout(()=>{
+    startHorror();
+  },5000);
+}
+
+function startHorror(){
+  if(ticketEntered||replaying)return;
+  horrorActive=true;
+  horrorStartTime=Date.now();
+  ticketScene.classList.add("haunted");
+
+  spawnHorrorWord();
+  scheduleNextHorrorWord();
+
+  horrorStageTimer=setInterval(()=>{
+    if(!horrorActive)return;
+    const elapsed=Date.now()-horrorStartTime;
+
+    ticketScene.classList.toggle(
+      "horror-stage-2",elapsed>=4500
+    );
+    ticketScene.classList.toggle(
+      "horror-stage-3",elapsed>=9000
+    );
+  },300);
+}
+
+function spawnHorrorWord(){
+  if(!horrorActive)return;
+
+  const elapsed=Date.now()-horrorStartTime;
+  const stage=elapsed>=9000?3:elapsed>=4500?2:1;
+
+  const word=document.createElement("span");
+  word.className="horror-word";
+  word.textContent=horrorMessages[
+    Math.floor(Math.random()*horrorMessages.length)
+  ];
+
+  const x=15+Math.random()*70;
+  const y=13+Math.random()*74;
+
+  word.style.left=x+"%";
+  word.style.top=y+"%";
+
+  const size=stage===1
+    ?20+Math.random()*26
+    :stage===2
+      ?25+Math.random()*43
+      :30+Math.random()*56;
+
+  word.style.fontSize=size+"px";
+  word.style.color=stage===3
+    ?(Math.random()>.5?"#e0a7b2":"#a84560")
+    :stage===2
+      ?(Math.random()>.5?"#803047":"#d9a0aa")
+      :"#62243e";
+
+  const duration=stage===3?850:stage===2?1100:1500;
+  word.style.setProperty(
+    "--word-duration",duration+"ms"
+  );
+
+  horrorWords.appendChild(word);
+
+  setTimeout(()=>{
+    word.remove();
+  },duration+100);
+}
+
+function scheduleNextHorrorWord(){
+  if(!horrorActive)return;
+
+  const elapsed=Date.now()-horrorStartTime;
+  const delay=elapsed>=9000
+    ?160+Math.random()*180
+    :elapsed>=4500
+      ?350+Math.random()*250
+      :750+Math.random()*450;
+
+  horrorWordTimer=setTimeout(()=>{
+    spawnHorrorWord();
+    scheduleNextHorrorWord();
+  },delay);
+}
+
+function stopHorror(){
+  clearTimeout(horrorStartTimer);
+  clearTimeout(horrorWordTimer);
+  clearInterval(horrorStageTimer);
+
+  horrorStartTimer=null;
+  horrorWordTimer=null;
+  horrorStageTimer=null;
+  horrorActive=false;
+
+  ticketScene.classList.remove(
+    "haunted","horror-stage-2","horror-stage-3"
+  );
+
+  horrorWords.replaceChildren();
+}
+
+/* TICKET — PRESERVED */
 function tearTicket(){
   if(ticketEntered||replaying)return;
+
+  stopHorror();
 
   ticketEntered=true;
   ticketStub.disabled=true;
@@ -907,10 +1052,9 @@ function tearTicket(){
     admission.classList.add("entered");
   },reducedMotion.matches?100:650);
 }
-
 ticketStub.addEventListener("click",tearTicket);
 
-/* RETURN TO TICKET — UNCHANGED */
+/* RETURN TO TICKET — PRESERVED */
 replayButton.addEventListener("click",()=>{
   if(replaying||!ticketEntered)return;
 
@@ -929,6 +1073,8 @@ replayButton.addEventListener("click",()=>{
       ticketEntered=false;
       replaying=false;
       replayButton.disabled=false;
+
+      scheduleHorror();
     },reducedMotion.matches?100:1350);
 
   },reducedMotion.matches?100:1550);
@@ -939,7 +1085,9 @@ window.addEventListener("resize",()=>{
 });
 
 document.addEventListener("visibilitychange",()=>{
-  if(document.hidden)stopNoise();
+  if(document.hidden){
+    stopNoise();
+  }
 });
 </script>
 </body>
