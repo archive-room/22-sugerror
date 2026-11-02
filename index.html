@@ -3,7 +3,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
 <meta name="format-detection" content="telephone=no">
 <title>SUGERROR</title>
@@ -15,8 +15,8 @@
 @font-face{
   font-family:"Saint Timothy";
   src:url("./Saint%20Timothy.otf") format("opentype");
-  font-weight:400;
   font-style:normal;
+  font-weight:400;
   font-display:swap;
 }
 
@@ -24,9 +24,9 @@
   --paper:#f7f3f6;
   --ink:#29252c;
   --pink:#d99dbd;
-  --pink-dark:#aa7898;
-  --blue:#b9dfe9;
+  --pink-dark:#a97c9a;
   --line:#d9cdd6;
+  --dark:#111019;
   --mono:"DM Mono",monospace;
   --display:"Space Grotesk",sans-serif;
   --script:"Saint Timothy",cursive;
@@ -63,7 +63,7 @@ button{
 }
 
 button:focus-visible{
-  outline:2px solid var(--pink-dark);
+  outline:2px solid var(--pink);
   outline-offset:3px;
 }
 
@@ -75,7 +75,6 @@ button:focus-visible{
   height:100dvh;
   overflow:hidden;
   isolation:isolate;
-  clip-path:inset(0);
 }
 
 .screen{
@@ -89,9 +88,9 @@ button:focus-visible{
   letter-spacing:.07em;
 }
 
-/* ========================
-   ORIGINAL ERROR SCREEN
-======================== */
+/* =========================
+   ORIGINAL ERROR PAGE
+========================= */
 
 #entry{
   position:absolute;
@@ -123,7 +122,6 @@ button:focus-visible{
   position:relative;
   display:table;
   font:500 clamp(19px,5vw,23px)/1.45 Arial,Helvetica,sans-serif;
-  letter-spacing:0;
   margin:0 0 18px;
 }
 
@@ -214,9 +212,9 @@ button:focus-visible{
   100%{transform:translate(4px,0)}
 }
 
-/* ========================
-   GLITCH CANVAS
-======================== */
+/* =========================
+   GLITCH NOISE
+========================= */
 
 #noise{
   position:absolute;
@@ -233,24 +231,24 @@ button:focus-visible{
   opacity:.65;
 }
 
-/* ========================
-   HOME BASE
-======================== */
+/* =========================
+   HOME
+========================= */
 
 #home{
   z-index:2;
   background:
     radial-gradient(
-      ellipse at 80% 40%,
-      rgba(242,211,230,.7),
-      transparent 48%
+      ellipse at 50% 44%,
+      rgba(235,208,224,.65),
+      transparent 62%
     ),
     radial-gradient(
-      ellipse at 90% 79%,
-      rgba(193,226,239,.45),
-      transparent 43%
+      ellipse at 80% 76%,
+      rgba(204,228,239,.35),
+      transparent 45%
     ),
-    #f8f5f7;
+    var(--paper);
   opacity:0;
   visibility:hidden;
   pointer-events:none;
@@ -278,7 +276,7 @@ button:focus-visible{
       rgba(70,55,74,.045) 1px,
       transparent 1px
     );
-  background-size:19% 17%;
+  background-size:20% 17%;
 }
 
 .home-header{
@@ -293,7 +291,7 @@ button:focus-visible{
   align-items:center;
   justify-content:space-between;
   border-bottom:1px solid var(--line);
-  background:rgba(250,247,250,.7);
+  background:rgba(250,247,250,.72);
   backdrop-filter:blur(14px);
 }
 
@@ -329,35 +327,118 @@ button:focus-visible{
   overflow:hidden;
 }
 
-/* ========================
-   MAIN TITLE
-======================== */
+/* =========================
+   ROTATING TEXT BACKGROUND
+========================= */
 
-.hero-copy{
+.background-orbit{
   position:absolute;
-  z-index:9;
-  top:4%;
-  left:5%;
-  width:90%;
+  z-index:1;
+  left:50%;
+  top:43%;
+  width:min(113vw,650px);
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  opacity:.85;
+  pointer-events:none;
+}
+
+.background-orbit svg{
+  display:block;
+  width:100%;
+  height:100%;
+  animation:orbitRotate 32s linear infinite;
+}
+
+.background-orbit text{
+  font:10px var(--mono);
+  letter-spacing:3px;
+  fill:#b18aa5;
+}
+
+.background-orbit .orbit-outline{
+  fill:none;
+  stroke:#d8b7cb;
+  stroke-width:.65;
+}
+
+.background-orbit::before{
+  content:"";
+  position:absolute;
+  inset:19%;
+  border:1px solid rgba(204,164,191,.42);
+  border-radius:50%;
+}
+
+.background-orbit::after{
+  content:"";
+  position:absolute;
+  inset:32%;
+  border:1px dashed rgba(208,180,198,.35);
+  border-radius:50%;
+  animation:orbitReverse 50s linear infinite;
+}
+
+@keyframes orbitRotate{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes orbitReverse{
+  to{transform:rotate(-360deg)}
+}
+
+.orbit-glow{
+  position:absolute;
+  z-index:0;
+  left:50%;
+  top:43%;
+  width:76vw;
+  max-width:430px;
+  aspect-ratio:1;
+  transform:translate(-50%,-50%);
+  background:
+    radial-gradient(
+      circle,
+      rgba(245,219,233,.7),
+      rgba(233,219,236,.3) 46%,
+      transparent 73%
+    );
+  filter:blur(20px);
+  pointer-events:none;
+}
+
+/* =========================
+   HOME TITLE
+========================= */
+
+.hero{
+  position:absolute;
+  z-index:4;
+  left:0;
+  right:0;
+  top:40%;
+  transform:translateY(-50%);
+  text-align:center;
   pointer-events:none;
 }
 
 .hero-kicker{
+  color:#877589;
   font:9px var(--mono);
   letter-spacing:.16em;
-  color:#8d798a;
+  margin-bottom:20px;
 }
 
 .hero-title{
-  display:block;
   position:relative;
+  display:block;
   width:max-content;
   max-width:100%;
-  margin:15px 0 0;
-  font:400 clamp(65px,16vw,155px)/1 var(--script);
-  letter-spacing:0;
+  margin:0 auto;
+  padding:8px 6px 16px;
+  color:#29232c;
+  font:400 clamp(58px,15vw,148px)/1.05 var(--script);
   white-space:nowrap;
-  color:#28232c;
 }
 
 .hero-title.glitch{
@@ -365,320 +446,73 @@ button:focus-visible{
 }
 
 .hero-sub{
-  margin-top:8px;
+  margin-top:12px;
+  color:#9c7791;
   font:9px var(--mono);
-  letter-spacing:.16em;
-  color:var(--pink-dark);
+  letter-spacing:.15em;
 }
 
-.hero-index{
+.home-side-label{
   position:absolute;
-  top:3%;
-  right:5%;
+  top:25px;
+  left:22px;
   z-index:5;
-  color:#cda8bf;
-  font:500 12px var(--mono);
-}
-
-/* ========================
-   LEFT INFORMATION
-======================== */
-
-.side-information{
-  position:absolute;
-  z-index:8;
-  top:44%;
-  left:5%;
-  width:33%;
-  max-width:300px;
-}
-
-.side-accent{
-  width:30px;
-  height:1px;
-  background:var(--pink-dark);
-  margin-bottom:16px;
-}
-
-.side-number{
-  font:10px var(--mono);
-  color:var(--pink-dark);
-  letter-spacing:.1em;
-}
-
-.side-heading{
-  font:600 clamp(16px,4vw,30px)/1.15 var(--display);
-  letter-spacing:-.045em;
-  margin:14px 0 12px;
-}
-
-.side-description{
-  font-size:clamp(10px,2.5vw,13px);
-  line-height:1.8;
-  color:#7a6b79;
-  margin:0;
-}
-
-.side-status{
-  margin-top:18px;
-  display:inline-block;
-  border:1px solid #d7bfd0;
-  padding:8px 10px;
-  font:8px var(--mono);
-  letter-spacing:.06em;
-  background:rgba(255,255,255,.54);
-  color:#98758e;
-}
-
-/* ========================
-   PLUSH DISPLAY
-======================== */
-
-.plush-area{
-  position:absolute;
-  right:0;
-  top:22%;
-  bottom:12%;
-  width:75%;
-  z-index:4;
-  pointer-events:none;
-}
-
-.plush-glow{
-  position:absolute;
-  right:0;
-  bottom:6%;
-  width:100%;
-  height:80%;
-  border-radius:50%;
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(245,216,232,.8) 0%,
-      rgba(217,229,241,.48) 42%,
-      transparent 72%
-    );
-  filter:blur(18px);
-  animation:glowBreath 7s ease-in-out infinite alternate;
-}
-
-@keyframes glowBreath{
-  from{
-    opacity:.55;
-    transform:scale(.95);
-  }
-  to{
-    opacity:1;
-    transform:scale(1.06);
-  }
-}
-
-.plush-image{
-  position:absolute;
-  right:-5%;
-  bottom:0;
-  height:100%;
-  width:100%;
-  object-fit:contain;
-  object-position:bottom right;
-  filter:drop-shadow(0 14px 20px rgba(70,55,76,.13));
-  animation:plushFloat 5s ease-in-out infinite;
-}
-
-@keyframes plushFloat{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-8px);
-  }
-}
-
-/* ========================
-   ANGEL HALO
-
-   The text is positioned on a circular
-   SVG path, then the entire plane is
-   tilted in 3D to form an ellipse.
-======================== */
-
-.halo-system{
-  position:absolute;
-  z-index:8;
-  left:54%;
-  top:3%;
-  width:94%;
-  max-width:420px;
-  height:190px;
-  transform:translateX(-50%);
-  perspective:750px;
-  pointer-events:none;
-  animation:haloFloat 5s ease-in-out infinite;
-}
-
-@keyframes haloFloat{
-  0%,100%{
-    transform:translateX(-50%) translateY(0);
-  }
-  50%{
-    transform:translateX(-50%) translateY(-8px);
-  }
-}
-
-.halo-light{
-  position:absolute;
-  left:50%;
-  top:53%;
-  width:75%;
-  height:30%;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  background:rgba(248,203,232,.65);
-  filter:blur(22px);
-}
-
-.halo-plane{
-  position:absolute;
-  inset:0;
-  transform-style:preserve-3d;
-  transform:rotateX(65deg) rotateZ(-9deg);
-}
-
-.halo-rotor{
-  width:100%;
-  height:100%;
-  animation:haloRotation 17s linear infinite;
-  transform-origin:center;
-}
-
-@keyframes haloRotation{
-  from{
-    transform:rotate(0deg);
-  }
-  to{
-    transform:rotate(360deg);
-  }
-}
-
-.halo-svg{
-  display:block;
-  width:100%;
-  height:100%;
-  overflow:visible;
-  filter:drop-shadow(0 0 5px rgba(219,144,189,.35));
-}
-
-.halo-svg .halo-outline{
-  fill:none;
-  stroke:#cc97b8;
-  stroke-width:1.2;
-  opacity:.66;
-}
-
-.halo-svg .halo-inside{
-  fill:none;
-  stroke:#c5dfe8;
-  stroke-width:.65;
-  opacity:.7;
-}
-
-.halo-svg .halo-letters{
-  font-family:var(--mono);
-  font-size:15px;
-  font-weight:500;
-  letter-spacing:2px;
-  fill:#a76f94;
-}
-
-.halo-svg .halo-dots{
-  fill:#d2a1bd;
-}
-
-/* ========================
-   DECORATIONS
-======================== */
-
-.decor-cross{
-  position:absolute;
-  z-index:5;
-  width:20px;
-  height:20px;
-  opacity:.55;
-}
-
-.decor-cross::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:0;
-  width:1px;
-  height:100%;
-  background:#a77d9a;
-}
-
-.decor-cross::after{
-  content:"";
-  position:absolute;
-  top:50%;
-  left:0;
-  height:1px;
-  width:100%;
-  background:#a77d9a;
-}
-
-.decor-cross.one{
-  right:8%;
-  top:35%;
-}
-
-.decor-cross.two{
-  left:8%;
-  top:36%;
-  transform:scale(.6);
-}
-
-.specimen-number{
-  position:absolute;
-  right:5%;
-  bottom:29%;
-  z-index:5;
-  font:10px var(--mono);
-  color:#a78ca0;
-  writing-mode:vertical-rl;
+  color:#a18b9d;
+  font:9px var(--mono);
   letter-spacing:.12em;
 }
 
-/* ========================
-   NAVIGATION
-======================== */
+.home-vertical{
+  position:absolute;
+  top:23%;
+  right:15px;
+  z-index:5;
+  writing-mode:vertical-rl;
+  color:#a18b9d;
+  font:9px var(--mono);
+  letter-spacing:.12em;
+}
+
+.home-caption{
+  position:absolute;
+  z-index:5;
+  bottom:calc(94px + env(safe-area-inset-bottom));
+  left:22px;
+  color:#8e7e8d;
+  font:9px/1.9 var(--mono);
+  letter-spacing:.05em;
+}
+
+/* =========================
+   HOME NAV
+========================= */
 
 .home-navigation{
   position:absolute;
+  bottom:0;
   left:0;
   right:0;
-  bottom:0;
   z-index:13;
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
   padding-bottom:env(safe-area-inset-bottom);
-  border-top:1px solid rgba(192,168,184,.7);
-  background:rgba(250,247,250,.84);
+  border-top:1px solid #d8cbd4;
+  background:rgba(250,247,250,.85);
   backdrop-filter:blur(18px);
 }
 
 .home-nav-button{
   min-width:0;
-  height:73px;
-  padding:13px 8px 11px;
+  height:78px;
+  padding:14px 8px 12px;
   display:flex;
   flex-direction:column;
-  align-items:flex-start;
   justify-content:space-between;
+  text-align:left;
   border:0;
   border-right:1px solid #ddd1d9;
   background:transparent;
   color:var(--ink);
-  text-align:left;
 }
 
 .home-nav-button:last-child{
@@ -686,22 +520,402 @@ button:focus-visible{
 }
 
 .home-nav-button strong{
-  font:600 clamp(8px,2.6vw,13px) var(--display);
+  font:600 clamp(8px,2.5vw,13px) var(--display);
   letter-spacing:-.04em;
 }
 
 .home-nav-button small{
   font:9px var(--mono);
-  color:#bb8ba8;
+  color:#b989a6;
 }
 
 .home-nav-button:active{
   background:rgba(222,177,205,.22);
 }
 
-/* ========================
+/* =========================
+   DARK TRANSITION
+========================= */
+
+#transition{
+  position:absolute;
+  inset:0;
+  z-index:40;
+  visibility:hidden;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+#transition.active{
+  visibility:visible;
+}
+
+.transition-darkness{
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      #34303b 0%,
+      #191720 43%,
+      #0d0c14 100%
+    );
+  clip-path:inset(0 0 100% 0);
+  will-change:clip-path;
+}
+
+#transition.active .transition-darkness{
+  animation:darknessDescend 1.35s cubic-bezier(.42,0,.16,1) forwards;
+}
+
+@keyframes darknessDescend{
+  0%{
+    clip-path:inset(0 0 100% 0);
+  }
+  22%{
+    clip-path:inset(0 0 83% 0);
+  }
+  70%{
+    clip-path:inset(0 0 24% 0);
+  }
+  100%{
+    clip-path:inset(0 0 0 0);
+  }
+}
+
+.transition-text{
+  position:absolute;
+  z-index:5;
+  left:50%;
+  top:54%;
+  transform:translate(-50%,-50%);
+  white-space:nowrap;
+  color:#d7b7cc;
+  font:10px var(--mono);
+  letter-spacing:.18em;
+  opacity:0;
+}
+
+#transition.active .transition-text{
+  animation:transitionText 1.4s ease forwards;
+}
+
+@keyframes transitionText{
+  0%,35%{
+    opacity:0;
+    transform:translate(-50%,-40%);
+  }
+  55%,80%{
+    opacity:1;
+    transform:translate(-50%,-50%);
+  }
+  100%{
+    opacity:0;
+  }
+}
+
+/* =========================
+   CHAIN APPEARANCE
+========================= */
+
+/*
+  Each chain is made with SVG link shapes.
+  They descend from above with different
+  lengths, delays and positions.
+*/
+
+.transition-chains{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
+}
+
+.chain{
+  --duration:1s;
+  --delay:0s;
+  position:absolute;
+  top:0;
+  left:var(--x);
+  width:var(--w,18px);
+  height:var(--length);
+  overflow:visible;
+  transform:translateY(calc(-100% - 30px));
+  transform-origin:top center;
+}
+
+.chain svg{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+
+#transition.active .chain{
+  animation:chainDrop var(--duration)
+    cubic-bezier(.17,.82,.32,1.07)
+    var(--delay) forwards;
+}
+
+@keyframes chainDrop{
+  0%{
+    transform:translateY(calc(-100% - 30px));
+  }
+  75%{
+    transform:translateY(12px);
+  }
+  89%{
+    transform:translateY(-5px);
+  }
+  100%{
+    transform:translateY(0);
+  }
+}
+
+.chain:nth-child(1){
+  --x:7%;
+  --length:55%;
+  --w:16px;
+  --duration:1s;
+  --delay:.05s;
+}
+
+.chain:nth-child(2){
+  --x:23%;
+  --length:29%;
+  --w:14px;
+  --duration:.85s;
+  --delay:.2s;
+}
+
+.chain:nth-child(3){
+  --x:41%;
+  --length:70%;
+  --w:21px;
+  --duration:1.15s;
+  --delay:.1s;
+}
+
+.chain:nth-child(4){
+  --x:63%;
+  --length:38%;
+  --w:16px;
+  --duration:.95s;
+  --delay:.3s;
+}
+
+.chain:nth-child(5){
+  --x:82%;
+  --length:63%;
+  --w:20px;
+  --duration:1.15s;
+  --delay:.15s;
+}
+
+.chain:nth-child(6){
+  --x:96%;
+  --length:25%;
+  --w:13px;
+  --duration:.85s;
+  --delay:.36s;
+}
+
+/* =========================
+   DARK CONTENT PAGE
+========================= */
+
+#panel{
+  position:absolute;
+  inset:0;
+  z-index:16;
+  color:#eee6ef;
+  background:
+    radial-gradient(
+      ellipse at 50% 0%,
+      rgba(78,64,79,.38),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      #24212c 0%,
+      #14121c 55%,
+      #0d0c14 100%
+    );
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .3s,visibility .3s;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+#panel.open{
+  visibility:visible;
+  opacity:1;
+  pointer-events:auto;
+}
+
+.panel-grid{
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(220,194,216,.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(220,194,216,.035) 1px,
+      transparent 1px
+    );
+  background-size:20% 17%;
+  pointer-events:none;
+}
+
+.panel-chain-layer{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+}
+
+.panel-chain-layer .chain{
+  transform:translateY(0);
+  opacity:.58;
+}
+
+.panel-chain-layer .chain:nth-child(1){
+  --length:37%;
+}
+
+.panel-chain-layer .chain:nth-child(2){
+  --length:23%;
+}
+
+.panel-chain-layer .chain:nth-child(3){
+  --length:51%;
+}
+
+.panel-chain-layer .chain:nth-child(4){
+  --length:27%;
+}
+
+.panel-chain-layer .chain:nth-child(5){
+  --length:42%;
+}
+
+.panel-chain-layer .chain:nth-child(6){
+  --length:19%;
+}
+
+.panel-head{
+  position:relative;
+  z-index:5;
+  height:calc(84px + env(safe-area-inset-top));
+  min-height:calc(84px + env(safe-area-inset-top));
+  padding:env(safe-area-inset-top) 24px 0;
+  border-bottom:1px solid rgba(222,191,215,.2);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(13,12,20,.55);
+  backdrop-filter:blur(9px);
+}
+
+.panel-brand{
+  color:#d7b9cf;
+  font:10px var(--mono);
+  letter-spacing:.1em;
+}
+
+.back-button{
+  border:1px solid rgba(226,190,216,.45);
+  padding:10px 15px;
+  background:rgba(255,255,255,.04);
+  color:#eee0eb;
+  font:10px var(--mono);
+}
+
+.panel-content{
+  position:relative;
+  z-index:3;
+  flex:1;
+  min-height:0;
+  padding:48px 24px 70px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+}
+
+.panel-kicker{
+  color:#ca99bb;
+  font:10px var(--mono);
+  letter-spacing:.15em;
+}
+
+.panel-title{
+  margin:26px 0 15px;
+  max-width:100%;
+  font:700 clamp(39px,10.5vw,105px)/1 var(--display);
+  letter-spacing:-.07em;
+  overflow-wrap:anywhere;
+  text-shadow:0 5px 20px rgba(0,0,0,.3);
+}
+
+.panel-title-glow{
+  width:70px;
+  height:2px;
+  background:#c48eaf;
+  box-shadow:0 0 17px rgba(211,145,192,.8);
+  margin:22px 0;
+}
+
+.panel-description{
+  max-width:420px;
+  margin:26px 0;
+  color:#baaebc;
+  font-size:13px;
+  line-height:2;
+}
+
+.panel-placeholder{
+  margin-top:50px;
+  min-height:190px;
+  padding:25px 23px;
+  border:1px solid rgba(214,177,205,.25);
+  background:rgba(12,11,19,.65);
+  backdrop-filter:blur(8px);
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:24px;
+}
+
+.panel-placeholder-number{
+  color:rgba(209,148,187,.65);
+  font:600 75px/1 var(--display);
+  letter-spacing:-.08em;
+}
+
+.panel-placeholder-label{
+  color:#c8a9bf;
+  font:10px var(--mono);
+  letter-spacing:.1em;
+}
+
+.panel-warning{
+  margin-top:25px;
+  color:#8e7b8d;
+  font:9px var(--mono);
+  letter-spacing:.08em;
+}
+
+/* =========================
    MENU
-======================== */
+========================= */
 
 #menu{
   position:absolute;
@@ -776,105 +990,9 @@ button:focus-visible{
   color:#c3aebd;
 }
 
-/* ========================
-   CONTENT PANELS
-======================== */
-
-#panel{
-  position:absolute;
-  inset:0;
-  z-index:16;
-  background:#f2edf0;
-  visibility:hidden;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .35s,visibility .35s;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-
-#panel.open{
-  visibility:visible;
-  opacity:1;
-  pointer-events:auto;
-}
-
-.panel-head{
-  min-height:calc(84px + env(safe-area-inset-top));
-  padding:env(safe-area-inset-top) 24px 0;
-  border-bottom:1px solid #d1c4cd;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.back-button{
-  background:none;
-  border:0;
-  color:var(--ink);
-  font:10px var(--mono);
-  padding:12px 0;
-}
-
-.panel-content{
-  flex:1;
-  min-height:0;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  -webkit-overflow-scrolling:touch;
-  touch-action:pan-y;
-  padding:38px 24px 60px;
-}
-
-.panel-kicker{
-  font:10px var(--mono);
-  color:#a77797;
-  letter-spacing:.15em;
-}
-
-.panel-title{
-  font:700 clamp(42px,11vw,110px)/1 var(--display);
-  letter-spacing:-.08em;
-  margin:24px 0;
-  overflow-wrap:anywhere;
-}
-
-.panel-rule{
-  height:1px;
-  background:#d2c2cd;
-  margin:30px 0;
-}
-
-.panel-description{
-  font-size:13px;
-  line-height:2;
-  color:#70636d;
-  max-width:520px;
-}
-
-.placeholder{
-  margin-top:35px;
-  border:1px solid #d0beca;
-  padding:28px 24px;
-  display:flex;
-  flex-direction:column;
-  gap:38px;
-}
-
-.placeholder strong{
-  color:#bb91ad;
-  font:600 53px var(--display);
-}
-
-.placeholder span{
-  font:10px var(--mono);
-  color:#857681;
-}
-
-/* ========================
-   TABLET / DESKTOP
-======================== */
+/* =========================
+   RESPONSIVE
+========================= */
 
 @media(min-width:760px){
   .home-header{
@@ -882,123 +1000,54 @@ button:focus-visible{
     padding-right:44px;
   }
 
-  .hero-copy{
-    left:7%;
-    top:8%;
+  .home-side-label,
+  .home-caption{
+    left:44px;
   }
 
-  .hero-title{
-    font-size:clamp(100px,13vw,190px);
-  }
-
-  .side-information{
-    left:7%;
-    top:49%;
-    width:28%;
-  }
-
-  .plush-area{
-    width:58%;
-    top:15%;
-    bottom:11%;
-  }
-
-  .halo-system{
-    width:70%;
-    height:240px;
-    top:-2%;
-    left:54%;
-  }
-
-  .home-navigation{
-    left:7%;
-    right:7%;
+  .background-orbit{
+    width:min(80vh,720px);
   }
 
   .panel-content{
     padding-left:8%;
   }
+
+  .panel-head{
+    padding-left:40px;
+    padding-right:40px;
+  }
+
+  .home-navigation{
+    left:35%;
+  }
 }
 
-/* ========================
-   SMALL IPHONES
-======================== */
-
 @media(max-width:450px){
-  .hero-copy{
-    top:5%;
+  .hero{
+    top:41%;
   }
 
   .hero-title{
-    font-size:clamp(59px,17vw,88px);
+    font-size:clamp(55px,14.5vw,85px);
   }
 
-  .hero-kicker{
-    font-size:8px;
-  }
-
-  .side-information{
+  .background-orbit{
     top:42%;
-    left:5%;
-    width:31%;
-  }
-
-  .side-heading{
-    font-size:clamp(16px,4.5vw,21px);
-  }
-
-  .side-description{
-    font-size:10px;
-  }
-
-  .side-status{
-    font-size:7px;
-    padding:7px;
-  }
-
-  .plush-area{
-    top:25%;
-    right:-5%;
-    bottom:11%;
-    width:79%;
-  }
-
-  .halo-system{
-    top:1%;
-    left:54%;
-    width:100%;
-    height:160px;
-  }
-
-  .halo-svg .halo-letters{
-    font-size:17px;
+    width:119vw;
   }
 
   .home-nav-button{
-    height:68px;
+    height:70px;
     padding:12px 6px;
   }
 
-  .specimen-number{
-    display:none;
-  }
-}
-
-@media(max-height:680px){
-  .side-information{
-    top:44%;
+  .home-caption{
+    bottom:calc(85px + env(safe-area-inset-bottom));
   }
 
-  .side-description{
-    display:none;
-  }
-
-  .side-status{
-    margin-top:12px;
-  }
-
-  .plush-area{
-    top:22%;
+  .panel-title{
+    font-size:clamp(37px,10vw,54px);
   }
 }
 
@@ -1015,7 +1064,10 @@ button:focus-visible{
 <body>
 <div id="app">
 
-<!-- ERROR OPENING -->
+<!-- =========================
+     ERROR OPENING
+========================= -->
+
 <section id="entry" class="screen">
   <main class="entry-content">
 
@@ -1065,7 +1117,10 @@ button:focus-visible{
 
 <canvas id="noise" aria-hidden="true"></canvas>
 
-<!-- HOME -->
+<!-- =========================
+     HOME
+========================= -->
+
 <section id="home"
   class="screen"
   aria-hidden="true">
@@ -1091,11 +1146,53 @@ button:focus-visible{
 
   <main class="home-stage">
 
-    <!-- TITLE -->
-    <div class="hero-copy">
+    <div class="orbit-glow"></div>
+
+    <!-- ROTATING BACKGROUND TEXT -->
+
+    <div class="background-orbit" aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <defs>
+          <path id="backgroundTextPath"
+            d="
+              M200 200
+              m-175 0
+              a175 175 0 1 1 350 0
+              a175 175 0 1 1-350 0
+            "/>
+        </defs>
+
+        <circle
+          class="orbit-outline"
+          cx="200"
+          cy="200"
+          r="175"/>
+
+        <text>
+          <textPath href="#backgroundTextPath">
+            A SWEET LITTLE MALFUNCTION ·
+            WELCOME TO THE UNREAL WORLD ·
+            A SWEET LITTLE MALFUNCTION ·
+            WELCOME TO THE UNREAL WORLD ·
+          </textPath>
+        </text>
+      </svg>
+    </div>
+
+    <div class="home-side-label">
+      THE WORLD OF BEAUTIFUL ERRORS
+    </div>
+
+    <div class="home-vertical">
+      THIS WORLD IS NOT SUPPOSED TO EXIST.
+    </div>
+
+    <!-- MAIN TITLE -->
+
+    <div class="hero">
 
       <div class="hero-kicker">
-        ANGELIC SYSTEM / BEAUTIFUL ERROR
+        ANGELIC SYSTEM / 001
       </div>
 
       <h1 id="heroTitle" class="hero-title">
@@ -1108,139 +1205,35 @@ button:focus-visible{
 
     </div>
 
-    <div class="hero-index">
-      SYSTEM / 01
-    </div>
-
-    <!-- SIDE TEXT -->
-    <section class="side-information">
-
-      <div class="side-accent"></div>
-
-      <div class="side-number">
-        [ OBJECT : 001 ]
-      </div>
-
-      <h2 class="side-heading">
-        An angelic<br>
-        error.
-      </h2>
-
-      <p class="side-description">
-        Soft things, strange worlds,
-        and beautiful little mistakes.
-      </p>
-
-      <div class="side-status">
-        STATUS / UNKNOWN
-      </div>
-
-    </section>
-
-    <!-- PLUSH + HALO -->
-    <div class="plush-area">
-
-      <div class="plush-glow"></div>
-
-      <img
-        class="plush-image"
-        src="./IMG_3533.png"
-        alt="天使のぬいぐるみ">
-
-      <!-- ELLIPTICAL TEXT HALO -->
-      <div class="halo-system" aria-hidden="true">
-
-        <div class="halo-light"></div>
-
-        <div class="halo-plane">
-
-          <div class="halo-rotor">
-
-            <svg
-              class="halo-svg"
-              viewBox="0 0 400 400"
-              xmlns="http://www.w3.org/2000/svg">
-
-              <defs>
-                <path
-                  id="haloTextPath"
-                  d="
-                    M 200,30
-                    A 170,170 0 1,1 200,370
-                    A 170,170 0 1,1 200,30
-                  "/>
-              </defs>
-
-              <!-- Thin concentric rings -->
-              <circle
-                class="halo-outline"
-                cx="200"
-                cy="200"
-                r="170"/>
-
-              <circle
-                class="halo-inside"
-                cx="200"
-                cy="200"
-                r="153"/>
-
-              <!-- Rotating text ring -->
-              <text class="halo-letters">
-                <textPath
-                  href="#haloTextPath"
-                  textLength="1068"
-                  lengthAdjust="spacing"
-                  startOffset="0%">
-                  ✦ SUGERROR ✦ A SWEET LITTLE MALFUNCTION ✦ SUGERROR ✦ ANGELIC SYSTEM ✦ BEAUTIFUL ERROR ✦
-                </textPath>
-              </text>
-
-              <circle class="halo-dots" cx="200" cy="30" r="2"/>
-              <circle class="halo-dots" cx="200" cy="370" r="2"/>
-
-            </svg>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="decor-cross one"></div>
-    <div class="decor-cross two"></div>
-
-    <div class="specimen-number">
-      HALO OBJECT / NO.001
+    <div class="home-caption">
+      [ SYSTEM STATUS : UNKNOWN ]<br>
+      000 — AN UNREAL ARCHIVE<br>
+      PLEASE ENJOY YOUR STAY.
     </div>
 
     <!-- NAVIGATION -->
+
     <nav class="home-navigation">
 
-      <button
-        class="home-nav-button"
+      <button class="home-nav-button"
         data-page="CHARACTERS">
         <strong>CHARACTERS</strong>
         <small>01 ↗</small>
       </button>
 
-      <button
-        class="home-nav-button"
+      <button class="home-nav-button"
         data-page="STORIES">
         <strong>STORIES</strong>
         <small>02 ↗</small>
       </button>
 
-      <button
-        class="home-nav-button"
+      <button class="home-nav-button"
         data-page="WORLDS">
         <strong>WORLDS</strong>
         <small>03 ↗</small>
       </button>
 
-      <button
-        class="home-nav-button"
+      <button class="home-nav-button"
         data-page="FILES">
         <strong>FILES</strong>
         <small>04 ↗</small>
@@ -1251,46 +1244,39 @@ button:focus-visible{
   </main>
 </section>
 
-<!-- FULL MENU -->
+<!-- =========================
+     MENU
+========================= -->
+
 <aside id="menu" aria-hidden="true">
 
   <header class="menu-top">
-
-    <span class="mono">
-      SUGERROR / INDEX
-    </span>
-
-    <button id="menuClose"
-      class="close-menu">
+    <span class="mono">SUGERROR / INDEX</span>
+    <button id="menuClose" class="close-menu">
       CLOSE ×
     </button>
-
   </header>
 
   <div class="menu-list">
 
     <button class="menu-item"
       data-page="CHARACTERS">
-      CHARACTERS
-      <span>01 ↗</span>
+      CHARACTERS <span>01 ↗</span>
     </button>
 
     <button class="menu-item"
       data-page="STORIES">
-      STORIES
-      <span>02 ↗</span>
+      STORIES <span>02 ↗</span>
     </button>
 
     <button class="menu-item"
       data-page="WORLDS">
-      WORLDS
-      <span>03 ↗</span>
+      WORLDS <span>03 ↗</span>
     </button>
 
     <button class="menu-item"
       data-page="FILES">
-      FILES
-      <span>04 ↗</span>
+      FILES <span>04 ↗</span>
     </button>
 
   </div>
@@ -1302,42 +1288,81 @@ button:focus-visible{
 
 </aside>
 
-<!-- CONTENT PANEL -->
+<!-- =========================
+     DARK TRANSITION
+========================= -->
+
+<div id="transition"
+  aria-hidden="true">
+
+  <div class="transition-darkness"></div>
+
+  <div class="transition-chains"
+    id="transitionChains">
+  </div>
+
+  <div class="transition-text">
+    DESCENDING INTO THE UNKNOWN
+  </div>
+
+</div>
+
+<!-- =========================
+     DARK CONTENT PANEL
+========================= -->
+
 <section id="panel" aria-hidden="true">
+
+  <div class="panel-grid"></div>
+
+  <div class="panel-chain-layer"
+    id="panelChains">
+  </div>
 
   <header class="panel-head">
 
-    <span class="mono">
-      SUGERROR / DIRECTORY
+    <span class="panel-brand">
+      SUGERROR / UNKNOWN
     </span>
 
     <button id="panelBack"
       class="back-button">
-      ← BACK
+      ← RETURN
     </button>
 
   </header>
 
   <div class="panel-content">
 
-    <div id="panelKicker" class="panel-kicker">
+    <div class="panel-kicker"
+      id="panelKicker">
       DIRECTORY / 001
     </div>
 
-    <h2 id="panelTitle" class="panel-title">
+    <h2 class="panel-title"
+      id="panelTitle">
       CHARACTERS
     </h2>
 
-    <div class="panel-rule"></div>
+    <div class="panel-title-glow"></div>
 
-    <p id="panelDescription"
-      class="panel-description"></p>
+    <p class="panel-description"
+      id="panelDescription"></p>
 
-    <div class="placeholder">
-      <strong>404.</strong>
-      <span>
+    <div class="panel-placeholder">
+
+      <div class="panel-placeholder-number">
+        404.
+      </div>
+
+      <div class="panel-placeholder-label">
         CONTENT IS UNDER CONSTRUCTION.
-      </span>
+      </div>
+
+    </div>
+
+    <div class="panel-warning">
+      [ CAUTION : ARCHIVE INCOMPLETE ]
     </div>
 
   </div>
@@ -1347,21 +1372,50 @@ button:focus-visible{
 </div>
 
 <script>
-const entry=document.getElementById("entry");
-const enterButton=document.getElementById("enterButton");
-const home=document.getElementById("home");
-const heroTitle=document.getElementById("heroTitle");
-const menu=document.getElementById("menu");
-const panel=document.getElementById("panel");
-const menuOpen=document.getElementById("menuOpen");
-const menuClose=document.getElementById("menuClose");
-const panelBack=document.getElementById("panelBack");
-const noise=document.getElementById("noise");
-const ctx=noise.getContext("2d");
+/* =========================
+   ELEMENTS
+========================= */
 
-const reducedMotion=window.matchMedia(
-  "(prefers-reduced-motion: reduce)"
-);
+const entry =
+  document.getElementById("entry");
+
+const enterButton =
+  document.getElementById("enterButton");
+
+const home =
+  document.getElementById("home");
+
+const heroTitle =
+  document.getElementById("heroTitle");
+
+const menu =
+  document.getElementById("menu");
+
+const panel =
+  document.getElementById("panel");
+
+const transition =
+  document.getElementById("transition");
+
+const menuOpen =
+  document.getElementById("menuOpen");
+
+const menuClose =
+  document.getElementById("menuClose");
+
+const panelBack =
+  document.getElementById("panelBack");
+
+const noise =
+  document.getElementById("noise");
+
+const ctx =
+  noise.getContext("2d");
+
+const reducedMotion =
+  window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  );
 
 let entering=false;
 let glitchActive=false;
@@ -1369,59 +1423,86 @@ let frameId=null;
 let lastFrame=0;
 let periodicTimer=null;
 let transitionBusy=false;
+let transitionTimer=null;
+let transitionCleanupTimer=null;
 
-/* ========================
+/* =========================
    ZOOM PREVENTION
-======================== */
+========================= */
 
-["gesturestart","gesturechange","gestureend"]
-.forEach(type=>{
-  document.addEventListener(type,event=>{
-    event.preventDefault();
-  },{passive:false});
+[
+  "gesturestart",
+  "gesturechange",
+  "gestureend"
+].forEach(type=>{
+  document.addEventListener(
+    type,
+    event=>{
+      event.preventDefault();
+    },
+    {passive:false}
+  );
 });
 
-document.addEventListener("touchstart",event=>{
-  if(event.touches.length>1){
-    event.preventDefault();
-  }
-},{passive:false});
+document.addEventListener(
+  "touchstart",
+  event=>{
+    if(event.touches.length>1){
+      event.preventDefault();
+    }
+  },
+  {passive:false}
+);
 
-document.addEventListener("touchmove",event=>{
-  if(event.touches.length>1){
-    event.preventDefault();
-  }
-},{passive:false});
+document.addEventListener(
+  "touchmove",
+  event=>{
+    if(event.touches.length>1){
+      event.preventDefault();
+    }
+  },
+  {passive:false}
+);
 
 let lastTapTime=0;
 let lastTapX=0;
 let lastTapY=0;
 
-document.addEventListener("touchend",event=>{
-  if(event.changedTouches.length!==1)return;
+document.addEventListener(
+  "touchend",
+  event=>{
+    if(event.changedTouches.length!==1){
+      return;
+    }
 
-  const touch=event.changedTouches[0];
-  const now=Date.now();
-  const delta=now-lastTapTime;
+    const touch=event.changedTouches[0];
+    const now=Date.now();
+    const delta=now-lastTapTime;
 
-  const distance=Math.hypot(
-    touch.clientX-lastTapX,
-    touch.clientY-lastTapY
-  );
+    const distance=Math.hypot(
+      touch.clientX-lastTapX,
+      touch.clientY-lastTapY
+    );
 
-  if(delta>0&&delta<300&&distance<30){
-    event.preventDefault();
-    lastTapTime=0;
-  }else{
-    lastTapTime=now;
-    lastTapX=touch.clientX;
-    lastTapY=touch.clientY;
-  }
-},{passive:false});
+    if(
+      delta>0 &&
+      delta<300 &&
+      distance<30
+    ){
+      event.preventDefault();
+      lastTapTime=0;
+    }else{
+      lastTapTime=now;
+      lastTapX=touch.clientX;
+      lastTapY=touch.clientY;
+    }
+  },
+  {passive:false}
+);
 
-/* ========================
-   GLITCH NOISE
-======================== */
+/* =========================
+   NOISE
+========================= */
 
 function resizeNoise(){
   noise.width=190;
@@ -1431,20 +1512,24 @@ function resizeNoise(){
     Math.min(
       420,
       Math.round(
-        190*innerHeight/Math.max(innerWidth,1)
+        190*innerHeight/
+        Math.max(innerWidth,1)
       )
     )
   );
 }
 
 function drawNoise(time){
-  if(!glitchActive)return;
+  if(!glitchActive){
+    return;
+  }
 
   if(time-lastFrame>45){
     lastFrame=time;
 
     const w=noise.width;
     const h=noise.height;
+
     const data=ctx.createImageData(w,h);
     const p=data.data;
 
@@ -1477,10 +1562,14 @@ function drawNoise(time){
 }
 
 function startNoise(){
-  if(reducedMotion.matches||glitchActive)return;
+  if(
+    reducedMotion.matches ||
+    glitchActive
+  ){
+    return;
+  }
 
   resizeNoise();
-
   glitchActive=true;
   lastFrame=0;
 
@@ -1493,17 +1582,23 @@ function stopNoise(){
   cancelAnimationFrame(frameId);
 
   noise.classList.remove("active");
+
   ctx.clearRect(
-    0,0,noise.width,noise.height
+    0,
+    0,
+    noise.width,
+    noise.height
   );
 }
 
-/* ========================
-   ENTER WORLD
-======================== */
+/* =========================
+   ERROR ENTRY
+========================= */
 
 function enterWorld(){
-  if(entering)return;
+  if(entering){
+    return;
+  }
 
   entering=true;
   enterButton.disabled=true;
@@ -1515,50 +1610,166 @@ function enterWorld(){
 
   setTimeout(()=>{
     stopNoise();
+
     entry.style.display="none";
 
     home.classList.add("visible");
-    home.setAttribute("aria-hidden","false");
+    home.setAttribute(
+      "aria-hidden",
+      "false"
+    );
 
     startAmbientGlitch();
 
   },reducedMotion.matches?100:1100);
 }
 
-enterButton.addEventListener("click",enterWorld);
+enterButton.addEventListener(
+  "click",
+  enterWorld
+);
 
-/* ========================
-   BACKGROUND GLITCH
-======================== */
+/* =========================
+   AMBIENT GLITCH
+========================= */
 
 function startAmbientGlitch(){
   clearInterval(periodicTimer);
 
-  if(reducedMotion.matches)return;
+  if(reducedMotion.matches){
+    return;
+  }
 
   periodicTimer=setInterval(()=>{
     if(
-      menu.classList.contains("open")||
-      panel.classList.contains("open")
-    )return;
+      menu.classList.contains("open") ||
+      panel.classList.contains("open") ||
+      transitionBusy
+    ){
+      return;
+    }
 
     heroTitle.classList.add("glitch");
 
     setTimeout(()=>{
-      heroTitle.classList.remove("glitch");
+      heroTitle.classList.remove(
+        "glitch"
+      );
     },450);
 
   },8000);
 }
 
-/* ========================
-   TRANSITION
-======================== */
+/* =========================
+   SVG CHAIN GENERATOR
+========================= */
 
-function glitchTransition(callback){
-  if(transitionBusy)return;
+/*
+  Draws an actual chain from repeated
+  interlocking oval links.
+
+  Every chain gets a different length
+  through its CSS variables.
+*/
+
+function makeChainSVG(){
+  return `
+    <svg
+      viewBox="0 0 24 800"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg">
+
+      <defs>
+        <linearGradient
+          id="chainMetal"
+          x1="0" y1="0"
+          x2="1" y2="0">
+          <stop offset="0%"
+            stop-color="#443e4c"/>
+          <stop offset="35%"
+            stop-color="#c1aabf"/>
+          <stop offset="65%"
+            stop-color="#837789"/>
+          <stop offset="100%"
+            stop-color="#2c2934"/>
+        </linearGradient>
+
+        <pattern
+          id="chainPattern"
+          width="24"
+          height="29"
+          patternUnits="userSpaceOnUse">
+
+          <ellipse
+            cx="12"
+            cy="8"
+            rx="5.6"
+            ry="10.5"
+            fill="none"
+            stroke="url(#chainMetal)"
+            stroke-width="4"/>
+
+          <ellipse
+            cx="12"
+            cy="22"
+            rx="5.6"
+            ry="10.5"
+            fill="none"
+            stroke="#8f8191"
+            stroke-width="3.3"/>
+
+          <path
+            d="M 10 2 L 10 13"
+            stroke="#ead4e3"
+            stroke-width=".65"
+            opacity=".6"/>
+        </pattern>
+      </defs>
+
+      <rect
+        x="0"
+        y="0"
+        width="24"
+        height="800"
+        fill="url(#chainPattern)"/>
+
+    </svg>
+  `;
+}
+
+function createChains(containerId){
+  const container=
+    document.getElementById(containerId);
+
+  container.innerHTML="";
+
+  for(let i=0;i<6;i++){
+    const chain=document.createElement("div");
+
+    chain.className="chain";
+    chain.innerHTML=makeChainSVG();
+
+    container.appendChild(chain);
+  }
+}
+
+createChains("transitionChains");
+createChains("panelChains");
+
+/* =========================
+   DARK TRANSITION
+========================= */
+
+function descendIntoDarkness(callback){
+  if(transitionBusy){
+    return;
+  }
 
   transitionBusy=true;
+
+  clearTimeout(transitionTimer);
+  clearTimeout(transitionCleanupTimer);
 
   if(reducedMotion.matches){
     callback();
@@ -1566,42 +1777,79 @@ function glitchTransition(callback){
     return;
   }
 
-  heroTitle.classList.add("glitch");
-  startNoise();
+  /*
+    Restart the animations each time
+    a navigation button is pressed.
+  */
 
-  setTimeout(()=>{
+  transition.classList.remove("active");
+
+  void transition.offsetWidth;
+
+  transition.classList.add("active");
+  transition.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  /*
+    The screen is covered from top
+    to bottom before the new page
+    appears.
+  */
+
+  transitionTimer=setTimeout(()=>{
     callback();
+  },1280);
 
-    stopNoise();
-    heroTitle.classList.remove("glitch");
+  transitionCleanupTimer=setTimeout(()=>{
+    transition.classList.remove("active");
+    transition.setAttribute(
+      "aria-hidden",
+      "true"
+    );
 
     transitionBusy=false;
-  },400);
+  },1450);
 }
 
-/* ========================
+/* =========================
    MENU
-======================== */
+========================= */
 
 function openMenu(){
+  if(transitionBusy){
+    return;
+  }
+
   menu.classList.add("open");
-  menu.setAttribute("aria-hidden","false");
+  menu.setAttribute(
+    "aria-hidden",
+    "false"
+  );
 }
 
 function closeMenu(){
   menu.classList.remove("open");
-  menu.setAttribute("aria-hidden","true");
+  menu.setAttribute(
+    "aria-hidden",
+    "true"
+  );
 }
 
-menuOpen.addEventListener("click",()=>{
-  glitchTransition(openMenu);
-});
+menuOpen.addEventListener(
+  "click",
+  openMenu
+);
 
-menuClose.addEventListener("click",closeMenu);
+menuClose.addEventListener(
+  "click",
+  closeMenu
+);
 
-/* ========================
-   CONTENT
-======================== */
+/* =========================
+   PAGES
+========================= */
 
 const pages={
   CHARACTERS:{
@@ -1632,63 +1880,109 @@ const pages={
 function openPanel(name){
   const page=pages[name];
 
-  if(!page)return;
+  if(!page){
+    return;
+  }
 
-  document.getElementById("panelTitle")
-    .textContent=name;
+  document.getElementById(
+    "panelTitle"
+  ).textContent=name;
 
-  document.getElementById("panelKicker")
-    .textContent="DIRECTORY / "+page.number;
+  document.getElementById(
+    "panelKicker"
+  ).textContent=
+    "DIRECTORY / "+page.number;
 
-  document.getElementById("panelDescription")
-    .textContent=page.description;
+  document.getElementById(
+    "panelDescription"
+  ).textContent=page.description;
+
+  const panelContent=
+    document.querySelector(".panel-content");
+
+  panelContent.scrollTop=0;
 
   panel.classList.add("open");
-  panel.setAttribute("aria-hidden","false");
+  panel.setAttribute(
+    "aria-hidden",
+    "false"
+  );
 }
 
 function closePanel(){
+  if(transitionBusy){
+    return;
+  }
+
   panel.classList.remove("open");
-  panel.setAttribute("aria-hidden","true");
+  panel.setAttribute(
+    "aria-hidden",
+    "true"
+  );
 }
 
-document.querySelectorAll("[data-page]")
-.forEach(button=>{
-  button.addEventListener("click",()=>{
-    const name=button.dataset.page;
+/* =========================
+   NAVIGATION EVENTS
+========================= */
 
-    if(menu.classList.contains("open")){
-      closeMenu();
+document.querySelectorAll(
+  "[data-page]"
+).forEach(button=>{
 
-      setTimeout(()=>{
-        openPanel(name);
-      },250);
+  button.addEventListener(
+    "click",
+    ()=>{
 
-    }else{
-      glitchTransition(()=>{
+      if(transitionBusy){
+        return;
+      }
+
+      const name=button.dataset.page;
+
+      /*
+        Close the menu first, then
+        animate chains and darkness.
+      */
+
+      if(menu.classList.contains("open")){
+        closeMenu();
+      }
+
+      descendIntoDarkness(()=>{
         openPanel(name);
       });
+
     }
-  });
+  );
+
 });
 
-panelBack.addEventListener("click",closePanel);
+panelBack.addEventListener(
+  "click",
+  closePanel
+);
 
-/* ========================
+/* =========================
    EVENTS
-======================== */
+========================= */
 
-window.addEventListener("resize",()=>{
-  if(glitchActive){
-    resizeNoise();
+window.addEventListener(
+  "resize",
+  ()=>{
+    if(glitchActive){
+      resizeNoise();
+    }
   }
-});
+);
 
-document.addEventListener("visibilitychange",()=>{
-  if(document.hidden){
-    stopNoise();
+document.addEventListener(
+  "visibilitychange",
+  ()=>{
+    if(document.hidden){
+      stopNoise();
+    }
   }
-});
+);
 </script>
 </body>
 </html>
