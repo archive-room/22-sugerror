@@ -230,23 +230,19 @@ button:focus-visible{
   pointer-events:auto;
 }
 
-/*
-  Two vertically connected screens.
-  Both entering and returning use
-  the same smooth transition.
-*/
+/* SCREEN MOVEMENT */
 
 .admission-stack{
   position:absolute;
   inset:0;
   height:200%;
-  transform:translateY(0);
-  transition:transform 2.1s cubic-bezier(.45,0,.2,1);
+  transform:translate3d(0,0,0);
+  transition:transform 1.2s cubic-bezier(.45,0,.2,1);
   will-change:transform;
 }
 
 #admission.entered .admission-stack{
-  transform:translateY(-50%);
+  transform:translate3d(0,-50%,0);
 }
 
 .ticket-scene,
@@ -316,8 +312,24 @@ button:focus-visible{
 .ticket-wrap{
   width:min(94vw,670px);
   position:relative;
-  transform:rotate(-2deg);
+  transform:translate3d(0,0,0) rotate(-2deg);
+  opacity:1;
   filter:drop-shadow(0 18px 16px #7d46513b);
+
+  /*
+    Keep this transition on the base element,
+    so it works smoothly in both directions.
+  */
+  transition:
+    transform 1.3s cubic-bezier(.45,0,.2,1),
+    opacity 1.3s ease;
+
+  will-change:transform,opacity;
+}
+
+.ticket-scene.departing .ticket-wrap{
+  transform:translate3d(0,35px,0) rotate(-5deg);
+  opacity:.35;
 }
 
 .ticket{
@@ -492,25 +504,10 @@ button:focus-visible{
   z-index:2;
 }
 
-/*
-  Slower, softer movement.
-  Opacity remains visible for
-  the first part of the fall.
-*/
-
 .ticket-stub.torn{
   transform:translate(105px,125px) rotate(38deg);
   opacity:0;
   pointer-events:none;
-}
-
-.ticket-scene.departing .ticket-wrap{
-  transition:
-    transform 1.3s cubic-bezier(.35,0,.25,1),
-    opacity 1.3s ease;
-
-  transform:translateY(35px) rotate(-5deg);
-  opacity:.35;
 }
 
 /* TEMPORARY LOBBY */
@@ -685,7 +682,6 @@ button:focus-visible{
             </div>
           </div>
 
-          <!-- TAP TO TEAR -->
           <button
             class="ticket-stub"
             id="ticketStub"
@@ -912,13 +908,7 @@ function tearTicket(){
 
   ticketEntered=true;
   ticketStub.disabled=true;
-
   ticketStub.classList.add("torn");
-
-  /*
-    Wait until the slower tear
-    animation has nearly finished.
-  */
 
   setTimeout(()=>{
     ticketScene.classList.add("departing");
@@ -937,25 +927,28 @@ replayButton.addEventListener("click",()=>{
   replayButton.disabled=true;
 
   /*
-    First travel smoothly upward.
-    Do not reset the ticket while
-    the camera is still moving.
+    Move back to the ticket screen.
+    The ticket itself stays tilted
+    until the screen has returned.
   */
 
   admission.classList.remove("entered");
 
   setTimeout(()=>{
     /*
-      Restore the main ticket's
-      normal position smoothly.
+      The ticket-wrap now has its
+      transition in the base CSS,
+      so the tilt and vertical
+      offset return smoothly.
     */
 
     ticketScene.classList.remove("departing");
 
     setTimeout(()=>{
       /*
-        Restore the stub only
-        after the return finishes.
+        Restore the detachable stub
+        after the ticket body has
+        finished returning.
       */
 
       ticketStub.classList.remove("torn");
@@ -964,9 +957,9 @@ replayButton.addEventListener("click",()=>{
       ticketEntered=false;
       replaying=false;
       replayButton.disabled=false;
-    },reducedMotion.matches?100:1300);
+    },reducedMotion.matches?100:1350);
 
-  },reducedMotion.matches?100:2150);
+  },reducedMotion.matches?100:1250);
 });
 
 window.addEventListener("resize",()=>{
