@@ -1218,6 +1218,11 @@ function drawNoise(time){
     const data=ctx.createImageData(w,h);
     const p=data.data;
 
+    /*
+      Grainy noise with occasional
+      pink and blue pixels.
+    */
+
     for(let i=0;i<p.length;i+=4){
       const random=Math.random();
       const v=random>.5?255:0;
@@ -1241,6 +1246,10 @@ function drawNoise(time){
 
     ctx.putImageData(data,0,0);
 
+    /*
+      Horizontal digital error lines.
+    */
+
     for(let i=0;i<12;i++){
       const colors=[
         "rgba(255,120,177,.75)",
@@ -1259,6 +1268,11 @@ function drawNoise(time){
         Math.random()*4+1
       );
     }
+
+    /*
+      Short horizontal displacement
+      bars for a broken-screen effect.
+    */
 
     for(let i=0;i<4;i++){
       const y=Math.random()*h;
@@ -1369,8 +1383,17 @@ enterButton.addEventListener(
 
 /* =========================
    RANDOM GLOBAL GLITCH
-   Every 9–16 seconds
 ========================= */
+
+/*
+  An occasional burst appears across
+  the entire visible screen, including
+  the home page, menu and panels.
+
+  The interval varies from around
+  3.5 to 8 seconds, rather than being
+  a fixed repeating animation.
+*/
 
 function scheduleAmbientNoise(){
   clearTimeout(ambientTimer);
@@ -1383,13 +1406,8 @@ function scheduleAmbientNoise(){
     return;
   }
 
-  /*
-    Updated frequency:
-    9000–16000 milliseconds.
-  */
-
   const delay=
-    9000+Math.random()*7000;
+    3500+Math.random()*4500;
 
   ambientTimer=setTimeout(()=>{
     if(!transitionBusy){
@@ -1397,6 +1415,11 @@ function scheduleAmbientNoise(){
         95+Math.random()*115;
 
       flashNoise(duration);
+
+      /*
+        Occasionally jitter the title
+        alongside the global noise.
+      */
 
       if(
         !panel.classList.contains("open") &&
@@ -1418,7 +1441,6 @@ function scheduleAmbientNoise(){
 
 /* =========================
    FAST SCENE TRANSITION
-   Still used for content pages
 ========================= */
 
 function glitchTransition(callback){
@@ -1440,6 +1462,12 @@ function glitchTransition(callback){
 
   heroTitle.classList.add("glitch");
 
+  /*
+    A faster 180ms transition.
+    Callback occurs during the noise
+    rather than after a long pause.
+  */
+
   setTimeout(()=>{
     callback();
 
@@ -1455,7 +1483,6 @@ function glitchTransition(callback){
 
 /* =========================
    MENU
-   No transition noise
 ========================= */
 
 function openMenu(){
@@ -1474,26 +1501,12 @@ function closeMenu(){
   );
 }
 
-/*
-  The upper-right menu button
-  opens and closes directly,
-  without calling glitchTransition().
-*/
-
 menuOpen.addEventListener("click",()=>{
-  if(transitionBusy){
-    return;
-  }
-
-  openMenu();
+  glitchTransition(openMenu);
 });
 
 menuClose.addEventListener("click",()=>{
-  if(transitionBusy){
-    return;
-  }
-
-  closeMenu();
+  glitchTransition(closeMenu);
 });
 
 /* =========================
