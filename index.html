@@ -9,7 +9,8 @@
 <title>SUGERROR LAND</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap" rel="stylesheet">
 
 <style>
 @font-face{
@@ -26,8 +27,7 @@
   --gold-light:#dfc58d;
   --gold-dark:#89652f;
   --ink:#514435;
-  --mono:"DM Mono",monospace;
-  --display:"Space Grotesk",sans-serif;
+  --rounded:"M PLUS Rounded 1c",sans-serif;
 }
 
 *{
@@ -55,7 +55,8 @@ body{
   inset:0;
   background:#fff;
   color:var(--ink);
-  font-family:"DM Sans",sans-serif;
+  font-family:var(--rounded);
+  font-weight:700;
   -webkit-tap-highlight-color:transparent;
 }
 
@@ -91,7 +92,7 @@ button:focus-visible{
   overflow:hidden;
 }
 
-/* ERROR PAGE */
+/* ERROR PAGE — UNCHANGED */
 
 #entry{
   position:absolute;
@@ -197,7 +198,7 @@ button:focus-visible{
   100%{transform:translate(4px,0)}
 }
 
-/* NOISE */
+/* NOISE — UNCHANGED */
 
 #noise{
   position:absolute;
@@ -230,14 +231,21 @@ button:focus-visible{
   pointer-events:auto;
 }
 
-/* SCREEN MOVEMENT */
+/* SMOOTH SCREEN MOVEMENT */
 
 .admission-stack{
   position:absolute;
   inset:0;
   height:200%;
   transform:translate3d(0,0,0);
-  transition:transform 1.2s cubic-bezier(.45,0,.2,1);
+
+  /*
+    Gentle acceleration and deceleration,
+    without a sudden stop.
+  */
+  transition:
+    transform 1.8s cubic-bezier(.42,0,.22,1);
+
   will-change:transform;
 }
 
@@ -291,8 +299,8 @@ button:focus-visible{
   left:15px;
   right:15px;
   text-align:center;
-  font:10px/1.9 var(--mono);
-  letter-spacing:.25em;
+  font:700 10px/1.9 var(--rounded);
+  letter-spacing:.18em;
   color:#895d71;
 }
 
@@ -302,8 +310,8 @@ button:focus-visible{
   left:15px;
   right:15px;
   text-align:center;
-  font:10px/2 var(--mono);
-  letter-spacing:.12em;
+  font:700 10px/2 var(--rounded);
+  letter-spacing:.08em;
   color:#80546b;
 }
 
@@ -316,10 +324,6 @@ button:focus-visible{
   opacity:1;
   filter:drop-shadow(0 18px 16px #7d46513b);
 
-  /*
-    Keep this transition on the base element,
-    so it works smoothly in both directions.
-  */
   transition:
     transform 1.3s cubic-bezier(.45,0,.2,1),
     opacity 1.3s ease;
@@ -402,9 +406,9 @@ button:focus-visible{
 }
 
 .ticket-topline{
-  font:clamp(8px,1.8vw,11px) var(--mono);
+  font:700 clamp(8px,1.8vw,11px) var(--rounded);
   color:#a48755;
-  letter-spacing:.2em;
+  letter-spacing:.15em;
   margin-bottom:9px;
 }
 
@@ -421,22 +425,22 @@ button:focus-visible{
 }
 
 .ticket-subtitle{
-  font:clamp(7px,1.6vw,11px)/1.5 var(--mono);
-  letter-spacing:.22em;
+  font:700 clamp(7px,1.6vw,11px)/1.5 var(--rounded);
+  letter-spacing:.17em;
   color:#6d5b47;
 }
 
 .ticket-micro{
   margin-top:14px;
-  font:clamp(7px,1.4vw,10px)/1.6 var(--mono);
-  letter-spacing:.08em;
+  font:700 clamp(7px,1.4vw,10px)/1.6 var(--rounded);
+  letter-spacing:.05em;
   color:#947b56;
 }
 
 .ticket-bottomline{
   margin-top:12px;
-  font:clamp(7px,1.4vw,10px) var(--mono);
-  letter-spacing:.16em;
+  font:700 clamp(7px,1.4vw,10px) var(--rounded);
+  letter-spacing:.12em;
   color:#b08b50;
 }
 
@@ -480,17 +484,17 @@ button:focus-visible{
 }
 
 .stub-label{
-  font:clamp(7px,1.4vw,11px) var(--mono);
-  letter-spacing:.1em;
+  font:700 clamp(7px,1.4vw,11px) var(--rounded);
+  letter-spacing:.08em;
 }
 
 .stub-number{
-  font:clamp(20px,5vw,37px) Georgia,serif;
+  font:700 clamp(20px,5vw,37px) var(--rounded);
   color:#a47d3b;
 }
 
 .stub-small{
-  font:clamp(7px,1.3vw,9px) var(--mono);
+  font:700 clamp(7px,1.3vw,9px) var(--rounded);
 }
 
 .tear-arrow{
@@ -498,7 +502,7 @@ button:focus-visible{
   left:-7px;
   top:50%;
   transform:translateY(-50%);
-  font:20px Arial,sans-serif;
+  font:700 20px var(--rounded);
   color:#b58a51;
   background:var(--ivory);
   z-index:2;
@@ -532,8 +536,8 @@ button:focus-visible{
 }
 
 .lobby-kicker{
-  font:11px var(--mono);
-  letter-spacing:.3em;
+  font:700 11px var(--rounded);
+  letter-spacing:.22em;
   color:#96744d;
 }
 
@@ -547,15 +551,15 @@ button:focus-visible{
 }
 
 .lobby-description{
-  font:11px/2 var(--mono);
-  letter-spacing:.1em;
+  font:700 11px/2 var(--rounded);
+  letter-spacing:.08em;
   color:#82634b;
 }
 
 .lobby-note{
   margin-top:35px;
-  font:9px/2 var(--mono);
-  letter-spacing:.12em;
+  font:700 9px/2 var(--rounded);
+  letter-spacing:.1em;
   color:#a17d70;
 }
 
@@ -565,8 +569,8 @@ button:focus-visible{
   background:#fff5e7aa;
   color:#86683d;
   padding:12px 20px;
-  font:10px var(--mono);
-  letter-spacing:.12em;
+  font:700 10px var(--rounded);
+  letter-spacing:.1em;
 }
 
 @media(min-width:700px){
@@ -878,7 +882,7 @@ function stopNoise(){
   );
 }
 
-/* ERROR ENTRY */
+/* ERROR ENTRY — UNCHANGED */
 
 function enterWorld(){
   if(entering)return;
@@ -926,31 +930,12 @@ replayButton.addEventListener("click",()=>{
   replaying=true;
   replayButton.disabled=true;
 
-  /*
-    Move back to the ticket screen.
-    The ticket itself stays tilted
-    until the screen has returned.
-  */
-
   admission.classList.remove("entered");
 
   setTimeout(()=>{
-    /*
-      The ticket-wrap now has its
-      transition in the base CSS,
-      so the tilt and vertical
-      offset return smoothly.
-    */
-
     ticketScene.classList.remove("departing");
 
     setTimeout(()=>{
-      /*
-        Restore the detachable stub
-        after the ticket body has
-        finished returning.
-      */
-
       ticketStub.classList.remove("torn");
       ticketStub.disabled=false;
 
@@ -959,7 +944,7 @@ replayButton.addEventListener("click",()=>{
       replayButton.disabled=false;
     },reducedMotion.matches?100:1350);
 
-  },reducedMotion.matches?100:1250);
+  },reducedMotion.matches?100:1850);
 });
 
 window.addEventListener("resize",()=>{
