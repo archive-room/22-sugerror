@@ -30,9 +30,7 @@
   --rounded:"M PLUS Rounded 1c",sans-serif;
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box;}
 
 html,body{
   margin:0;
@@ -45,10 +43,7 @@ html,body{
   -webkit-text-size-adjust:100%;
 }
 
-html{
-  position:fixed;
-  inset:0;
-}
+html{position:fixed;inset:0;}
 
 body{
   position:fixed;
@@ -92,7 +87,7 @@ button:focus-visible{
   overflow:hidden;
 }
 
-/* ERROR PAGE */
+/* ERROR PAGE — FIXED */
 
 #entry{
   position:absolute;
@@ -144,9 +139,7 @@ button:focus-visible{
   font:12px Arial,Helvetica,sans-serif;
   min-height:42px;
 }
-.entry-button:active{
-  background:#e8e8e8;
-}
+.entry-button:active{background:#e8e8e8;}
 #entry.corrupt{
   color:#f3edf1;
   background:#17151c;
@@ -198,7 +191,7 @@ button:focus-visible{
   100%{transform:translate(4px,0)}
 }
 
-/* NOISE */
+/* NOISE — FIXED */
 
 #noise{
   position:absolute;
@@ -210,9 +203,7 @@ button:focus-visible{
   opacity:0;
   image-rendering:pixelated;
 }
-#noise.active{
-  opacity:.65;
-}
+#noise.active{opacity:.65;}
 
 /* ADMISSION */
 
@@ -224,14 +215,11 @@ button:focus-visible{
   pointer-events:none;
   transition:opacity .55s ease;
 }
-
 #admission.visible{
   opacity:1;
   visibility:visible;
   pointer-events:auto;
 }
-
-/* SCREEN MOVEMENT */
 
 .admission-stack{
   position:absolute;
@@ -241,7 +229,6 @@ button:focus-visible{
   transition:transform 1.5s cubic-bezier(.42,0,.22,1);
   will-change:transform;
 }
-
 #admission.entered .admission-stack{
   transform:translate3d(0,-50%,0);
 }
@@ -258,61 +245,123 @@ button:focus-visible{
   justify-content:center;
 }
 
+/* AMUSEMENT PARK BACKGROUND */
+
 .ticket-scene{
-  background:radial-gradient(
-    ellipse at 50% 42%,
-    #ffe9e6 0%,
-    #f6cad5 52%,
-    #e9a5ba 100%
+  background:linear-gradient(
+    180deg,
+    #78bce6 0%,
+    #a9d9ef 38%,
+    #e2e9dc 70%,
+    #c6b8a3 100%
   );
 }
 
-.ticket-scene::before{
+.park-background{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.park-art{
+  display:block;
+  width:100%;
+  height:100%;
+}
+
+.cloud-drift{
+  animation:cloud-drift 110s ease-in-out infinite alternate;
+}
+
+.cloud-drift-slow{
+  animation:cloud-drift 155s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes cloud-drift{
+  from{transform:translateX(-32px);}
+  to{transform:translateX(55px);}
+}
+
+/* Ferris wheel rotates around its center */
+
+.ferris-wheel-rotor{
+  transform-box:view-box;
+  transform-origin:0px 0px;
+  animation:ferris-spin 100s linear infinite;
+}
+
+@keyframes ferris-spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+/* Counter-rotation keeps cabins upright */
+
+.ferris-cabin{
+  animation:ferris-spin-back 100s linear infinite;
+}
+
+@keyframes ferris-spin-back{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(-360deg);}
+}
+
+.park-atmosphere{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.06) 0%,
+      transparent 40%,
+      rgba(255,243,216,.09) 74%,
+      rgba(67,75,85,.12) 100%
+    );
+}
+
+.park-atmosphere::after{
   content:"";
   position:absolute;
   inset:0;
-  opacity:.16;
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0 21px,
-      #fff 22px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 21px,
-      #fff 22px
-    );
-  pointer-events:none;
+  box-shadow:
+    inset 0 0 85px rgba(47,76,93,.09),
+    inset 0 -70px 90px rgba(60,67,70,.14);
 }
 
 .ticket-top{
   position:absolute;
+  z-index:3;
   top:calc(8% + env(safe-area-inset-top));
   left:15px;
   right:15px;
   text-align:center;
   font:700 10px/1.9 var(--rounded);
   letter-spacing:.18em;
-  color:#895d71;
+  color:#426071;
+  text-shadow:0 1px 3px #ffffffaa;
 }
 
 .ticket-hint{
   position:absolute;
+  z-index:3;
   bottom:calc(10% + env(safe-area-inset-bottom));
   left:15px;
   right:15px;
   text-align:center;
   font:700 10px/2 var(--rounded);
   letter-spacing:.08em;
-  color:#80546b;
+  color:#415e67;
+  text-shadow:0 1px 3px #ffffffaa;
 }
 
-/* PAPER TICKET */
+/* PAPER TICKET — UNCHANGED */
 
 .ticket-wrap{
   width:min(94vw,670px);
   position:relative;
+  z-index:2;
   transform:translate3d(0,0,0) rotate(-2deg);
   opacity:1;
   filter:drop-shadow(0 18px 16px #7d46513b);
@@ -334,8 +383,6 @@ button:focus-visible{
   background:transparent;
   overflow:visible;
 }
-
-/* MAIN PAPER */
 
 .ticket-main{
   width:76%;
@@ -362,14 +409,6 @@ button:focus-visible{
 
   box-shadow:inset 0 0 30px #b5a07b44;
 }
-
-/*
-  STRAIGHT CUT EDGE
-
-  The paper remains a straight-edged
-  rectangle after the stub falls away.
-  No jagged cut or extra decoration.
-*/
 
 .ticket.torn-edge .ticket-main{
   clip-path:polygon(
@@ -402,14 +441,12 @@ button:focus-visible{
   border:2px solid var(--gold);
   outline:1px solid var(--gold-light);
   outline-offset:-7px;
-
   background:linear-gradient(
     130deg,
     #fff9e9bb,
     transparent 55%,
     #b8a37b22
   );
-
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -458,8 +495,6 @@ button:focus-visible{
   color:#b08b50;
 }
 
-/* DETACHABLE PAPER STUB */
-
 .ticket-stub{
   width:24%;
   height:100%;
@@ -471,7 +506,6 @@ button:focus-visible{
   background:var(--ivory);
   color:var(--ink);
   cursor:pointer;
-
   box-shadow:inset 0 0 25px #b5a07b33;
 
   clip-path:polygon(
@@ -494,8 +528,6 @@ button:focus-visible{
   touch-action:manipulation;
   z-index:2;
 }
-
-/* STRAIGHT EDGE ON DETACHED STUB */
 
 .ticket-stub.torn{
   transform:translate(105px,125px) rotate(38deg);
@@ -547,7 +579,7 @@ button:focus-visible{
   z-index:2;
 }
 
-/* TEMPORARY LOBBY */
+/* TEMPORARY LOBBY — UNCHANGED */
 
 .lobby-scene{
   background:radial-gradient(
@@ -607,17 +639,9 @@ button:focus-visible{
 }
 
 @media(min-width:700px){
-  .ticket{
-    height:300px;
-  }
-
-  .ticket-main{
-    padding:23px;
-  }
-
-  .ticket-stub{
-    padding:23px 22px 23px 5px;
-  }
+  .ticket{height:300px;}
+  .ticket-main{padding:23px;}
+  .ticket-stub{padding:23px 22px 23px 5px;}
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -636,39 +660,19 @@ button:focus-visible{
 <!-- ERROR OPENING -->
 <section id="entry" class="screen">
   <main class="entry-content">
-    <svg class="error-icon"
-      viewBox="0 0 40 45"
-      fill="none"
-      aria-hidden="true">
-      <path d="M5 1H25L35 11V43H5Z"
-        stroke="currentColor"
-        stroke-width="2"/>
-      <path d="M25 1V11H35"
-        stroke="currentColor"
-        stroke-width="2"/>
-      <path d="M13 20H27M13 26H27"
-        stroke="currentColor"
-        stroke-width="2"/>
+    <svg class="error-icon" viewBox="0 0 40 45" fill="none" aria-hidden="true">
+      <path d="M5 1H25L35 11V43H5Z" stroke="currentColor" stroke-width="2"/>
+      <path d="M25 1V11H35" stroke="currentColor" stroke-width="2"/>
+      <path d="M13 20H27M13 26H27" stroke="currentColor" stroke-width="2"/>
+      <path d="M15 35H25" stroke="currentColor" stroke-width="2"/>
     </svg>
-
-    <h1 class="error-heading">
-      This page isn't working
-    </h1>
-
+    <h1 class="error-heading">This page isn't working</h1>
     <div class="error-description">
-      The requested page could not be found.
-      <br>
+      The requested page could not be found.<br>
       Please check the address and try again.
     </div>
-
-    <div class="error-code">
-      HTTP ERROR 404
-    </div>
-
-    <button id="enterButton"
-      class="entry-button">
-      Reload
-    </button>
+    <div class="error-code">HTTP ERROR 404</div>
+    <button id="enterButton" class="entry-button">Reload</button>
   </main>
 </section>
 
@@ -676,11 +680,226 @@ button:focus-visible{
 
 <!-- ADMISSION -->
 <section id="admission" class="screen" aria-hidden="true">
-
   <div class="admission-stack">
 
-    <!-- TICKET SCREEN -->
+    <!-- TICKET SCENE -->
     <div class="ticket-scene" id="ticketScene">
+
+      <!-- CODE-DRAWN AMUSEMENT PARK -->
+      <div class="park-background" aria-hidden="true">
+        <svg class="park-art"
+          viewBox="0 0 1000 1000"
+          preserveAspectRatio="xMidYMid slice"
+          xmlns="http://www.w3.org/2000/svg">
+
+          <defs>
+            <linearGradient id="parkSky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#79bde7"/>
+              <stop offset="48%" stop-color="#b8e1ed"/>
+              <stop offset="80%" stop-color="#e6e8d6"/>
+              <stop offset="100%" stop-color="#c4baa8"/>
+            </linearGradient>
+
+            <linearGradient id="parkGround" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#b6b4a4"/>
+              <stop offset="100%" stop-color="#667f7d"/>
+            </linearGradient>
+
+            <g id="cloudShape" fill="#fffaf0">
+              <ellipse cx="0" cy="0" rx="95" ry="22"/>
+              <ellipse cx="-38" cy="-12" rx="46" ry="25"/>
+              <ellipse cx="18" cy="-18" rx="55" ry="32"/>
+              <ellipse cx="65" cy="-5" rx="36" ry="20"/>
+            </g>
+
+            <g id="cabinShape">
+              <path d="M-12 0L-10 18Q0 23 10 18L12 0Z"
+                fill="#f4d9a8" stroke="#586b76" stroke-width="2"/>
+              <path d="M-12 0Q0 -5 12 0"
+                fill="none" stroke="#586b76" stroke-width="2"/>
+              <path d="M0 -6V-1" stroke="#586b76" stroke-width="2"/>
+              <path d="M-7 5H7" stroke="#8a9aa0" stroke-width="1.5"/>
+            </g>
+          </defs>
+
+          <!-- SKY -->
+          <rect width="1000" height="1000" fill="url(#parkSky)"/>
+
+          <!-- SUN GLOW -->
+          <circle cx="260" cy="230" r="170" fill="#fff9df" opacity=".13"/>
+          <circle cx="260" cy="230" r="95" fill="#fff9e7" opacity=".13"/>
+
+          <!-- CLOUDS -->
+          <g class="cloud-drift-slow" opacity=".55">
+            <use href="#cloudShape" transform="translate(190 170) scale(1.3)"/>
+            <use href="#cloudShape" transform="translate(770 280) scale(.8)"/>
+            <use href="#cloudShape" transform="translate(450 100) scale(.6)"/>
+          </g>
+
+          <g class="cloud-drift" opacity=".77">
+            <use href="#cloudShape" transform="translate(50 335) scale(.75)"/>
+            <use href="#cloudShape" transform="translate(590 210) scale(1.15)"/>
+            <use href="#cloudShape" transform="translate(950 385) scale(.7)"/>
+          </g>
+
+          <!-- DISTANT HILLS -->
+          <path d="M0 665Q170 590 330 660T670 650T1000 640V1000H0Z"
+            fill="#a5b6ad" opacity=".5"/>
+          <path d="M0 705Q230 640 450 710T1000 685V1000H0Z"
+            fill="#8fa59c" opacity=".5"/>
+
+          <!-- DISTANT ROLLER COASTER -->
+          <g fill="none" stroke="#657f86" stroke-linecap="round">
+            <path d="M-90 700
+              C35 700 50 495 145 495
+              C240 495 235 710 330 710
+              C410 710 415 575 485 575
+              C555 575 570 700 645 700"
+              stroke-width="8"/>
+
+            <path d="M-90 713
+              C35 713 50 508 145 508
+              C240 508 235 723 330 723
+              C410 723 415 588 485 588
+              C555 588 570 713 645 713"
+              stroke-width="3" opacity=".7"/>
+
+            <g stroke-width="4" opacity=".65">
+              <path d="M50 665V800M145 510V800M245 640V800"/>
+              <path d="M330 715V800M425 615V800M485 585V800M580 670V800"/>
+            </g>
+          </g>
+
+          <!-- CLOCK TOWER -->
+          <g transform="translate(350 660)">
+            <rect x="-24" y="-125" width="48" height="155" fill="#c1a98c"/>
+            <rect x="-30" y="-130" width="60" height="16" fill="#987f76"/>
+            <path d="M-34 -130L0 -178L34 -130Z" fill="#6c8791"/>
+            <circle cx="0" cy="-92" r="17" fill="#f5e9cb" stroke="#887e72" stroke-width="3"/>
+            <path d="M0 -92V-103M0 -92L8 -87"
+              fill="none" stroke="#6f7775" stroke-width="2"/>
+            <rect x="-7" y="-36" width="14" height="40" fill="#687e82"/>
+          </g>
+
+          <!-- CAROUSEL -->
+          <g transform="translate(535 710)">
+            <path d="M-95 -42L0 -105L95 -42Z" fill="#e2a5a6"/>
+            <path d="M-75 -42L0 -105L75 -42Z" fill="#f4e0b5"/>
+            <path d="M-95 -42H95" stroke="#8f8178" stroke-width="5"/>
+            <rect x="-85" y="-40" width="170" height="90" fill="#e8d5b5" opacity=".6"/>
+            <g stroke="#a58c79" stroke-width="5">
+              <path d="M-70 -40V52M-35 -40V52M0 -40V52M35 -40V52M70 -40V52"/>
+            </g>
+            <path d="M-105 52H105V67H-105Z" fill="#9b7d78"/>
+            <path d="M-100 67H100V78H-100Z" fill="#d6b6a2"/>
+          </g>
+
+          <!-- FAIRGROUND TENTS -->
+          <g transform="translate(160 730)">
+            <path d="M-105 0L-50 -92L5 0Z" fill="#d5a4a1"/>
+            <path d="M-50 -92L5 0H-40Z" fill="#f1d9bb"/>
+            <rect x="-105" y="0" width="110" height="58" fill="#e4cdb6"/>
+            <path d="M-105 0H5" stroke="#9e8784" stroke-width="5"/>
+          </g>
+
+          <g transform="translate(810 745)">
+            <path d="M-85 0L0 -110L85 0Z" fill="#e2c4a9"/>
+            <path d="M0 -110L85 0H10Z" fill="#c58f91"/>
+            <rect x="-85" y="0" width="170" height="52" fill="#d8c3ae"/>
+            <path d="M-85 0H85" stroke="#9a8981" stroke-width="5"/>
+          </g>
+
+          <!-- FERRIS WHEEL SUPPORT -->
+          <g transform="translate(755 515)">
+            <g stroke="#667f88" stroke-width="10" fill="none">
+              <path d="M0 0L-122 355"/>
+              <path d="M0 0L122 355"/>
+            </g>
+            <path d="M-140 355H140" stroke="#6d777b" stroke-width="14"/>
+
+            <!-- ROTATING WHEEL -->
+            <g class="ferris-wheel-rotor">
+              <circle r="210" fill="none" stroke="#688793" stroke-width="10"/>
+              <circle r="190" fill="none" stroke="#91a5a6" stroke-width="3"/>
+              <circle r="12" fill="#e4d5b9" stroke="#627f88" stroke-width="6"/>
+
+              <g stroke="#718b94" stroke-width="4">
+                <path d="M0 -210V210"/>
+                <path d="M-210 0H210"/>
+                <path d="M-148 -148L148 148"/>
+                <path d="M148 -148L-148 148"/>
+                <path d="M-80 -194L80 194"/>
+                <path d="M80 -194L-80 194"/>
+                <path d="M-194 -80L194 80"/>
+                <path d="M194 -80L-194 80"/>
+              </g>
+
+              <circle r="120" fill="none" stroke="#8ca1a4" stroke-width="3"/>
+
+              <!-- UPRIGHT CABINS -->
+              <g transform="translate(0 -210)">
+                <g class="ferris-cabin"><use href="#cabinShape"/></g>
+              </g>
+              <g transform="translate(148.5 -148.5)">
+                <g class="ferris-cabin"><use href="#cabinShape"/></g>
+              </g>
+              <g transform="translate(210 0)">
+                <g class="ferris-cabin"><use href="#cabinShape"/></g>
+              </g>
+              <g transform="translate(148.5 148.5)">
+                <g class="ferris-cabin"><use href="#cabinShape"/></g>
+              </g>
+              <g transform="translate(0 210)">
+                <g class="ferris-cabin"><use href="#cabinShape"/></g>
+              </g>
+              <g transform="translate(-148.5 148.5)">
+                <g class="ferris-cabin"><use href="#cabinShape"/></g>
+              </g>
+              <g transform="translate(-210 0)">
+                <g class="ferris-cabin"><use href="#cabinShape"/></g>
+              </g>
+              <g transform="translate(-148.5 -148.5)">
+                <g class="ferris-cabin"><use href="#cabinShape"/></g>
+              </g>
+            </g>
+
+            <!-- FRONT AXLE -->
+            <circle r="17" fill="#d9c5a7" stroke="#5e7b87" stroke-width="6"/>
+          </g>
+
+          <!-- DISTANT FENCE -->
+          <g stroke="#718b86" stroke-width="4" opacity=".7">
+            <path d="M0 800H1000M0 828H1000"/>
+            <path d="M0 795V850M40 795V850M80 795V850M120 795V850"/>
+            <path d="M160 795V850M200 795V850M240 795V850M280 795V850"/>
+            <path d="M320 795V850M360 795V850M400 795V850M440 795V850"/>
+            <path d="M480 795V850M520 795V850M560 795V850M600 795V850"/>
+            <path d="M640 795V850M680 795V850M720 795V850M760 795V850"/>
+            <path d="M800 795V850M840 795V850M880 795V850M920 795V850"/>
+            <path d="M960 795V850M1000 795V850"/>
+          </g>
+
+          <!-- FOREGROUND GROUND -->
+          <path d="M0 845Q240 830 480 850T1000 835V1000H0Z"
+            fill="url(#parkGround)" opacity=".8"/>
+
+          <!-- EMPTY PATH -->
+          <path d="M430 1000L480 845H580L690 1000Z"
+            fill="#d4c7b1" opacity=".45"/>
+
+          <!-- SMALL DISTANT LAMPS -->
+          <g stroke="#536d73" stroke-width="4" fill="#f5e4bb">
+            <path d="M80 810V885M300 810V875M625 810V890M925 810V880"/>
+            <circle cx="80" cy="805" r="8"/>
+            <circle cx="300" cy="805" r="8"/>
+            <circle cx="625" cy="805" r="8"/>
+            <circle cx="925" cy="805" r="8"/>
+          </g>
+
+        </svg>
+
+        <div class="park-atmosphere"></div>
+      </div>
 
       <div class="ticket-top">
         SUGERROR LAND<br>
@@ -692,43 +911,22 @@ button:focus-visible{
 
           <div class="ticket-main">
             <div class="ticket-frame">
-
-              <div class="ticket-topline">
-                EST. 0000
-              </div>
-
-              <h1 class="ticket-title">
-                SUGERROR LAND
-              </h1>
-
-              <div class="ticket-subtitle">
-                ADMISSION TICKET
-              </div>
-
-              <div class="ticket-micro">
-                ONE GUEST · ONE WAY · NO EXPIRATION
-              </div>
-
-              <div class="ticket-bottomline">
-                OFFICIAL PASS / 001
-              </div>
-
+              <div class="ticket-topline">EST. 0000</div>
+              <h1 class="ticket-title">SUGERROR LAND</h1>
+              <div class="ticket-subtitle">ADMISSION TICKET</div>
+              <div class="ticket-micro">ONE GUEST · ONE WAY · NO EXPIRATION</div>
+              <div class="ticket-bottomline">OFFICIAL PASS / 001</div>
             </div>
           </div>
 
-          <button
-            class="ticket-stub"
-            id="ticketStub"
+          <button class="ticket-stub" id="ticketStub"
             aria-label="半券をタップして入園する">
-
             <span class="tear-arrow">›</span>
-
             <span class="stub-inner">
               <span class="stub-label">ENTRY</span>
               <span class="stub-number">001</span>
               <span class="stub-small">TEAR HERE</span>
             </span>
-
           </button>
 
         </div>
@@ -743,33 +941,18 @@ button:focus-visible{
 
     <!-- TEMPORARY LOBBY -->
     <div class="lobby-scene">
-
-      <div class="lobby-kicker">
-        WELCOME TO
-      </div>
-
-      <h2 class="lobby-title">
-        SUGERROR LAND
-      </h2>
-
+      <div class="lobby-kicker">WELCOME TO</div>
+      <h2 class="lobby-title">SUGERROR LAND</h2>
       <p class="lobby-description">
         YOU HAVE BEEN ADMITTED.<br>
         ENJOY YOUR STAY.
       </p>
-
-      <div class="lobby-note">
-        LOBBY / DESIGN IN PROGRESS
-      </div>
-
-      <button class="replay-button" id="replayButton">
-        REPLAY ADMISSION
-      </button>
-
+      <div class="lobby-note">LOBBY / DESIGN IN PROGRESS</div>
+      <button class="replay-button" id="replayButton">REPLAY ADMISSION</button>
     </div>
 
   </div>
 </section>
-
 </div>
 
 <script>
@@ -794,7 +977,7 @@ let glitchActive=false;
 let frameId=null;
 let lastFrame=0;
 
-/* ZOOM CONTROL */
+/* ZOOM CONTROL — UNCHANGED */
 
 ["gesturestart","gesturechange","gestureend"]
 .forEach(type=>{
@@ -841,7 +1024,7 @@ document.addEventListener("touchend",event=>{
   }
 },{passive:false});
 
-/* NOISE */
+/* NOISE — UNCHANGED */
 
 function resizeNoise(){
   noise.width=190;
@@ -849,9 +1032,7 @@ function resizeNoise(){
     180,
     Math.min(
       420,
-      Math.round(
-        190*innerHeight/Math.max(innerWidth,1)
-      )
+      Math.round(190*innerHeight/Math.max(innerWidth,1))
     )
   );
 }
@@ -861,7 +1042,6 @@ function drawNoise(time){
 
   if(time-lastFrame>45){
     lastFrame=time;
-
     const w=noise.width;
     const h=noise.height;
     const data=ctx.createImageData(w,h);
@@ -881,13 +1061,7 @@ function drawNoise(time){
       ctx.fillStyle=Math.random()>.5
         ?"rgba(255,120,177,.65)"
         :"rgba(110,210,230,.65)";
-
-      ctx.fillRect(
-        0,
-        Math.random()*h,
-        w,
-        Math.random()*5+1
-      );
+      ctx.fillRect(0,Math.random()*h,w,Math.random()*5+1);
     }
   }
 
@@ -896,7 +1070,6 @@ function drawNoise(time){
 
 function startNoise(){
   if(reducedMotion.matches||glitchActive)return;
-
   resizeNoise();
   glitchActive=true;
   lastFrame=0;
@@ -908,12 +1081,10 @@ function stopNoise(){
   glitchActive=false;
   cancelAnimationFrame(frameId);
   noise.classList.remove("active");
-  ctx.clearRect(
-    0,0,noise.width,noise.height
-  );
+  ctx.clearRect(0,0,noise.width,noise.height);
 }
 
-/* ERROR ENTRY */
+/* ERROR ENTRY — UNCHANGED */
 
 function enterWorld(){
   if(entering)return;
@@ -928,7 +1099,6 @@ function enterWorld(){
   setTimeout(()=>{
     stopNoise();
     entry.style.display="none";
-
     admission.classList.add("visible");
     admission.setAttribute("aria-hidden","false");
   },reducedMotion.matches?100:1100);
@@ -936,14 +1106,13 @@ function enterWorld(){
 
 enterButton.addEventListener("click",enterWorld);
 
-/* TICKET */
+/* TICKET — UNCHANGED */
 
 function tearTicket(){
   if(ticketEntered||replaying)return;
 
   ticketEntered=true;
   ticketStub.disabled=true;
-
   ticketPaper.classList.add("torn-edge");
   ticketStub.classList.add("torn");
 
@@ -955,14 +1124,13 @@ function tearTicket(){
 
 ticketStub.addEventListener("click",tearTicket);
 
-/* RETURN TO TICKET */
+/* RETURN TO TICKET — UNCHANGED */
 
 replayButton.addEventListener("click",()=>{
   if(replaying||!ticketEntered)return;
 
   replaying=true;
   replayButton.disabled=true;
-
   admission.classList.remove("entered");
 
   setTimeout(()=>{
@@ -971,7 +1139,6 @@ replayButton.addEventListener("click",()=>{
     setTimeout(()=>{
       ticketStub.classList.remove("torn");
       ticketPaper.classList.remove("torn-edge");
-
       ticketStub.disabled=false;
       ticketEntered=false;
       replaying=false;
