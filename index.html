@@ -6,67 +6,72 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
 <meta name="format-detection" content="telephone=no">
-<title>SUGERROR</title>
+<title>SUGERROR LAND</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-@font-face {
-  font-family:"Saint Timothy";
-  src:url("./Saint%20Timothy.otf") format("opentype");
-  font-weight:400;
+@font-face{
+  font-family:"Ribel Noise";
+  src:url("./Ribel%20Noise%21.ttf") format("truetype");
   font-style:normal;
+  font-weight:400;
   font-display:swap;
 }
 
-:root {
-  --paper:#f7f3f6;
-  --ink:#29252c;
-  --pink:#d99dbd;
-  --pink-dark:#a97c9a;
-  --line:#d9cdd6;
+:root{
+  --ivory:#f5efdf;
+  --gold:#b48b43;
+  --gold-light:#dfc58d;
+  --gold-dark:#89652f;
+  --ink:#514435;
   --mono:"DM Mono",monospace;
   --display:"Space Grotesk",sans-serif;
-  --script:"Saint Timothy",cursive;
 }
 
-* {
+*{
   box-sizing:border-box;
 }
 
-html,body {
-  position:fixed;
-  inset:0;
+html,body{
+  margin:0;
+  padding:0;
   width:100%;
   height:100%;
-  margin:0;
   overflow:hidden;
   overscroll-behavior:none;
   touch-action:manipulation;
   -webkit-text-size-adjust:100%;
 }
 
-body {
+html{
+  position:fixed;
+  inset:0;
+}
+
+body{
+  position:fixed;
+  inset:0;
   background:#fff;
   color:var(--ink);
   font-family:"DM Sans",sans-serif;
   -webkit-tap-highlight-color:transparent;
 }
 
-button {
+button{
   font:inherit;
   cursor:pointer;
   touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
 }
 
-button:focus-visible {
-  outline:2px solid var(--pink-dark);
+button:focus-visible{
+  outline:2px solid #aa7c99;
   outline-offset:3px;
 }
 
-#app {
+#app{
   position:fixed;
   inset:0;
   width:100%;
@@ -74,24 +79,21 @@ button:focus-visible {
   height:100dvh;
   overflow:hidden;
   isolation:isolate;
+  clip-path:inset(0);
+  touch-action:manipulation;
 }
 
-.screen {
+.screen{
   position:absolute;
   inset:0;
+  width:100%;
+  height:100%;
   overflow:hidden;
 }
 
-.mono {
-  font:10px var(--mono);
-  letter-spacing:.07em;
-}
+/* ERROR PAGE */
 
-/* =========================
-   ORIGINAL ERROR SCREEN
-========================= */
-
-#entry {
+#entry{
   position:absolute;
   inset:0;
   z-index:30;
@@ -103,41 +105,35 @@ button:focus-visible {
   padding:36px 30px;
   transition:background .15s,color .15s;
 }
-
-.entry-content {
+.entry-content{
   width:100%;
   max-width:450px;
   transform:translateY(-7%);
 }
-
-.error-icon {
+.error-icon{
   width:38px;
   height:43px;
   color:#757575;
   margin-bottom:30px;
 }
-
-.error-heading {
+.error-heading{
   position:relative;
   display:table;
   font:500 clamp(19px,5vw,23px)/1.45 Arial,Helvetica,sans-serif;
   letter-spacing:0;
   margin:0 0 18px;
 }
-
-.error-description {
+.error-description{
   color:#646464;
   font:13px/1.85 Arial,Helvetica,sans-serif;
   max-width:380px;
 }
-
-.error-code {
+.error-code{
   color:#777;
   font:11px/1.8 Arial,Helvetica,sans-serif;
   margin-top:20px;
 }
-
-.entry-button {
+.entry-button{
   margin-top:35px;
   background:#f7f7f7;
   border:1px solid #dedede;
@@ -147,22 +143,18 @@ button:focus-visible {
   font:12px Arial,Helvetica,sans-serif;
   min-height:42px;
 }
-
-.entry-button:active {
+.entry-button:active{
   background:#e8e8e8;
 }
-
-#entry.corrupt {
+#entry.corrupt{
   color:#f3edf1;
   background:#17151c;
 }
-
-#entry.corrupt .error-heading {
+#entry.corrupt .error-heading{
   animation:shake .07s steps(2) infinite;
 }
-
 #entry.corrupt .error-heading::before,
-#entry.corrupt .error-heading::after {
+#entry.corrupt .error-heading::after{
   content:"This page isn't working";
   position:absolute;
   inset:0;
@@ -170,53 +162,44 @@ button:focus-visible {
   pointer-events:none;
   font:inherit;
 }
-
-#entry.corrupt .error-heading::before {
+#entry.corrupt .error-heading::before{
   color:#ff84b9;
   clip-path:inset(0 0 53% 0);
   animation:splitA .09s steps(2) infinite;
 }
-
-#entry.corrupt .error-heading::after {
+#entry.corrupt .error-heading::after{
   color:#83d9e9;
   clip-path:inset(55% 0 0 0);
   animation:splitB .12s steps(2) infinite;
 }
-
 #entry.corrupt .error-description,
-#entry.corrupt .error-code {
+#entry.corrupt .error-code{
   color:#aaa1ad;
 }
-
-#entry.corrupt .entry-button {
+#entry.corrupt .entry-button{
   color:#eee;
   background:#26212b;
   border-color:#554a5b;
 }
-
-@keyframes shake {
-  0% {transform:translate(-3px,0)}
-  50% {transform:translate(5px,1px)}
-  100% {transform:translate(-2px,-1px)}
+@keyframes shake{
+  0%{transform:translate(-3px,0)}
+  50%{transform:translate(5px,1px)}
+  100%{transform:translate(-2px,-1px)}
+}
+@keyframes splitA{
+  0%{transform:translate(-9px,1px)}
+  50%{transform:translate(8px,-2px)}
+  100%{transform:translate(-4px,2px)}
+}
+@keyframes splitB{
+  0%{transform:translate(9px,-2px)}
+  50%{transform:translate(-7px,2px)}
+  100%{transform:translate(4px,0)}
 }
 
-@keyframes splitA {
-  0% {transform:translate(-9px,1px)}
-  50% {transform:translate(8px,-2px)}
-  100% {transform:translate(-4px,2px)}
-}
+/* NOISE */
 
-@keyframes splitB {
-  0% {transform:translate(9px,-2px)}
-  50% {transform:translate(-7px,2px)}
-  100% {transform:translate(4px,0)}
-}
-
-/* =========================
-   GLOBAL NOISE
-========================= */
-
-#noise {
+#noise{
   position:absolute;
   inset:0;
   width:100%;
@@ -226,565 +209,348 @@ button:focus-visible {
   opacity:0;
   image-rendering:pixelated;
 }
-
-#noise.active {
-  opacity:.78;
+#noise.active{
+  opacity:.65;
 }
 
-/* =========================
-   HOME
-========================= */
+/* ADMISSION SCENE */
 
-#home {
-  z-index:2;
-  background:
-    radial-gradient(
-      ellipse at 50% 44%,
-      rgba(235,208,224,.65),
-      transparent 62%
-    ),
-    radial-gradient(
-      ellipse at 80% 76%,
-      rgba(204,228,239,.35),
-      transparent 45%
-    ),
-    var(--paper);
+#admission{
+  z-index:5;
+  background:#f5c6d3;
   opacity:0;
   visibility:hidden;
   pointer-events:none;
-  transition:opacity .8s ease;
+  transition:opacity .55s ease;
 }
 
-#home.visible {
+#admission.visible{
   opacity:1;
   visibility:visible;
   pointer-events:auto;
 }
 
-.home-grid {
+.admission-stack{
   position:absolute;
   inset:0;
-  pointer-events:none;
-  background-image:
-    linear-gradient(
-      to right,
-      rgba(70,55,74,.045) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(70,55,74,.045) 1px,
-      transparent 1px
-    );
-  background-size:20% 17%;
+  height:200%;
+  transform:translateY(0);
+  transition:transform 1.65s cubic-bezier(.64,0,.17,1);
+  will-change:transform;
 }
 
-.home-header {
-  position:absolute;
-  top:0;
-  left:0;
-  right:0;
-  height:calc(76px + env(safe-area-inset-top));
-  padding:env(safe-area-inset-top) 22px 0;
-  z-index:12;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid var(--line);
-  background:rgba(250,247,250,.72);
-  backdrop-filter:blur(14px);
-}
-
-.brand {
-  font:700 15px var(--display);
-  letter-spacing:-.05em;
-}
-
-.header-middle {
-  color:#91838d;
-  font:9px var(--mono);
-}
-
-.menu-trigger {
-  width:42px;
-  height:42px;
-  display:grid;
-  place-content:center;
-  gap:6px;
-  background:transparent;
-  border:1px solid var(--ink);
-}
-
-.menu-trigger span {
-  width:18px;
-  height:1px;
-  background:var(--ink);
-}
-
-.home-stage {
-  position:absolute;
-  inset:calc(76px + env(safe-area-inset-top)) 0 0;
-  overflow:hidden;
-}
-
-/* =========================
-   ROTATING TEXT BACKGROUND
-========================= */
-
-.background-orbit {
-  position:absolute;
-  z-index:1;
-  left:50%;
-  top:43%;
-  width:min(113vw,650px);
-  aspect-ratio:1;
-  transform:translate(-50%,-50%);
-  opacity:.85;
-  pointer-events:none;
-}
-
-.background-orbit svg {
-  display:block;
-  width:100%;
-  height:100%;
-  animation:orbitRotate 32s linear infinite;
-}
-
-.background-orbit text {
-  font:10px var(--mono);
-  letter-spacing:3px;
-  fill:#b18aa5;
-}
-
-.background-orbit .orbit-outline {
-  fill:none;
-  stroke:#d8b7cb;
-  stroke-width:.65;
-}
-
-.background-orbit::before {
-  content:"";
-  position:absolute;
-  inset:19%;
-  border:1px solid rgba(204,164,191,.42);
-  border-radius:50%;
-}
-
-.background-orbit::after {
-  content:"";
-  position:absolute;
-  inset:32%;
-  border:1px dashed rgba(208,180,198,.35);
-  border-radius:50%;
-  animation:orbitReverse 50s linear infinite;
-}
-
-@keyframes orbitRotate {
-  to {transform:rotate(360deg)}
-}
-
-@keyframes orbitReverse {
-  to {transform:rotate(-360deg)}
-}
-
-.orbit-glow {
-  position:absolute;
-  z-index:0;
-  left:50%;
-  top:43%;
-  width:76vw;
-  max-width:430px;
-  aspect-ratio:1;
-  transform:translate(-50%,-50%);
-  background:
-    radial-gradient(
-      circle,
-      rgba(245,219,233,.7),
-      rgba(233,219,236,.3) 46%,
-      transparent 73%
-    );
-  filter:blur(20px);
-  pointer-events:none;
-}
-
-/* =========================
-   MAIN TITLE
-========================= */
-
-.hero {
-  position:absolute;
-  z-index:4;
-  left:0;
-  right:0;
-  top:40%;
+#admission.entered .admission-stack{
   transform:translateY(-50%);
-  text-align:center;
-  pointer-events:none;
 }
 
-.hero-kicker {
-  color:#877589;
-  font:9px var(--mono);
-  letter-spacing:.16em;
-  margin-bottom:20px;
-}
-
-.hero-title {
+.ticket-scene,
+.lobby-scene{
   position:relative;
-  display:block;
-  width:max-content;
-  max-width:100%;
-  margin:0 auto;
-  padding:8px 6px 16px;
-  color:#29232c;
-  font:400 clamp(58px,15vw,148px)/1.05 var(--script);
-  white-space:nowrap;
-}
-
-.hero-title.glitch {
-  animation:shake .08s steps(2) 3;
-}
-
-.hero-sub {
-  margin-top:12px;
-  color:#9c7791;
-  font:9px var(--mono);
-  letter-spacing:.15em;
-}
-
-.home-side-label {
-  position:absolute;
-  top:25px;
-  left:22px;
-  z-index:5;
-  color:#a18b9d;
-  font:9px var(--mono);
-  letter-spacing:.12em;
-}
-
-.home-vertical {
-  position:absolute;
-  top:23%;
-  right:15px;
-  z-index:5;
-  writing-mode:vertical-rl;
-  color:#a18b9d;
-  font:9px var(--mono);
-  letter-spacing:.12em;
-}
-
-.home-caption {
-  position:absolute;
-  z-index:5;
-  bottom:calc(94px + env(safe-area-inset-bottom));
-  left:22px;
-  color:#8e7e8d;
-  font:9px/1.9 var(--mono);
-  letter-spacing:.05em;
-}
-
-/* =========================
-   HOME NAVIGATION
-========================= */
-
-.home-navigation {
-  position:absolute;
-  bottom:0;
-  left:0;
-  right:0;
-  z-index:13;
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  padding-bottom:env(safe-area-inset-bottom);
-  border-top:1px solid #d8cbd4;
-  background:rgba(250,247,250,.85);
-  backdrop-filter:blur(18px);
-}
-
-.home-nav-button {
-  min-width:0;
-  height:78px;
-  padding:14px 8px 12px;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  text-align:left;
-  border:0;
-  border-right:1px solid #ddd1d9;
-  background:transparent;
-  color:var(--ink);
-}
-
-.home-nav-button:last-child {
-  border-right:0;
-}
-
-.home-nav-button strong {
-  font:600 clamp(8px,2.5vw,13px) var(--display);
-  letter-spacing:-.04em;
-}
-
-.home-nav-button small {
-  font:9px var(--mono);
-  color:#b989a6;
-}
-
-.home-nav-button:active {
-  background:rgba(222,177,205,.22);
-}
-
-/* =========================
-   MENU
-========================= */
-
-#menu {
-  position:absolute;
-  inset:0;
-  z-index:18;
-  background:#25212a;
-  color:white;
-  visibility:hidden;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .18s,visibility .18s;
-  padding:
-    max(30px,env(safe-area-inset-top))
-    24px
-    max(30px,env(safe-area-inset-bottom));
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
-
-#menu.open {
-  visibility:visible;
-  opacity:1;
-  pointer-events:auto;
-}
-
-.menu-top {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  border-bottom:1px solid #61545f;
-  padding-bottom:18px;
-}
-
-.close-menu {
-  border:1px solid #8e7e8b;
-  background:transparent;
-  color:white;
-  padding:10px 15px;
-  font:10px var(--mono);
-}
-
-.menu-list {
-  margin:auto 0;
-}
-
-.menu-item {
-  display:flex;
-  justify-content:space-between;
-  align-items:baseline;
+  height:50%;
   width:100%;
-  text-align:left;
-  border:0;
-  border-bottom:1px solid #514752;
-  background:transparent;
-  color:white;
-  padding:21px 0;
-  font:600 clamp(30px,8vw,78px) var(--display);
-  letter-spacing:-.065em;
-}
-
-.menu-item span {
-  font:10px var(--mono);
-  color:#d9a4c3;
-}
-
-.menu-footer {
+  overflow:hidden;
   display:flex;
-  justify-content:space-between;
-  gap:10px;
-  font:9px var(--mono);
-  color:#c3aebd;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
 }
 
-/* =========================
-   LIGHT CONTENT PANELS
-========================= */
+.ticket-scene{
+  background:radial-gradient(
+    ellipse at 50% 42%,
+    #ffe9e6 0%,
+    #f6cad5 52%,
+    #e9a5ba 100%
+  );
+}
 
-#panel {
+.ticket-scene::before{
+  content:"";
   position:absolute;
   inset:0;
-  z-index:16;
-  background:
-    radial-gradient(
-      ellipse at 85% 20%,
-      rgba(231,201,220,.35),
-      transparent 55%
+  opacity:.16;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 21px,
+      #fff 22px
     ),
-    #f2edf0;
-  visibility:hidden;
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 21px,
+      #fff 22px
+    );
+  pointer-events:none;
+}
+
+.ticket-top{
+  position:absolute;
+  top:calc(8% + env(safe-area-inset-top));
+  left:15px;
+  right:15px;
+  text-align:center;
+  font:10px/1.9 var(--mono);
+  letter-spacing:.25em;
+  color:#895d71;
+}
+
+.ticket-hint{
+  position:absolute;
+  bottom:calc(10% + env(safe-area-inset-bottom));
+  left:15px;
+  right:15px;
+  text-align:center;
+  font:10px/2 var(--mono);
+  letter-spacing:.12em;
+  color:#80546b;
+}
+
+.ticket-wrap{
+  width:min(94vw,670px);
+  position:relative;
+  transform:rotate(-2deg);
+  filter:drop-shadow(0 18px 16px #7d46513b);
+}
+
+.ticket{
+  position:relative;
+  display:flex;
+  height:clamp(188px,52vw,300px);
+  background:var(--ivory);
+  clip-path:polygon(
+    0 0,
+    9% 0,
+    9% 3%,
+    12% 3%,
+    12% 0,
+    100% 0,
+    100% 15%,
+    98.5% 17%,
+    100% 19%,
+    100% 81%,
+    98.5% 83%,
+    100% 85%,
+    100% 100%,
+    12% 100%,
+    12% 97%,
+    9% 97%,
+    9% 100%,
+    0 100%
+  );
+  box-shadow:inset 0 0 30px #b5a07b44;
+}
+
+.ticket::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.26;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.33'/%3E%3C/svg%3E");
+}
+
+.ticket-main{
+  width:76%;
+  padding:17px 10px 17px 19px;
+  position:relative;
+  min-width:0;
+}
+
+.ticket-frame{
+  height:100%;
+  border:2px solid var(--gold);
+  outline:1px solid var(--gold-light);
+  outline-offset:-7px;
+  background:linear-gradient(
+    130deg,
+    #fff9e9bb,
+    transparent 55%,
+    #b8a37b22
+  );
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  position:relative;
+  padding:8px 3px;
+}
+
+.ticket-ornament{
+  font:clamp(9px,2.4vw,13px) Georgia,serif;
+  color:#b08b50;
+  letter-spacing:.24em;
+}
+
+.ticket-title{
+  font-family:"Ribel Noise",Georgia,serif;
+  font-weight:400;
+  font-size:clamp(27px,7.5vw,67px);
+  line-height:1.25;
+  letter-spacing:-.025em;
+  white-space:nowrap;
+  color:#a17a39;
+  text-shadow:0 1px #fff7dc;
+  margin:9px 0 1px;
+}
+
+.ticket-subtitle{
+  font:clamp(7px,1.6vw,11px)/1.5 var(--mono);
+  letter-spacing:.22em;
+  color:#6d5b47;
+}
+
+.ticket-micro{
+  margin-top:14px;
+  font:clamp(7px,1.4vw,10px)/1.6 var(--mono);
+  letter-spacing:.08em;
+  color:#947b56;
+}
+
+.ticket-stub{
+  width:24%;
+  position:relative;
+  padding:17px 15px 17px 4px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:var(--ink);
+  cursor:pointer;
+  transition:transform .55s cubic-bezier(.3,.1,.5,1),
+             opacity .55s ease;
+  touch-action:manipulation;
+  z-index:2;
+}
+
+.ticket-stub::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:9%;
+  bottom:9%;
+  border-left:2px dashed #ae8d57;
+}
+
+.stub-inner{
+  height:100%;
+  border:1px solid #bd995a;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-around;
+  padding:8px 2px;
+}
+
+.stub-label{
+  font:clamp(7px,1.4vw,11px) var(--mono);
+  letter-spacing:.1em;
+}
+
+.stub-number{
+  font:clamp(20px,5vw,37px) Georgia,serif;
+  color:#a47d3b;
+}
+
+.stub-small{
+  font:clamp(7px,1.3vw,9px) var(--mono);
+}
+
+.tear-arrow{
+  position:absolute;
+  left:-7px;
+  top:50%;
+  transform:translateY(-50%);
+  font:20px Arial,sans-serif;
+  color:#b58a51;
+  background:var(--ivory);
+  z-index:2;
+}
+
+.ticket-stub.torn{
+  transform:translate(110px,85px) rotate(28deg);
   opacity:0;
   pointer-events:none;
-  transition:opacity .18s,visibility .18s;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
 }
 
-#panel.open {
-  visibility:visible;
-  opacity:1;
-  pointer-events:auto;
+.ticket-scene.departing .ticket-wrap{
+  transition:transform .8s ease,opacity .8s ease;
+  transform:translateY(35px) rotate(-5deg);
+  opacity:.35;
 }
 
-.panel-head {
-  position:relative;
-  z-index:2;
-  min-height:calc(84px + env(safe-area-inset-top));
-  padding:env(safe-area-inset-top) 24px 0;
-  border-bottom:1px solid #d1c4cd;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+/* TEMPORARY LOBBY */
+
+.lobby-scene{
+  background:radial-gradient(
+    ellipse at 50% 15%,
+    #fff4d7,
+    #f5cad2 62%,
+    #e9a2ba
+  );
+  text-align:center;
+  padding:30px 20px;
 }
 
-.panel-brand {
-  font:10px var(--mono);
-  letter-spacing:.07em;
+.lobby-scene::before{
+  content:"";
+  position:absolute;
+  inset:18px;
+  border:2px solid #c59b58;
+  pointer-events:none;
 }
 
-.back-button {
-  background:transparent;
-  border:0;
-  color:var(--ink);
-  font:10px var(--mono);
-  padding:12px 0;
+.lobby-kicker{
+  font:11px var(--mono);
+  letter-spacing:.3em;
+  color:#96744d;
 }
 
-.panel-content {
-  position:relative;
-  z-index:2;
-  flex:1;
-  min-height:0;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  -webkit-overflow-scrolling:touch;
-  touch-action:pan-y;
-  padding:38px 24px 60px;
+.lobby-title{
+  font-family:"Ribel Noise",Georgia,serif;
+  font-size:clamp(38px,10vw,94px);
+  line-height:1.2;
+  font-weight:400;
+  color:#9c7639;
+  margin:20px 0;
 }
 
-.panel-kicker {
-  font:10px var(--mono);
-  color:#a77797;
-  letter-spacing:.15em;
+.lobby-description{
+  font:11px/2 var(--mono);
+  letter-spacing:.1em;
+  color:#82634b;
 }
 
-.panel-title {
-  font:700 clamp(42px,11vw,110px)/1 var(--display);
-  letter-spacing:-.08em;
-  margin:24px 0;
-  overflow-wrap:anywhere;
-}
-
-.panel-rule {
-  height:1px;
-  background:#d2c2cd;
-  margin:30px 0;
-}
-
-.panel-description {
-  font-size:13px;
-  line-height:2;
-  color:#70636d;
-  max-width:520px;
-}
-
-.placeholder {
+.lobby-note{
   margin-top:35px;
-  border:1px solid #d0beca;
-  padding:28px 24px;
-  display:flex;
-  flex-direction:column;
-  gap:38px;
-  background:rgba(255,255,255,.3);
+  font:9px/2 var(--mono);
+  letter-spacing:.12em;
+  color:#a17d70;
 }
 
-.placeholder strong {
-  color:#bb91ad;
-  font:600 53px var(--display);
-}
-
-.placeholder span {
+.replay-button{
+  margin-top:22px;
+  border:1px solid #ac8950;
+  background:#fff5e7aa;
+  color:#86683d;
+  padding:12px 20px;
   font:10px var(--mono);
-  color:#857681;
+  letter-spacing:.12em;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-
-@media(min-width:760px) {
-  .home-header {
-    padding-left:44px;
-    padding-right:44px;
+@media(min-width:700px){
+  .ticket{
+    height:300px;
   }
-
-  .home-side-label,
-  .home-caption {
-    left:44px;
+  .ticket-main{
+    padding:23px;
   }
-
-  .background-orbit {
-    width:min(80vh,720px);
-  }
-
-  .panel-content {
-    padding-left:8%;
-  }
-
-  .panel-head {
-    padding-left:40px;
-    padding-right:40px;
-  }
-
-  .home-navigation {
-    left:35%;
+  .ticket-stub{
+    padding:23px 22px 23px 5px;
   }
 }
 
-@media(max-width:450px) {
-  .hero {
-    top:41%;
-  }
-
-  .hero-title {
-    font-size:clamp(55px,14.5vw,85px);
-  }
-
-  .background-orbit {
-    top:42%;
-    width:119vw;
-  }
-
-  .home-nav-button {
-    height:70px;
-    padding:12px 6px;
-  }
-
-  .home-caption {
-    bottom:calc(85px + env(safe-area-inset-bottom));
-  }
-
-  .panel-title {
-    font-size:clamp(37px,10vw,54px);
-  }
-}
-
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after {
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
     animation-duration:.01ms!important;
     animation-iteration-count:1!important;
     transition-duration:.01ms!important;
@@ -799,24 +565,19 @@ button:focus-visible {
 <!-- ERROR OPENING -->
 <section id="entry" class="screen">
   <main class="entry-content">
-
     <svg class="error-icon"
       viewBox="0 0 40 45"
       fill="none"
       aria-hidden="true">
-
       <path d="M5 1H25L35 11V43H5Z"
         stroke="currentColor"
         stroke-width="2"/>
-
       <path d="M25 1V11H35"
         stroke="currentColor"
         stroke-width="2"/>
-
       <path d="M13 20H27M13 26H27"
         stroke="currentColor"
         stroke-width="2"/>
-
       <path d="M15 35H25"
         stroke="currentColor"
         stroke-width="2"/>
@@ -840,377 +601,195 @@ button:focus-visible {
       class="entry-button">
       Reload
     </button>
-
   </main>
 </section>
 
-<!-- GLOBAL NOISE -->
 <canvas id="noise" aria-hidden="true"></canvas>
 
-<!-- HOME -->
-<section id="home"
-  class="screen"
-  aria-hidden="true">
+<!-- ADMISSION -->
+<section id="admission" class="screen" aria-hidden="true">
 
-  <div class="home-grid"></div>
+  <div class="admission-stack">
 
-  <header class="home-header">
+    <!-- TICKET -->
+    <div class="ticket-scene" id="ticketScene">
 
-    <div class="brand">SUGERROR®</div>
-
-    <div class="header-middle">
-      ENTRY / 001
-    </div>
-
-    <button id="menuOpen"
-      class="menu-trigger"
-      aria-label="メニューを開く">
-      <span></span>
-      <span></span>
-    </button>
-
-  </header>
-
-  <main class="home-stage">
-
-    <div class="orbit-glow"></div>
-
-    <!-- ROTATING TEXT BACKGROUND -->
-    <div class="background-orbit"
-      aria-hidden="true">
-
-      <svg viewBox="0 0 400 400">
-        <defs>
-          <path id="backgroundTextPath"
-            d="
-              M200 200
-              m-175 0
-              a175 175 0 1 1 350 0
-              a175 175 0 1 1-350 0
-            "/>
-        </defs>
-
-        <circle
-          class="orbit-outline"
-          cx="200"
-          cy="200"
-          r="175"/>
-
-        <text>
-          <textPath href="#backgroundTextPath">
-            A SWEET LITTLE MALFUNCTION ·
-            WELCOME TO THE UNREAL WORLD ·
-            A SWEET LITTLE MALFUNCTION ·
-            WELCOME TO THE UNREAL WORLD ·
-          </textPath>
-        </text>
-      </svg>
-
-    </div>
-
-    <div class="home-side-label">
-      THE WORLD OF BEAUTIFUL ERRORS
-    </div>
-
-    <div class="home-vertical">
-      THIS WORLD IS NOT SUPPOSED TO EXIST.
-    </div>
-
-    <!-- MAIN TITLE -->
-    <div class="hero">
-
-      <div class="hero-kicker">
-        ANGELIC SYSTEM / 001
+      <div class="ticket-top">
+        SUGERROR LAND<br>
+        OFFICIAL ADMISSION PASS
       </div>
 
-      <h1 id="heroTitle" class="hero-title">
-        SUGERROR
-      </h1>
+      <div class="ticket-wrap">
+        <div class="ticket">
 
-      <div class="hero-sub">
-        A SWEET LITTLE MALFUNCTION.
+          <div class="ticket-main">
+            <div class="ticket-frame">
+
+              <div class="ticket-ornament">
+                ✦ &nbsp; EST. 0000 &nbsp; ✦
+              </div>
+
+              <h1 class="ticket-title">
+                SUGERROR LAND
+              </h1>
+
+              <div class="ticket-subtitle">
+                ADMISSION TICKET
+              </div>
+
+              <div class="ticket-micro">
+                ONE GUEST · ONE WAY · NO EXPIRATION
+              </div>
+
+              <div class="ticket-ornament" style="margin-top:12px">
+                ❦ &nbsp; ✧ &nbsp; ❦
+              </div>
+
+            </div>
+          </div>
+
+          <button
+            class="ticket-stub"
+            id="ticketStub"
+            aria-label="半券をタップして入園する">
+
+            <span class="tear-arrow">›</span>
+
+            <span class="stub-inner">
+              <span class="stub-label">ENTRY</span>
+              <span class="stub-number">001</span>
+              <span class="stub-small">TEAR HERE</span>
+            </span>
+
+          </button>
+
+        </div>
+      </div>
+
+      <div class="ticket-hint">
+        半券をタップして入園<br>
+        TAP THE STUB TO ENTER
       </div>
 
     </div>
 
-    <div class="home-caption">
-      [ SYSTEM STATUS : UNKNOWN ]<br>
-      000 — AN UNREAL ARCHIVE<br>
-      PLEASE ENJOY YOUR STAY.
-    </div>
+    <!-- TEMPORARY LOBBY -->
+    <div class="lobby-scene">
 
-    <!-- NAVIGATION -->
-    <nav class="home-navigation">
+      <div class="lobby-kicker">
+        WELCOME TO
+      </div>
 
-      <button class="home-nav-button"
-        data-page="CHARACTERS">
-        <strong>CHARACTERS</strong>
-        <small>01 ↗</small>
+      <h2 class="lobby-title">
+        SUGERROR LAND
+      </h2>
+
+      <p class="lobby-description">
+        YOU HAVE BEEN ADMITTED.<br>
+        ENJOY YOUR STAY.
+      </p>
+
+      <div class="lobby-note">
+        LOBBY / DESIGN IN PROGRESS
+      </div>
+
+      <button class="replay-button" id="replayButton">
+        REPLAY ADMISSION
       </button>
 
-      <button class="home-nav-button"
-        data-page="STORIES">
-        <strong>STORIES</strong>
-        <small>02 ↗</small>
-      </button>
-
-      <button class="home-nav-button"
-        data-page="WORLDS">
-        <strong>WORLDS</strong>
-        <small>03 ↗</small>
-      </button>
-
-      <button class="home-nav-button"
-        data-page="FILES">
-        <strong>FILES</strong>
-        <small>04 ↗</small>
-      </button>
-
-    </nav>
-
-  </main>
-</section>
-
-<!-- MENU -->
-<aside id="menu" aria-hidden="true">
-
-  <header class="menu-top">
-    <span class="mono">SUGERROR / INDEX</span>
-
-    <button id="menuClose"
-      class="close-menu">
-      CLOSE ×
-    </button>
-  </header>
-
-  <div class="menu-list">
-
-    <button class="menu-item"
-      data-page="CHARACTERS">
-      CHARACTERS <span>01 ↗</span>
-    </button>
-
-    <button class="menu-item"
-      data-page="STORIES">
-      STORIES <span>02 ↗</span>
-    </button>
-
-    <button class="menu-item"
-      data-page="WORLDS">
-      WORLDS <span>03 ↗</span>
-    </button>
-
-    <button class="menu-item"
-      data-page="FILES">
-      FILES <span>04 ↗</span>
-    </button>
-
-  </div>
-
-  <footer class="menu-footer">
-    <span>THE UNREAL ARCHIVE</span>
-    <span>STATUS / ACTIVE</span>
-  </footer>
-
-</aside>
-
-<!-- LIGHT CONTENT PANEL -->
-<section id="panel" aria-hidden="true">
-
-  <header class="panel-head">
-
-    <span class="panel-brand">
-      SUGERROR / DIRECTORY
-    </span>
-
-    <button id="panelBack"
-      class="back-button">
-      ← BACK
-    </button>
-
-  </header>
-
-  <div class="panel-content">
-
-    <div class="panel-kicker"
-      id="panelKicker">
-      DIRECTORY / 001
-    </div>
-
-    <h2 class="panel-title"
-      id="panelTitle">
-      CHARACTERS
-    </h2>
-
-    <div class="panel-rule"></div>
-
-    <p class="panel-description"
-      id="panelDescription"></p>
-
-    <div class="placeholder">
-      <strong>404.</strong>
-      <span>
-        CONTENT IS UNDER CONSTRUCTION.
-      </span>
     </div>
 
   </div>
-
 </section>
 
 </div>
 
 <script>
-/* =========================
-   ELEMENTS
-========================= */
+const entry=document.getElementById("entry");
+const enterButton=document.getElementById("enterButton");
+const admission=document.getElementById("admission");
+const ticketStub=document.getElementById("ticketStub");
+const ticketScene=document.getElementById("ticketScene");
+const replayButton=document.getElementById("replayButton");
+const noise=document.getElementById("noise");
+const ctx=noise.getContext("2d");
 
-const entry =
-  document.getElementById("entry");
-
-const enterButton =
-  document.getElementById("enterButton");
-
-const home =
-  document.getElementById("home");
-
-const heroTitle =
-  document.getElementById("heroTitle");
-
-const menu =
-  document.getElementById("menu");
-
-const panel =
-  document.getElementById("panel");
-
-const menuOpen =
-  document.getElementById("menuOpen");
-
-const menuClose =
-  document.getElementById("menuClose");
-
-const panelBack =
-  document.getElementById("panelBack");
-
-const noise =
-  document.getElementById("noise");
-
-const ctx =
-  noise.getContext("2d");
-
-const reducedMotion =
-  window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
+const reducedMotion=window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+);
 
 let entering=false;
-let entered=false;
+let ticketEntered=false;
 let glitchActive=false;
 let frameId=null;
 let lastFrame=0;
-let ambientTimer=null;
-let noiseStopTimer=null;
-let transitionBusy=false;
 
-/* =========================
-   ZOOM PREVENTION
-========================= */
+/* ZOOM CONTROL */
 
-[
-  "gesturestart",
-  "gesturechange",
-  "gestureend"
-].forEach(type=>{
-  document.addEventListener(
-    type,
-    event=>{
-      event.preventDefault();
-    },
-    {passive:false}
-  );
+["gesturestart","gesturechange","gestureend"]
+.forEach(type=>{
+  document.addEventListener(type,event=>{
+    event.preventDefault();
+  },{passive:false});
 });
 
-document.addEventListener(
-  "touchstart",
-  event=>{
-    if(event.touches.length>1){
-      event.preventDefault();
-    }
-  },
-  {passive:false}
-);
+document.addEventListener("touchstart",event=>{
+  if(event.touches.length>1){
+    event.preventDefault();
+  }
+},{passive:false});
 
-document.addEventListener(
-  "touchmove",
-  event=>{
-    if(event.touches.length>1){
-      event.preventDefault();
-    }
-  },
-  {passive:false}
-);
+document.addEventListener("touchmove",event=>{
+  if(event.touches.length>1){
+    event.preventDefault();
+  }
+},{passive:false});
 
 let lastTapTime=0;
 let lastTapX=0;
 let lastTapY=0;
 
-document.addEventListener(
-  "touchend",
-  event=>{
-    if(event.changedTouches.length!==1){
-      return;
-    }
+document.addEventListener("touchend",event=>{
+  if(event.changedTouches.length!==1)return;
 
-    const touch=event.changedTouches[0];
-    const now=Date.now();
-    const delta=now-lastTapTime;
+  const touch=event.changedTouches[0];
+  const now=Date.now();
+  const delta=now-lastTapTime;
 
-    const distance=Math.hypot(
-      touch.clientX-lastTapX,
-      touch.clientY-lastTapY
-    );
+  const distance=Math.hypot(
+    touch.clientX-lastTapX,
+    touch.clientY-lastTapY
+  );
 
-    if(
-      delta>0 &&
-      delta<300 &&
-      distance<30
-    ){
-      event.preventDefault();
-      lastTapTime=0;
-    }else{
-      lastTapTime=now;
-      lastTapX=touch.clientX;
-      lastTapY=touch.clientY;
-    }
-  },
-  {passive:false}
-);
+  if(delta>0&&delta<300&&distance<30){
+    event.preventDefault();
+    lastTapTime=0;
+  }else{
+    lastTapTime=now;
+    lastTapX=touch.clientX;
+    lastTapY=touch.clientY;
+  }
+},{passive:false});
 
-/* =========================
-   NOISE CANVAS
-========================= */
+/* NOISE */
 
 function resizeNoise(){
-  noise.width=220;
-
+  noise.width=190;
   noise.height=Math.max(
     180,
     Math.min(
-      480,
+      420,
       Math.round(
-        220*innerHeight/
-        Math.max(innerWidth,1)
+        190*innerHeight/Math.max(innerWidth,1)
       )
     )
   );
 }
 
 function drawNoise(time){
-  if(!glitchActive){
-    return;
-  }
+  if(!glitchActive)return;
 
-  if(time-lastFrame>35){
+  if(time-lastFrame>45){
     lastFrame=time;
 
     const w=noise.width;
@@ -1218,76 +797,26 @@ function drawNoise(time){
     const data=ctx.createImageData(w,h);
     const p=data.data;
 
-    /*
-      Grainy noise with occasional
-      pink and blue pixels.
-    */
-
     for(let i=0;i<p.length;i+=4){
-      const random=Math.random();
-      const v=random>.5?255:0;
-
-      if(random>.985){
-        p[i]=255;
-        p[i+1]=100;
-        p[i+2]=180;
-      }else if(random<.015){
-        p[i]=100;
-        p[i+1]=215;
-        p[i+2]=240;
-      }else{
-        p[i]=v;
-        p[i+1]=v;
-        p[i+2]=v;
-      }
-
-      p[i+3]=Math.random()*195;
+      const v=Math.random()>.52?255:0;
+      p[i]=v;
+      p[i+1]=v;
+      p[i+2]=v;
+      p[i+3]=Math.random()*160;
     }
 
     ctx.putImageData(data,0,0);
 
-    /*
-      Horizontal digital error lines.
-    */
-
-    for(let i=0;i<12;i++){
-      const colors=[
-        "rgba(255,120,177,.75)",
-        "rgba(110,210,230,.7)",
-        "rgba(255,255,255,.5)",
-        "rgba(35,28,48,.7)"
-      ];
-
-      ctx.fillStyle=
-        colors[Math.floor(Math.random()*colors.length)];
-
-      ctx.fillRect(
-        Math.random()*(-w*.2),
-        Math.random()*h,
-        w*(.4+Math.random()*.9),
-        Math.random()*4+1
-      );
-    }
-
-    /*
-      Short horizontal displacement
-      bars for a broken-screen effect.
-    */
-
-    for(let i=0;i<4;i++){
-      const y=Math.random()*h;
-      const barH=Math.random()*9+2;
-
-      ctx.fillStyle=
-        Math.random()>.5
-          ?"rgba(248,189,223,.38)"
-          :"rgba(163,222,239,.35)";
+    for(let i=0;i<8;i++){
+      ctx.fillStyle=Math.random()>.5
+        ?"rgba(255,120,177,.65)"
+        :"rgba(110,210,230,.65)";
 
       ctx.fillRect(
         0,
-        y,
+        Math.random()*h,
         w,
-        barH
+        Math.random()*5+1
       );
     }
   }
@@ -1296,17 +825,11 @@ function drawNoise(time){
 }
 
 function startNoise(){
-  if(
-    reducedMotion.matches ||
-    glitchActive
-  ){
-    return;
-  }
+  if(reducedMotion.matches||glitchActive)return;
 
   resizeNoise();
   glitchActive=true;
   lastFrame=0;
-
   noise.classList.add("active");
   frameId=requestAnimationFrame(drawNoise);
 }
@@ -1314,43 +837,16 @@ function startNoise(){
 function stopNoise(){
   glitchActive=false;
   cancelAnimationFrame(frameId);
-
   noise.classList.remove("active");
-
   ctx.clearRect(
-    0,
-    0,
-    noise.width,
-    noise.height
+    0,0,noise.width,noise.height
   );
 }
 
-function flashNoise(duration=140){
-  if(
-    reducedMotion.matches ||
-    document.hidden
-  ){
-    return;
-  }
-
-  clearTimeout(noiseStopTimer);
-
-  startNoise();
-
-  noiseStopTimer=setTimeout(()=>{
-    stopNoise();
-  },duration);
-}
-
-/* =========================
-   ERROR ENTRY
-========================= */
+/* ENTRY */
 
 function enterWorld(){
-  if(entering){
-    return;
-  }
-
+  if(entering)return;
   entering=true;
   enterButton.disabled=true;
 
@@ -1361,288 +857,53 @@ function enterWorld(){
 
   setTimeout(()=>{
     stopNoise();
-
     entry.style.display="none";
 
-    home.classList.add("visible");
-    home.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-    entered=true;
-    scheduleAmbientNoise();
-
+    admission.classList.add("visible");
+    admission.setAttribute("aria-hidden","false");
   },reducedMotion.matches?100:1100);
 }
 
-enterButton.addEventListener(
-  "click",
-  enterWorld
-);
+enterButton.addEventListener("click",enterWorld);
 
-/* =========================
-   RANDOM GLOBAL GLITCH
-========================= */
+/* TICKET ADMISSION */
 
-/*
-  An occasional burst appears across
-  the entire visible screen, including
-  the home page, menu and panels.
+function tearTicket(){
+  if(ticketEntered)return;
 
-  The interval varies from around
-  3.5 to 8 seconds, rather than being
-  a fixed repeating animation.
-*/
+  ticketEntered=true;
+  ticketStub.disabled=true;
 
-function scheduleAmbientNoise(){
-  clearTimeout(ambientTimer);
-
-  if(
-    !entered ||
-    reducedMotion.matches ||
-    document.hidden
-  ){
-    return;
-  }
-
-  const delay=
-    3500+Math.random()*4500;
-
-  ambientTimer=setTimeout(()=>{
-    if(!transitionBusy){
-      const duration=
-        95+Math.random()*115;
-
-      flashNoise(duration);
-
-      /*
-        Occasionally jitter the title
-        alongside the global noise.
-      */
-
-      if(
-        !panel.classList.contains("open") &&
-        !menu.classList.contains("open") &&
-        Math.random()>.4
-      ){
-        heroTitle.classList.add("glitch");
-
-        setTimeout(()=>{
-          heroTitle.classList.remove("glitch");
-        },220);
-      }
-    }
-
-    scheduleAmbientNoise();
-
-  },delay);
-}
-
-/* =========================
-   FAST SCENE TRANSITION
-========================= */
-
-function glitchTransition(callback){
-  if(transitionBusy){
-    return;
-  }
-
-  transitionBusy=true;
-
-  if(reducedMotion.matches){
-    callback();
-    transitionBusy=false;
-    return;
-  }
-
-  clearTimeout(noiseStopTimer);
-
-  startNoise();
-
-  heroTitle.classList.add("glitch");
-
-  /*
-    A faster 180ms transition.
-    Callback occurs during the noise
-    rather than after a long pause.
-  */
+  ticketStub.classList.add("torn");
 
   setTimeout(()=>{
-    callback();
-
-    heroTitle.classList.remove("glitch");
-
-    setTimeout(()=>{
-      stopNoise();
-      transitionBusy=false;
-    },35);
-
-  },145);
+    ticketScene.classList.add("departing");
+    admission.classList.add("entered");
+  },reducedMotion.matches?100:540);
 }
 
-/* =========================
-   MENU
-========================= */
+ticketStub.addEventListener("click",tearTicket);
 
-function openMenu(){
-  menu.classList.add("open");
-  menu.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-}
+/* REPLAY */
 
-function closeMenu(){
-  menu.classList.remove("open");
-  menu.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-}
+replayButton.addEventListener("click",()=>{
+  admission.classList.remove("entered");
 
-menuOpen.addEventListener("click",()=>{
-  glitchTransition(openMenu);
+  setTimeout(()=>{
+    ticketStub.classList.remove("torn");
+    ticketScene.classList.remove("departing");
+    ticketStub.disabled=false;
+    ticketEntered=false;
+  },reducedMotion.matches?100:1700);
 });
 
-menuClose.addEventListener("click",()=>{
-  glitchTransition(closeMenu);
+window.addEventListener("resize",()=>{
+  if(glitchActive)resizeNoise();
 });
 
-/* =========================
-   CONTENT PAGES
-========================= */
-
-const pages={
-  CHARACTERS:{
-    number:"001",
-    description:
-      "A collection of identities that exist beyond reality."
-  },
-
-  STORIES:{
-    number:"002",
-    description:
-      "Fragments of stories from another world."
-  },
-
-  WORLDS:{
-    number:"003",
-    description:
-      "A directory of imaginary universes."
-  },
-
-  FILES:{
-    number:"004",
-    description:
-      "Records, fragments and forgotten data."
-  }
-};
-
-function openPanel(name){
-  const page=pages[name];
-
-  if(!page){
-    return;
-  }
-
-  document.getElementById(
-    "panelTitle"
-  ).textContent=name;
-
-  document.getElementById(
-    "panelKicker"
-  ).textContent=
-    "DIRECTORY / "+page.number;
-
-  document.getElementById(
-    "panelDescription"
-  ).textContent=page.description;
-
-  document.querySelector(
-    ".panel-content"
-  ).scrollTop=0;
-
-  panel.classList.add("open");
-  panel.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-}
-
-function closePanel(){
-  panel.classList.remove("open");
-  panel.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-}
-
-/* =========================
-   BUTTON EVENTS
-========================= */
-
-document.querySelectorAll(
-  "[data-page]"
-).forEach(button=>{
-
-  button.addEventListener(
-    "click",
-    ()=>{
-
-      if(transitionBusy){
-        return;
-      }
-
-      const name=button.dataset.page;
-
-      glitchTransition(()=>{
-        if(menu.classList.contains("open")){
-          closeMenu();
-        }
-
-        openPanel(name);
-      });
-    }
-  );
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden)stopNoise();
 });
-
-panelBack.addEventListener(
-  "click",
-  ()=>{
-    if(transitionBusy){
-      return;
-    }
-
-    glitchTransition(closePanel);
-  }
-);
-
-/* =========================
-   EVENTS
-========================= */
-
-window.addEventListener(
-  "resize",
-  ()=>{
-    if(glitchActive){
-      resizeNoise();
-    }
-  }
-);
-
-document.addEventListener(
-  "visibilitychange",
-  ()=>{
-    if(document.hidden){
-      clearTimeout(ambientTimer);
-      clearTimeout(noiseStopTimer);
-      stopNoise();
-    }else if(entered){
-      scheduleAmbientNoise();
-    }
-  }
-);
 </script>
 </body>
 </html>
