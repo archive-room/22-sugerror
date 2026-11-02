@@ -92,7 +92,7 @@ button:focus-visible{
   overflow:hidden;
 }
 
-/* ERROR PAGE — FIXED */
+/* ERROR PAGE */
 
 #entry{
   position:absolute;
@@ -198,7 +198,7 @@ button:focus-visible{
   100%{transform:translate(4px,0)}
 }
 
-/* NOISE — FIXED */
+/* NOISE */
 
 #noise{
   position:absolute;
@@ -238,8 +238,7 @@ button:focus-visible{
   inset:0;
   height:200%;
   transform:translate3d(0,0,0);
-  transition:
-    transform 1.5s cubic-bezier(.42,0,.22,1);
+  transition:transform 1.5s cubic-bezier(.42,0,.22,1);
   will-change:transform;
 }
 
@@ -328,99 +327,112 @@ button:focus-visible{
   opacity:.35;
 }
 
+/*
+  The ticket container is transparent.
+  Only the actual paper sections have
+  an ivory background.
+
+  This lets the pink scene show through
+  where the stub has been torn away.
+*/
+
 .ticket{
   position:relative;
   display:flex;
   height:clamp(188px,52vw,300px);
-  background:var(--ivory);
-
-  clip-path:polygon(
-    0 0,
-    9% 0,
-    9% 3%,
-    12% 3%,
-    12% 0,
-    100% 0,
-    100% 15%,
-    98.5% 17%,
-    100% 19%,
-    100% 81%,
-    98.5% 83%,
-    100% 85%,
-    100% 100%,
-    12% 100%,
-    12% 97%,
-    9% 97%,
-    9% 100%,
-    0 100%
-  );
-
-  box-shadow:inset 0 0 30px #b5a07b44;
+  background:transparent;
+  overflow:visible;
 }
 
-.ticket::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  opacity:.26;
-
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.33'/%3E%3C/svg%3E");
-}
-
-/* TORN EDGE */
+/* MAIN PAPER */
 
 .ticket-main{
   width:76%;
   padding:17px 10px 17px 19px;
   position:relative;
   min-width:0;
-  isolation:isolate;
+  flex-shrink:0;
+
+  background:var(--ivory);
+
+  clip-path:polygon(
+    0 0,
+    12% 0,
+    12% 3%,
+    16% 3%,
+    16% 0,
+    100% 0,
+    100% 100%,
+    16% 100%,
+    16% 97%,
+    12% 97%,
+    12% 100%,
+    0 100%
+  );
+
+  box-shadow:inset 0 0 30px #b5a07b44;
+}
+
+/*
+  ACTUAL TORN PAPER EDGE
+
+  The right edge of the remaining paper
+  is clipped away into an irregular shape.
+  The removed area is transparent,
+  revealing the real pink background.
+*/
+
+.ticket.torn-edge .ticket-main{
+  clip-path:polygon(
+    0 0,
+    12% 0,
+    12% 3%,
+    16% 3%,
+    16% 0,
+
+    98% 0,
+    100% 3%,
+    97% 6%,
+    99% 10%,
+    96% 14%,
+    100% 18%,
+    97% 22%,
+    99% 26%,
+    95% 30%,
+    98% 34%,
+    96% 38%,
+    100% 42%,
+    97% 46%,
+    99% 50%,
+    95% 54%,
+    98% 58%,
+    96% 62%,
+    100% 66%,
+    97% 70%,
+    99% 74%,
+    95% 78%,
+    98% 82%,
+    96% 86%,
+    100% 90%,
+    97% 94%,
+    99% 97%,
+    96% 100%,
+
+    16% 100%,
+    16% 97%,
+    12% 97%,
+    12% 100%,
+    0 100%
+  );
 }
 
 .ticket-main::after{
   content:"";
   position:absolute;
-  top:0;
-  right:-1px;
-  bottom:0;
-  width:15px;
-  background:var(--ivory);
-
-  clip-path:polygon(
-    0 0,
-    65% 0,
-    100% 4%,
-    40% 8%,
-    90% 13%,
-    30% 18%,
-    100% 23%,
-    42% 28%,
-    88% 33%,
-    22% 38%,
-    100% 43%,
-    36% 48%,
-    90% 54%,
-    28% 59%,
-    100% 64%,
-    42% 69%,
-    85% 74%,
-    25% 79%,
-    100% 84%,
-    38% 89%,
-    95% 94%,
-    50% 100%,
-    0 100%
-  );
-
-  opacity:0;
-  transition:opacity .12s ease;
+  inset:0;
   pointer-events:none;
-  z-index:4;
-}
-
-.ticket.torn-edge .ticket-main::after{
-  opacity:1;
+  opacity:.26;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.33'/%3E%3C/svg%3E");
 }
 
 .ticket-frame{
@@ -484,17 +496,39 @@ button:focus-visible{
   color:#b08b50;
 }
 
-/* TEAR-OFF STUB */
+/* DETACHABLE PAPER STUB */
 
 .ticket-stub{
   width:24%;
+  height:100%;
+  flex-shrink:0;
   position:relative;
   padding:17px 15px 17px 4px;
   border:0;
   border-radius:0;
-  background:transparent;
+
+  /*
+    The stub itself is paper,
+    not a transparent button.
+  */
+  background:var(--ivory);
   color:var(--ink);
   cursor:pointer;
+
+  box-shadow:inset 0 0 25px #b5a07b33;
+
+  clip-path:polygon(
+    0 0,
+    100% 0,
+    100% 15%,
+    94% 17%,
+    100% 19%,
+    100% 81%,
+    94% 83%,
+    100% 85%,
+    100% 100%,
+    0 100%
+  );
 
   transition:
     transform 1.8s cubic-bezier(.25,.48,.3,1),
@@ -502,6 +536,50 @@ button:focus-visible{
 
   touch-action:manipulation;
   z-index:2;
+}
+
+/*
+  The left edge of the fallen stub
+  also has an irregular paper cut.
+*/
+
+.ticket-stub.torn{
+  clip-path:polygon(
+    4% 0,
+    100% 0,
+    100% 15%,
+    94% 17%,
+    100% 19%,
+    100% 81%,
+    94% 83%,
+    100% 85%,
+    100% 100%,
+    4% 100%,
+    1% 96%,
+    5% 92%,
+    2% 88%,
+    6% 83%,
+    1% 78%,
+    4% 73%,
+    2% 68%,
+    6% 63%,
+    1% 58%,
+    5% 53%,
+    2% 48%,
+    6% 43%,
+    1% 38%,
+    4% 33%,
+    2% 28%,
+    6% 23%,
+    1% 18%,
+    5% 13%,
+    2% 8%,
+    5% 4%
+  );
+
+  transform:translate(105px,125px) rotate(38deg);
+  opacity:0;
+  pointer-events:none;
 }
 
 .ticket-stub::before{
@@ -546,12 +624,6 @@ button:focus-visible{
   color:#b58a51;
   background:var(--ivory);
   z-index:2;
-}
-
-.ticket-stub.torn{
-  transform:translate(105px,125px) rotate(38deg);
-  opacity:0;
-  pointer-events:none;
 }
 
 /* TEMPORARY LOBBY */
@@ -698,6 +770,7 @@ button:focus-visible{
       </div>
 
       <div class="ticket-wrap">
+
         <div class="ticket" id="ticketPaper">
 
           <div class="ticket-main">
@@ -954,14 +1027,22 @@ function tearTicket(){
   ticketEntered=true;
   ticketStub.disabled=true;
 
-  /* Reveal the torn paper edge */
+  /*
+    Remove the paper at the cut line.
+    The background shows through
+    the missing area.
+  */
   ticketPaper.classList.add("torn-edge");
 
-  /* Slowly drop the detached stub */
+  /*
+    The entire paper stub,
+    including its ivory background,
+    now falls away.
+  */
   ticketStub.classList.add("torn");
 
   /*
-    Begin descending sooner,
+    Start moving to the lobby
     while the stub is still falling.
   */
   setTimeout(()=>{
@@ -986,6 +1067,10 @@ replayButton.addEventListener("click",()=>{
     ticketScene.classList.remove("departing");
 
     setTimeout(()=>{
+      /*
+        Restore both pieces together
+        before allowing another tear.
+      */
       ticketStub.classList.remove("torn");
       ticketPaper.classList.remove("torn-edge");
 
