@@ -213,7 +213,7 @@ button:focus-visible{
   opacity:.65;
 }
 
-/* ADMISSION SCENE */
+/* ADMISSION */
 
 #admission{
   z-index:5;
@@ -230,12 +230,18 @@ button:focus-visible{
   pointer-events:auto;
 }
 
+/*
+  Two vertically connected screens.
+  Both entering and returning use
+  the same smooth transition.
+*/
+
 .admission-stack{
   position:absolute;
   inset:0;
   height:200%;
   transform:translateY(0);
-  transition:transform 1.65s cubic-bezier(.64,0,.17,1);
+  transition:transform 2.1s cubic-bezier(.45,0,.2,1);
   will-change:transform;
 }
 
@@ -305,6 +311,8 @@ button:focus-visible{
   color:#80546b;
 }
 
+/* PAPER TICKET */
+
 .ticket-wrap{
   width:min(94vw,670px);
   position:relative;
@@ -317,6 +325,7 @@ button:focus-visible{
   display:flex;
   height:clamp(188px,52vw,300px);
   background:var(--ivory);
+
   clip-path:polygon(
     0 0,
     9% 0,
@@ -337,6 +346,7 @@ button:focus-visible{
     9% 100%,
     0 100%
   );
+
   box-shadow:inset 0 0 30px #b5a07b44;
 }
 
@@ -346,6 +356,7 @@ button:focus-visible{
   inset:0;
   pointer-events:none;
   opacity:.26;
+
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.33'/%3E%3C/svg%3E");
 }
 
@@ -361,12 +372,14 @@ button:focus-visible{
   border:2px solid var(--gold);
   outline:1px solid var(--gold-light);
   outline-offset:-7px;
+
   background:linear-gradient(
     130deg,
     #fff9e9bb,
     transparent 55%,
     #b8a37b22
   );
+
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -376,10 +389,11 @@ button:focus-visible{
   padding:8px 3px;
 }
 
-.ticket-ornament{
-  font:clamp(9px,2.4vw,13px) Georgia,serif;
-  color:#b08b50;
-  letter-spacing:.24em;
+.ticket-topline{
+  font:clamp(8px,1.8vw,11px) var(--mono);
+  color:#a48755;
+  letter-spacing:.2em;
+  margin-bottom:9px;
 }
 
 .ticket-title{
@@ -407,6 +421,15 @@ button:focus-visible{
   color:#947b56;
 }
 
+.ticket-bottomline{
+  margin-top:12px;
+  font:clamp(7px,1.4vw,10px) var(--mono);
+  letter-spacing:.16em;
+  color:#b08b50;
+}
+
+/* TEAR-OFF STUB */
+
 .ticket-stub{
   width:24%;
   position:relative;
@@ -416,8 +439,11 @@ button:focus-visible{
   background:transparent;
   color:var(--ink);
   cursor:pointer;
-  transition:transform .55s cubic-bezier(.3,.1,.5,1),
-             opacity .55s ease;
+
+  transition:
+    transform 1.4s cubic-bezier(.23,.55,.35,1),
+    opacity 1.4s ease-in;
+
   touch-action:manipulation;
   z-index:2;
 }
@@ -466,14 +492,23 @@ button:focus-visible{
   z-index:2;
 }
 
+/*
+  Slower, softer movement.
+  Opacity remains visible for
+  the first part of the fall.
+*/
+
 .ticket-stub.torn{
-  transform:translate(110px,85px) rotate(28deg);
+  transform:translate(105px,125px) rotate(38deg);
   opacity:0;
   pointer-events:none;
 }
 
 .ticket-scene.departing .ticket-wrap{
-  transition:transform .8s ease,opacity .8s ease;
+  transition:
+    transform 1.3s cubic-bezier(.35,0,.25,1),
+    opacity 1.3s ease;
+
   transform:translateY(35px) rotate(-5deg);
   opacity:.35;
 }
@@ -541,9 +576,11 @@ button:focus-visible{
   .ticket{
     height:300px;
   }
+
   .ticket-main{
     padding:23px;
   }
+
   .ticket-stub{
     padding:23px 22px 23px 5px;
   }
@@ -611,7 +648,7 @@ button:focus-visible{
 
   <div class="admission-stack">
 
-    <!-- TICKET -->
+    <!-- TICKET SCREEN -->
     <div class="ticket-scene" id="ticketScene">
 
       <div class="ticket-top">
@@ -625,8 +662,8 @@ button:focus-visible{
           <div class="ticket-main">
             <div class="ticket-frame">
 
-              <div class="ticket-ornament">
-                ✦ &nbsp; EST. 0000 &nbsp; ✦
+              <div class="ticket-topline">
+                EST. 0000
               </div>
 
               <h1 class="ticket-title">
@@ -641,13 +678,14 @@ button:focus-visible{
                 ONE GUEST · ONE WAY · NO EXPIRATION
               </div>
 
-              <div class="ticket-ornament" style="margin-top:12px">
-                ❦ &nbsp; ✧ &nbsp; ❦
+              <div class="ticket-bottomline">
+                OFFICIAL PASS / 001
               </div>
 
             </div>
           </div>
 
+          <!-- TAP TO TEAR -->
           <button
             class="ticket-stub"
             id="ticketStub"
@@ -720,6 +758,7 @@ const reducedMotion=window.matchMedia(
 
 let entering=false;
 let ticketEntered=false;
+let replaying=false;
 let glitchActive=false;
 let frameId=null;
 let lastFrame=0;
@@ -843,7 +882,7 @@ function stopNoise(){
   );
 }
 
-/* ENTRY */
+/* ERROR ENTRY */
 
 function enterWorld(){
   if(entering)return;
@@ -866,35 +905,68 @@ function enterWorld(){
 
 enterButton.addEventListener("click",enterWorld);
 
-/* TICKET ADMISSION */
+/* TICKET */
 
 function tearTicket(){
-  if(ticketEntered)return;
+  if(ticketEntered||replaying)return;
 
   ticketEntered=true;
   ticketStub.disabled=true;
 
   ticketStub.classList.add("torn");
 
+  /*
+    Wait until the slower tear
+    animation has nearly finished.
+  */
+
   setTimeout(()=>{
     ticketScene.classList.add("departing");
     admission.classList.add("entered");
-  },reducedMotion.matches?100:540);
+  },reducedMotion.matches?100:1350);
 }
 
 ticketStub.addEventListener("click",tearTicket);
 
-/* REPLAY */
+/* RETURN TO TICKET */
 
 replayButton.addEventListener("click",()=>{
+  if(replaying||!ticketEntered)return;
+
+  replaying=true;
+  replayButton.disabled=true;
+
+  /*
+    First travel smoothly upward.
+    Do not reset the ticket while
+    the camera is still moving.
+  */
+
   admission.classList.remove("entered");
 
   setTimeout(()=>{
-    ticketStub.classList.remove("torn");
+    /*
+      Restore the main ticket's
+      normal position smoothly.
+    */
+
     ticketScene.classList.remove("departing");
-    ticketStub.disabled=false;
-    ticketEntered=false;
-  },reducedMotion.matches?100:1700);
+
+    setTimeout(()=>{
+      /*
+        Restore the stub only
+        after the return finishes.
+      */
+
+      ticketStub.classList.remove("torn");
+      ticketStub.disabled=false;
+
+      ticketEntered=false;
+      replaying=false;
+      replayButton.disabled=false;
+    },reducedMotion.matches?100:1300);
+
+  },reducedMotion.matches?100:2150);
 });
 
 window.addEventListener("resize",()=>{
