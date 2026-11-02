@@ -92,7 +92,7 @@ button:focus-visible{
   overflow:hidden;
 }
 
-/* ERROR PAGE — UNCHANGED */
+/* ERROR PAGE */
 
 #entry{
   position:absolute;
@@ -198,7 +198,7 @@ button:focus-visible{
   100%{transform:translate(4px,0)}
 }
 
-/* NOISE — UNCHANGED */
+/* NOISE */
 
 #noise{
   position:absolute;
@@ -231,21 +231,15 @@ button:focus-visible{
   pointer-events:auto;
 }
 
-/* SMOOTH SCREEN MOVEMENT */
+/* SCREEN MOVEMENT */
 
 .admission-stack{
   position:absolute;
   inset:0;
   height:200%;
   transform:translate3d(0,0,0);
-
-  /*
-    Gentle acceleration and deceleration,
-    without a sudden stop.
-  */
   transition:
-    transform 1.8s cubic-bezier(.42,0,.22,1);
-
+    transform 1.5s cubic-bezier(.42,0,.22,1);
   will-change:transform;
 }
 
@@ -882,7 +876,7 @@ function stopNoise(){
   );
 }
 
-/* ERROR ENTRY — UNCHANGED */
+/* ERROR ENTRY */
 
 function enterWorld(){
   if(entering)return;
@@ -944,7 +938,7 @@ replayButton.addEventListener("click",()=>{
       replayButton.disabled=false;
     },reducedMotion.matches?100:1350);
 
-  },reducedMotion.matches?100:1850);
+  },reducedMotion.matches?100:1550);
 });
 
 window.addEventListener("resize",()=>{
