@@ -3,11 +3,14 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
+<meta name="format-detection" content="telephone=no">
 <title>SUGERROR</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
 :root{
   --paper:#f5f1f2;
@@ -17,18 +20,23 @@
   --mono:'DM Mono',monospace;
   --display:'Space Grotesk',sans-serif;
 }
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 html,body{
   margin:0;
+  padding:0;
   width:100%;
   height:100%;
   overflow:hidden;
   overscroll-behavior:none;
+  touch-action:manipulation;
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
 }
 html{
   position:fixed;
   inset:0;
-  touch-action:manipulation;
 }
 body{
   position:fixed;
@@ -38,8 +46,16 @@ body{
   font-family:'DM Sans',sans-serif;
   -webkit-tap-highlight-color:transparent;
 }
-button{font:inherit;cursor:pointer;touch-action:manipulation}
-button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
+button{
+  font:inherit;
+  cursor:pointer;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+button:focus-visible{
+  outline:2px solid #aa7c99;
+  outline-offset:3px;
+}
 #app{
   position:fixed;
   inset:0;
@@ -49,6 +65,7 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   overflow:hidden;
   isolation:isolate;
   clip-path:inset(0);
+  touch-action:manipulation;
 }
 .screen{
   position:absolute;
@@ -63,6 +80,7 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 }
 
 /* ERROR PAGE */
+
 #entry{
   position:absolute;
   inset:0;
@@ -168,6 +186,7 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 }
 
 /* NOISE */
+
 #noise{
   position:absolute;
   inset:0;
@@ -178,9 +197,12 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   opacity:0;
   image-rendering:pixelated;
 }
-#noise.active{opacity:.65}
+#noise.active{
+  opacity:.65;
+}
 
 /* MAIN */
+
 #home{
   z-index:2;
   background:var(--paper);
@@ -205,7 +227,9 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 }
 .home-header{
   position:absolute;
-  top:0;left:0;right:0;
+  top:0;
+  left:0;
+  right:0;
   height:calc(76px + env(safe-area-inset-top));
   padding:env(safe-area-inset-top) 24px 0;
   border-bottom:1px solid var(--line);
@@ -223,7 +247,8 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   color:#88808a;
 }
 .menu-trigger{
-  width:42px;height:42px;
+  width:42px;
+  height:42px;
   border:1px solid var(--ink);
   background:transparent;
   display:grid;
@@ -231,36 +256,51 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   gap:6px;
 }
 .menu-trigger span{
-  width:18px;height:1px;
+  width:18px;
+  height:1px;
   background:var(--ink);
 }
 .artboard{
   position:absolute;
   top:calc(76px + env(safe-area-inset-top));
   bottom:calc(84px + env(safe-area-inset-bottom));
-  left:0;right:0;
+  left:0;
+  right:0;
   overflow:hidden;
 }
 .halo{
   position:absolute;
   width:min(110vw,580px);
   aspect-ratio:1;
-  left:50%;top:45%;
+  left:50%;
+  top:45%;
   transform:translate(-50%,-50%);
   border-radius:50%;
-  background:radial-gradient(circle,#f0d6e4 0%,#f3e5ec 35%,transparent 70%);
+  background:radial-gradient(
+    circle,
+    #f0d6e4 0%,
+    #f3e5ec 35%,
+    transparent 70%
+  );
   opacity:.8;
   animation:haloPulse 9s ease-in-out infinite alternate;
 }
 @keyframes haloPulse{
-  from{opacity:.45;filter:blur(12px)}
-  to{opacity:.9;filter:blur(25px)}
+  from{
+    opacity:.45;
+    filter:blur(12px);
+  }
+  to{
+    opacity:.9;
+    filter:blur(25px);
+  }
 }
 .orbit{
   position:absolute;
   width:min(90vw,490px);
   aspect-ratio:1;
-  left:50%;top:45%;
+  left:50%;
+  top:45%;
   transform:translate(-50%,-50%);
 }
 .orbit svg{
@@ -281,12 +321,18 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   opacity:.5;
   animation:rotateBack 40s linear infinite;
 }
-@keyframes rotate{to{transform:rotate(360deg)}}
-@keyframes rotateBack{to{transform:rotate(-360deg)}}
+@keyframes rotate{
+  to{transform:rotate(360deg)}
+}
+@keyframes rotateBack{
+  to{transform:rotate(-360deg)}
+}
 .hero{
   position:absolute;
   z-index:3;
-  top:45%;left:0;right:0;
+  top:45%;
+  left:0;
+  right:0;
   transform:translateY(-50%);
   text-align:center;
   pointer-events:none;
@@ -303,7 +349,9 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   font:700 clamp(52px,13vw,180px)/.95 var(--display);
   letter-spacing:-.09em;
 }
-.hero-title .pink{color:var(--pink)}
+.hero-title .pink{
+  color:var(--pink);
+}
 .hero-title.glitch{
   animation:shake .08s steps(2) 5;
 }
@@ -315,20 +363,24 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 }
 .hero-caption{
   position:absolute;
-  bottom:28px;left:24px;
+  bottom:28px;
+  left:24px;
   font:9px/1.9 var(--mono);
   color:#80737e;
 }
 .vertical-note{
   position:absolute;
-  top:12%;right:18px;
+  top:12%;
+  right:18px;
   writing-mode:vertical-rl;
   font:9px var(--mono);
   letter-spacing:.14em;
 }
 .bottom-nav{
   position:absolute;
-  bottom:0;left:0;right:0;
+  bottom:0;
+  left:0;
+  right:0;
   height:calc(84px + env(safe-area-inset-bottom));
   padding-bottom:env(safe-area-inset-bottom);
   display:grid;
@@ -344,7 +396,9 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   font:clamp(7px,2.1vw,10px) var(--mono);
   overflow:hidden;
 }
-.nav-link:last-child{border-right:0}
+.nav-link:last-child{
+  border-right:0;
+}
 .nav-link small{
   display:block;
   margin-top:8px;
@@ -352,6 +406,7 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 }
 
 /* MENU */
+
 #menu{
   position:absolute;
   inset:0;
@@ -362,7 +417,10 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   opacity:0;
   pointer-events:none;
   transition:opacity .4s,visibility .4s;
-  padding:max(30px,env(safe-area-inset-top)) 24px max(30px,env(safe-area-inset-bottom));
+  padding:
+    max(30px,env(safe-area-inset-top))
+    24px
+    max(30px,env(safe-area-inset-bottom));
   display:flex;
   flex-direction:column;
   overflow:hidden;
@@ -386,7 +444,9 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   padding:10px 15px;
   font:10px var(--mono);
 }
-.menu-list{margin:auto 0}
+.menu-list{
+  margin:auto 0;
+}
 .menu-item{
   display:flex;
   justify-content:space-between;
@@ -414,6 +474,7 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 }
 
 /* CONTENT PANEL */
+
 #panel{
   position:absolute;
   inset:0;
@@ -453,6 +514,7 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   overflow-y:auto;
   overscroll-behavior:contain;
   -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
   padding:38px 24px 60px;
 }
 .panel-kicker{
@@ -494,10 +556,19 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   color:#857681;
 }
 @media(min-width:760px){
-  .home-header{padding-left:45px;padding-right:45px}
-  .hero-caption{left:45px}
-  .bottom-nav{left:35%}
-  .panel-content{padding-left:8%}
+  .home-header{
+    padding-left:45px;
+    padding-right:45px;
+  }
+  .hero-caption{
+    left:45px;
+  }
+  .bottom-nav{
+    left:35%;
+  }
+  .panel-content{
+    padding-left:8%;
+  }
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{
@@ -508,21 +579,29 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 }
 </style>
 </head>
+
 <body>
 <div id="app">
 
 <!-- ERROR OPENING -->
 <section id="entry" class="screen">
   <main class="entry-content">
-    <svg class="error-icon" viewBox="0 0 40 45" fill="none" aria-hidden="true">
+    <svg class="error-icon"
+      viewBox="0 0 40 45"
+      fill="none"
+      aria-hidden="true">
       <path d="M5 1H25L35 11V43H5Z"
-        stroke="currentColor" stroke-width="2"/>
+        stroke="currentColor"
+        stroke-width="2"/>
       <path d="M25 1V11H35"
-        stroke="currentColor" stroke-width="2"/>
+        stroke="currentColor"
+        stroke-width="2"/>
       <path d="M13 20H27M13 26H27"
-        stroke="currentColor" stroke-width="2"/>
+        stroke="currentColor"
+        stroke-width="2"/>
       <path d="M15 35H25"
-        stroke="currentColor" stroke-width="2"/>
+        stroke="currentColor"
+        stroke-width="2"/>
     </svg>
 
     <h1 class="error-heading">
@@ -539,7 +618,8 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
       HTTP ERROR 404
     </div>
 
-    <button id="enterButton" class="entry-button">
+    <button id="enterButton"
+      class="entry-button">
       Reload
     </button>
   </main>
@@ -548,15 +628,24 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 <canvas id="noise" aria-hidden="true"></canvas>
 
 <!-- HOME -->
-<section id="home" class="screen" aria-hidden="true">
+<section id="home"
+  class="screen"
+  aria-hidden="true">
+
   <div class="home-grid"></div>
 
   <header class="home-header">
     <div class="brand">SUGERROR®</div>
-    <div class="header-middle">WORLD / 001</div>
-    <button id="menuOpen" class="menu-trigger"
+
+    <div class="header-middle">
+      WORLD / 001
+    </div>
+
+    <button id="menuOpen"
+      class="menu-trigger"
       aria-label="メニューを開く">
-      <span></span><span></span>
+      <span></span>
+      <span></span>
     </button>
   </header>
 
@@ -565,6 +654,7 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 
     <div class="orbit">
       <div class="orbit-inner"></div>
+
       <svg viewBox="0 0 400 400">
         <defs>
           <path id="orbitPath"
@@ -572,6 +662,7 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
             a176 176 0 1 1 352 0
             a176 176 0 1 1-352 0"/>
         </defs>
+
         <text>
           <textPath href="#orbitPath">
             A SWEET LITTLE MALFUNCTION ·
@@ -590,9 +681,11 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
       <div class="hero-label">
         THE WORLD OF BEAUTIFUL ERRORS
       </div>
+
       <h1 class="hero-title" id="heroTitle">
         SUG<span class="pink">ERROR</span>
       </h1>
+
       <div class="hero-sub">
         A SWEET LITTLE MALFUNCTION.
       </div>
@@ -606,43 +699,68 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
   </div>
 
   <nav class="bottom-nav">
-    <button class="nav-link" data-page="CHARACTERS">
-      CHARACTERS<small>01 ↗</small>
+    <button class="nav-link"
+      data-page="CHARACTERS">
+      CHARACTERS
+      <small>01 ↗</small>
     </button>
-    <button class="nav-link" data-page="STORIES">
-      STORIES<small>02 ↗</small>
+
+    <button class="nav-link"
+      data-page="STORIES">
+      STORIES
+      <small>02 ↗</small>
     </button>
-    <button class="nav-link" data-page="WORLDS">
-      WORLDS<small>03 ↗</small>
+
+    <button class="nav-link"
+      data-page="WORLDS">
+      WORLDS
+      <small>03 ↗</small>
     </button>
-    <button class="nav-link" data-page="FILES">
-      FILES<small>04 ↗</small>
+
+    <button class="nav-link"
+      data-page="FILES">
+      FILES
+      <small>04 ↗</small>
     </button>
   </nav>
 </section>
 
 <!-- MENU -->
 <aside id="menu" aria-hidden="true">
+
   <header class="menu-top">
-    <span class="mono">SUGERROR / INDEX</span>
-    <button id="menuClose" class="close-menu">
+    <span class="mono">
+      SUGERROR / INDEX
+    </span>
+
+    <button id="menuClose"
+      class="close-menu">
       CLOSE ×
     </button>
   </header>
 
   <div class="menu-list">
-    <button class="menu-item" data-page="CHARACTERS">
+
+    <button class="menu-item"
+      data-page="CHARACTERS">
       CHARACTERS <span>01 ↗</span>
     </button>
-    <button class="menu-item" data-page="STORIES">
+
+    <button class="menu-item"
+      data-page="STORIES">
       STORIES <span>02 ↗</span>
     </button>
-    <button class="menu-item" data-page="WORLDS">
+
+    <button class="menu-item"
+      data-page="WORLDS">
       WORLDS <span>03 ↗</span>
     </button>
-    <button class="menu-item" data-page="FILES">
+
+    <button class="menu-item"
+      data-page="FILES">
       FILES <span>04 ↗</span>
     </button>
+
   </div>
 
   <footer class="menu-footer">
@@ -653,26 +771,39 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px}
 
 <!-- CONTENT -->
 <section id="panel" aria-hidden="true">
+
   <header class="panel-head">
-    <span class="mono">SUGERROR / DIRECTORY</span>
-    <button id="panelBack" class="back-button">
+    <span class="mono">
+      SUGERROR / DIRECTORY
+    </span>
+
+    <button id="panelBack"
+      class="back-button">
       ← BACK
     </button>
   </header>
 
   <div class="panel-content">
-    <div class="panel-kicker" id="panelKicker">
+    <div class="panel-kicker"
+      id="panelKicker">
       DIRECTORY / 001
     </div>
-    <h2 class="panel-title" id="panelTitle">
+
+    <h2 class="panel-title"
+      id="panelTitle">
       CHARACTERS
     </h2>
+
     <div class="panel-rule"></div>
+
     <p class="panel-description"
       id="panelDescription"></p>
+
     <div class="placeholder">
       <strong>404.</strong>
-      <span>CONTENT IS UNDER CONSTRUCTION.</span>
+      <span>
+        CONTENT IS UNDER CONSTRUCTION.
+      </span>
     </div>
   </div>
 </section>
@@ -703,13 +834,68 @@ let lastFrame=0;
 let periodicTimer=null;
 let transitionBusy=false;
 
+/* ZOOM PREVENTION */
+
+/* Safari's gesture events */
+["gesturestart","gesturechange","gestureend"]
+  .forEach(type=>{
+    document.addEventListener(type,event=>{
+      event.preventDefault();
+    },{passive:false});
+  });
+
+/* Prevent multi-finger page zoom */
+document.addEventListener("touchstart",event=>{
+  if(event.touches.length>1){
+    event.preventDefault();
+  }
+},{passive:false});
+
+document.addEventListener("touchmove",event=>{
+  if(event.touches.length>1){
+    event.preventDefault();
+  }
+},{passive:false});
+
+/* Prevent double-tap zoom while keeping
+   ordinary single taps functional */
+let lastTapTime=0;
+let lastTapX=0;
+let lastTapY=0;
+
+document.addEventListener("touchend",event=>{
+  if(event.changedTouches.length!==1)return;
+
+  const touch=event.changedTouches[0];
+  const now=Date.now();
+  const delta=now-lastTapTime;
+  const distance=Math.hypot(
+    touch.clientX-lastTapX,
+    touch.clientY-lastTapY
+  );
+
+  if(delta>0 && delta<300 && distance<30){
+    event.preventDefault();
+    lastTapTime=0;
+  }else{
+    lastTapTime=now;
+    lastTapX=touch.clientX;
+    lastTapY=touch.clientY;
+  }
+},{passive:false});
+
+/* NOISE */
+
 function resizeNoise(){
   noise.width=190;
   noise.height=Math.max(
     180,
-    Math.min(420,Math.round(
-      190*innerHeight/Math.max(innerWidth,1)
-    ))
+    Math.min(
+      420,
+      Math.round(
+        190*innerHeight/Math.max(innerWidth,1)
+      )
+    )
   );
 }
 
@@ -718,6 +904,7 @@ function drawNoise(time){
 
   if(time-lastFrame>45){
     lastFrame=time;
+
     const w=noise.width;
     const h=noise.height;
     const data=ctx.createImageData(w,h);
@@ -737,9 +924,12 @@ function drawNoise(time){
       ctx.fillStyle=Math.random()>.5
         ?"rgba(255,120,177,.65)"
         :"rgba(110,210,230,.65)";
+
       ctx.fillRect(
-        0,Math.random()*h,
-        w,Math.random()*5+1
+        0,
+        Math.random()*h,
+        w,
+        Math.random()*5+1
       );
     }
   }
@@ -749,6 +939,7 @@ function drawNoise(time){
 
 function startNoise(){
   if(reducedMotion.matches||glitchActive)return;
+
   resizeNoise();
   glitchActive=true;
   lastFrame=0;
@@ -760,11 +951,16 @@ function stopNoise(){
   glitchActive=false;
   cancelAnimationFrame(frameId);
   noise.classList.remove("active");
-  ctx.clearRect(0,0,noise.width,noise.height);
+  ctx.clearRect(
+    0,0,noise.width,noise.height
+  );
 }
+
+/* OPENING */
 
 function enterWorld(){
   if(entering)return;
+
   entering=true;
   enterButton.disabled=true;
 
@@ -776,31 +972,45 @@ function enterWorld(){
   setTimeout(()=>{
     stopNoise();
     entry.style.display="none";
+
     home.classList.add("visible");
     home.setAttribute("aria-hidden","false");
+
     startAmbientGlitch();
   },reducedMotion.matches?100:1100);
 }
 
-enterButton.addEventListener("click",enterWorld);
+enterButton.addEventListener(
+  "click",enterWorld
+);
+
+/* AMBIENT GLITCH */
 
 function startAmbientGlitch(){
   clearInterval(periodicTimer);
+
   if(reducedMotion.matches)return;
 
   periodicTimer=setInterval(()=>{
-    if(menu.classList.contains("open")||
-       panel.classList.contains("open"))return;
+    if(
+      menu.classList.contains("open")||
+      panel.classList.contains("open")
+    )return;
 
     heroTitle.classList.add("glitch");
+
     setTimeout(()=>{
       heroTitle.classList.remove("glitch");
     },450);
+
   },8000);
 }
 
+/* TRANSITION */
+
 function glitchTransition(callback){
   if(transitionBusy)return;
+
   transitionBusy=true;
 
   if(reducedMotion.matches){
@@ -820,10 +1030,13 @@ function glitchTransition(callback){
   },400);
 }
 
+/* MENU */
+
 function openMenu(){
   menu.classList.add("open");
   menu.setAttribute("aria-hidden","false");
 }
+
 function closeMenu(){
   menu.classList.remove("open");
   menu.setAttribute("aria-hidden","true");
@@ -832,24 +1045,33 @@ function closeMenu(){
 menuOpen.addEventListener("click",()=>{
   glitchTransition(openMenu);
 });
-menuClose.addEventListener("click",closeMenu);
+
+menuClose.addEventListener(
+  "click",closeMenu
+);
+
+/* CONTENT */
 
 const pages={
   CHARACTERS:{
     number:"001",
-    description:"A collection of identities that exist beyond reality."
+    description:
+      "A collection of identities that exist beyond reality."
   },
   STORIES:{
     number:"002",
-    description:"Fragments of stories from another world."
+    description:
+      "Fragments of stories from another world."
   },
   WORLDS:{
     number:"003",
-    description:"A directory of imaginary universes."
+    description:
+      "A directory of imaginary universes."
   },
   FILES:{
     number:"004",
-    description:"Records, fragments and forgotten data."
+    description:
+      "Records, fragments and forgotten data."
   }
 };
 
@@ -859,8 +1081,10 @@ function openPanel(name){
 
   document.getElementById("panelTitle")
     .textContent=name;
+
   document.getElementById("panelKicker")
     .textContent="DIRECTORY / "+page.number;
+
   document.getElementById("panelDescription")
     .textContent=page.description;
 
@@ -880,21 +1104,33 @@ document.querySelectorAll("[data-page]")
 
       if(menu.classList.contains("open")){
         closeMenu();
-        setTimeout(()=>openPanel(name),250);
+
+        setTimeout(()=>{
+          openPanel(name);
+        },250);
       }else{
-        glitchTransition(()=>openPanel(name));
+        glitchTransition(()=>{
+          openPanel(name);
+        });
       }
     });
   });
 
-panelBack.addEventListener("click",closePanel);
+panelBack.addEventListener(
+  "click",closePanel
+);
+
+/* WINDOW */
 
 window.addEventListener("resize",()=>{
   if(glitchActive)resizeNoise();
 });
-document.addEventListener("visibilitychange",()=>{
-  if(document.hidden)stopNoise();
-});
+
+document.addEventListener(
+  "visibilitychange",()=>{
+    if(document.hidden)stopNoise();
+  }
+);
 </script>
 </body>
 </html>
