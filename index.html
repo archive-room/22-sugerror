@@ -92,7 +92,7 @@ button:focus-visible{
   overflow:hidden;
 }
 
-/* ERROR PAGE */
+/* ERROR PAGE — FIXED */
 
 #entry{
   position:absolute;
@@ -198,7 +198,7 @@ button:focus-visible{
   100%{transform:translate(4px,0)}
 }
 
-/* NOISE */
+/* NOISE — FIXED */
 
 #noise{
   position:absolute;
@@ -317,11 +317,9 @@ button:focus-visible{
   transform:translate3d(0,0,0) rotate(-2deg);
   opacity:1;
   filter:drop-shadow(0 18px 16px #7d46513b);
-
   transition:
     transform 1.3s cubic-bezier(.45,0,.2,1),
     opacity 1.3s ease;
-
   will-change:transform,opacity;
 }
 
@@ -370,11 +368,59 @@ button:focus-visible{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.33'/%3E%3C/svg%3E");
 }
 
+/* TORN EDGE */
+
 .ticket-main{
   width:76%;
   padding:17px 10px 17px 19px;
   position:relative;
   min-width:0;
+  isolation:isolate;
+}
+
+.ticket-main::after{
+  content:"";
+  position:absolute;
+  top:0;
+  right:-1px;
+  bottom:0;
+  width:15px;
+  background:var(--ivory);
+
+  clip-path:polygon(
+    0 0,
+    65% 0,
+    100% 4%,
+    40% 8%,
+    90% 13%,
+    30% 18%,
+    100% 23%,
+    42% 28%,
+    88% 33%,
+    22% 38%,
+    100% 43%,
+    36% 48%,
+    90% 54%,
+    28% 59%,
+    100% 64%,
+    42% 69%,
+    85% 74%,
+    25% 79%,
+    100% 84%,
+    38% 89%,
+    95% 94%,
+    50% 100%,
+    0 100%
+  );
+
+  opacity:0;
+  transition:opacity .12s ease;
+  pointer-events:none;
+  z-index:4;
+}
+
+.ticket.torn-edge .ticket-main::after{
+  opacity:1;
 }
 
 .ticket-frame{
@@ -451,8 +497,8 @@ button:focus-visible{
   cursor:pointer;
 
   transition:
-    transform 1.4s cubic-bezier(.23,.55,.35,1),
-    opacity 1.4s ease-in;
+    transform 1.8s cubic-bezier(.25,.48,.3,1),
+    opacity 1.8s ease-in;
 
   touch-action:manipulation;
   z-index:2;
@@ -652,7 +698,7 @@ button:focus-visible{
       </div>
 
       <div class="ticket-wrap">
-        <div class="ticket">
+        <div class="ticket" id="ticketPaper">
 
           <div class="ticket-main">
             <div class="ticket-frame">
@@ -742,6 +788,7 @@ const enterButton=document.getElementById("enterButton");
 const admission=document.getElementById("admission");
 const ticketStub=document.getElementById("ticketStub");
 const ticketScene=document.getElementById("ticketScene");
+const ticketPaper=document.getElementById("ticketPaper");
 const replayButton=document.getElementById("replayButton");
 const noise=document.getElementById("noise");
 const ctx=noise.getContext("2d");
@@ -906,12 +953,21 @@ function tearTicket(){
 
   ticketEntered=true;
   ticketStub.disabled=true;
+
+  /* Reveal the torn paper edge */
+  ticketPaper.classList.add("torn-edge");
+
+  /* Slowly drop the detached stub */
   ticketStub.classList.add("torn");
 
+  /*
+    Begin descending sooner,
+    while the stub is still falling.
+  */
   setTimeout(()=>{
     ticketScene.classList.add("departing");
     admission.classList.add("entered");
-  },reducedMotion.matches?100:1350);
+  },reducedMotion.matches?100:650);
 }
 
 ticketStub.addEventListener("click",tearTicket);
@@ -931,8 +987,9 @@ replayButton.addEventListener("click",()=>{
 
     setTimeout(()=>{
       ticketStub.classList.remove("torn");
-      ticketStub.disabled=false;
+      ticketPaper.classList.remove("torn-edge");
 
+      ticketStub.disabled=false;
       ticketEntered=false;
       replaying=false;
       replayButton.disabled=false;
