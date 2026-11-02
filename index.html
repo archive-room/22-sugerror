@@ -3,7 +3,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
 <meta name="format-detection" content="telephone=no">
 <title>SUGERROR</title>
@@ -12,31 +12,30 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-@font-face{
+@font-face {
   font-family:"Saint Timothy";
   src:url("./Saint%20Timothy.otf") format("opentype");
-  font-style:normal;
   font-weight:400;
+  font-style:normal;
   font-display:swap;
 }
 
-:root{
+:root {
   --paper:#f7f3f6;
   --ink:#29252c;
   --pink:#d99dbd;
   --pink-dark:#a97c9a;
   --line:#d9cdd6;
-  --dark:#111019;
   --mono:"DM Mono",monospace;
   --display:"Space Grotesk",sans-serif;
   --script:"Saint Timothy",cursive;
 }
 
-*{
+* {
   box-sizing:border-box;
 }
 
-html,body{
+html,body {
   position:fixed;
   inset:0;
   width:100%;
@@ -48,26 +47,26 @@ html,body{
   -webkit-text-size-adjust:100%;
 }
 
-body{
+body {
   background:#fff;
   color:var(--ink);
   font-family:"DM Sans",sans-serif;
   -webkit-tap-highlight-color:transparent;
 }
 
-button{
+button {
   font:inherit;
   cursor:pointer;
   touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
 }
 
-button:focus-visible{
-  outline:2px solid var(--pink);
+button:focus-visible {
+  outline:2px solid var(--pink-dark);
   outline-offset:3px;
 }
 
-#app{
+#app {
   position:fixed;
   inset:0;
   width:100%;
@@ -77,22 +76,22 @@ button:focus-visible{
   isolation:isolate;
 }
 
-.screen{
+.screen {
   position:absolute;
   inset:0;
   overflow:hidden;
 }
 
-.mono{
+.mono {
   font:10px var(--mono);
   letter-spacing:.07em;
 }
 
 /* =========================
-   ORIGINAL ERROR PAGE
+   ORIGINAL ERROR SCREEN
 ========================= */
 
-#entry{
+#entry {
   position:absolute;
   inset:0;
   z-index:30;
@@ -105,39 +104,40 @@ button:focus-visible{
   transition:background .15s,color .15s;
 }
 
-.entry-content{
+.entry-content {
   width:100%;
   max-width:450px;
   transform:translateY(-7%);
 }
 
-.error-icon{
+.error-icon {
   width:38px;
   height:43px;
   color:#757575;
   margin-bottom:30px;
 }
 
-.error-heading{
+.error-heading {
   position:relative;
   display:table;
   font:500 clamp(19px,5vw,23px)/1.45 Arial,Helvetica,sans-serif;
+  letter-spacing:0;
   margin:0 0 18px;
 }
 
-.error-description{
+.error-description {
   color:#646464;
   font:13px/1.85 Arial,Helvetica,sans-serif;
   max-width:380px;
 }
 
-.error-code{
+.error-code {
   color:#777;
   font:11px/1.8 Arial,Helvetica,sans-serif;
   margin-top:20px;
 }
 
-.entry-button{
+.entry-button {
   margin-top:35px;
   background:#f7f7f7;
   border:1px solid #dedede;
@@ -148,21 +148,21 @@ button:focus-visible{
   min-height:42px;
 }
 
-.entry-button:active{
+.entry-button:active {
   background:#e8e8e8;
 }
 
-#entry.corrupt{
+#entry.corrupt {
   color:#f3edf1;
   background:#17151c;
 }
 
-#entry.corrupt .error-heading{
+#entry.corrupt .error-heading {
   animation:shake .07s steps(2) infinite;
 }
 
 #entry.corrupt .error-heading::before,
-#entry.corrupt .error-heading::after{
+#entry.corrupt .error-heading::after {
   content:"This page isn't working";
   position:absolute;
   inset:0;
@@ -171,52 +171,52 @@ button:focus-visible{
   font:inherit;
 }
 
-#entry.corrupt .error-heading::before{
+#entry.corrupt .error-heading::before {
   color:#ff84b9;
   clip-path:inset(0 0 53% 0);
   animation:splitA .09s steps(2) infinite;
 }
 
-#entry.corrupt .error-heading::after{
+#entry.corrupt .error-heading::after {
   color:#83d9e9;
   clip-path:inset(55% 0 0 0);
   animation:splitB .12s steps(2) infinite;
 }
 
 #entry.corrupt .error-description,
-#entry.corrupt .error-code{
+#entry.corrupt .error-code {
   color:#aaa1ad;
 }
 
-#entry.corrupt .entry-button{
+#entry.corrupt .entry-button {
   color:#eee;
   background:#26212b;
   border-color:#554a5b;
 }
 
-@keyframes shake{
-  0%{transform:translate(-3px,0)}
-  50%{transform:translate(5px,1px)}
-  100%{transform:translate(-2px,-1px)}
+@keyframes shake {
+  0% {transform:translate(-3px,0)}
+  50% {transform:translate(5px,1px)}
+  100% {transform:translate(-2px,-1px)}
 }
 
-@keyframes splitA{
-  0%{transform:translate(-9px,1px)}
-  50%{transform:translate(8px,-2px)}
-  100%{transform:translate(-4px,2px)}
+@keyframes splitA {
+  0% {transform:translate(-9px,1px)}
+  50% {transform:translate(8px,-2px)}
+  100% {transform:translate(-4px,2px)}
 }
 
-@keyframes splitB{
-  0%{transform:translate(9px,-2px)}
-  50%{transform:translate(-7px,2px)}
-  100%{transform:translate(4px,0)}
+@keyframes splitB {
+  0% {transform:translate(9px,-2px)}
+  50% {transform:translate(-7px,2px)}
+  100% {transform:translate(4px,0)}
 }
 
 /* =========================
-   GLITCH NOISE
+   GLOBAL NOISE
 ========================= */
 
-#noise{
+#noise {
   position:absolute;
   inset:0;
   width:100%;
@@ -227,15 +227,15 @@ button:focus-visible{
   image-rendering:pixelated;
 }
 
-#noise.active{
-  opacity:.65;
+#noise.active {
+  opacity:.78;
 }
 
 /* =========================
    HOME
 ========================= */
 
-#home{
+#home {
   z-index:2;
   background:
     radial-gradient(
@@ -255,13 +255,13 @@ button:focus-visible{
   transition:opacity .8s ease;
 }
 
-#home.visible{
+#home.visible {
   opacity:1;
   visibility:visible;
   pointer-events:auto;
 }
 
-.home-grid{
+.home-grid {
   position:absolute;
   inset:0;
   pointer-events:none;
@@ -279,7 +279,7 @@ button:focus-visible{
   background-size:20% 17%;
 }
 
-.home-header{
+.home-header {
   position:absolute;
   top:0;
   left:0;
@@ -295,17 +295,17 @@ button:focus-visible{
   backdrop-filter:blur(14px);
 }
 
-.brand{
+.brand {
   font:700 15px var(--display);
   letter-spacing:-.05em;
 }
 
-.header-middle{
+.header-middle {
   color:#91838d;
   font:9px var(--mono);
 }
 
-.menu-trigger{
+.menu-trigger {
   width:42px;
   height:42px;
   display:grid;
@@ -315,13 +315,13 @@ button:focus-visible{
   border:1px solid var(--ink);
 }
 
-.menu-trigger span{
+.menu-trigger span {
   width:18px;
   height:1px;
   background:var(--ink);
 }
 
-.home-stage{
+.home-stage {
   position:absolute;
   inset:calc(76px + env(safe-area-inset-top)) 0 0;
   overflow:hidden;
@@ -331,7 +331,7 @@ button:focus-visible{
    ROTATING TEXT BACKGROUND
 ========================= */
 
-.background-orbit{
+.background-orbit {
   position:absolute;
   z-index:1;
   left:50%;
@@ -343,26 +343,26 @@ button:focus-visible{
   pointer-events:none;
 }
 
-.background-orbit svg{
+.background-orbit svg {
   display:block;
   width:100%;
   height:100%;
   animation:orbitRotate 32s linear infinite;
 }
 
-.background-orbit text{
+.background-orbit text {
   font:10px var(--mono);
   letter-spacing:3px;
   fill:#b18aa5;
 }
 
-.background-orbit .orbit-outline{
+.background-orbit .orbit-outline {
   fill:none;
   stroke:#d8b7cb;
   stroke-width:.65;
 }
 
-.background-orbit::before{
+.background-orbit::before {
   content:"";
   position:absolute;
   inset:19%;
@@ -370,7 +370,7 @@ button:focus-visible{
   border-radius:50%;
 }
 
-.background-orbit::after{
+.background-orbit::after {
   content:"";
   position:absolute;
   inset:32%;
@@ -379,15 +379,15 @@ button:focus-visible{
   animation:orbitReverse 50s linear infinite;
 }
 
-@keyframes orbitRotate{
-  to{transform:rotate(360deg)}
+@keyframes orbitRotate {
+  to {transform:rotate(360deg)}
 }
 
-@keyframes orbitReverse{
-  to{transform:rotate(-360deg)}
+@keyframes orbitReverse {
+  to {transform:rotate(-360deg)}
 }
 
-.orbit-glow{
+.orbit-glow {
   position:absolute;
   z-index:0;
   left:50%;
@@ -408,10 +408,10 @@ button:focus-visible{
 }
 
 /* =========================
-   HOME TITLE
+   MAIN TITLE
 ========================= */
 
-.hero{
+.hero {
   position:absolute;
   z-index:4;
   left:0;
@@ -422,14 +422,14 @@ button:focus-visible{
   pointer-events:none;
 }
 
-.hero-kicker{
+.hero-kicker {
   color:#877589;
   font:9px var(--mono);
   letter-spacing:.16em;
   margin-bottom:20px;
 }
 
-.hero-title{
+.hero-title {
   position:relative;
   display:block;
   width:max-content;
@@ -441,18 +441,18 @@ button:focus-visible{
   white-space:nowrap;
 }
 
-.hero-title.glitch{
-  animation:shake .08s steps(2) 5;
+.hero-title.glitch {
+  animation:shake .08s steps(2) 3;
 }
 
-.hero-sub{
+.hero-sub {
   margin-top:12px;
   color:#9c7791;
   font:9px var(--mono);
   letter-spacing:.15em;
 }
 
-.home-side-label{
+.home-side-label {
   position:absolute;
   top:25px;
   left:22px;
@@ -462,7 +462,7 @@ button:focus-visible{
   letter-spacing:.12em;
 }
 
-.home-vertical{
+.home-vertical {
   position:absolute;
   top:23%;
   right:15px;
@@ -473,7 +473,7 @@ button:focus-visible{
   letter-spacing:.12em;
 }
 
-.home-caption{
+.home-caption {
   position:absolute;
   z-index:5;
   bottom:calc(94px + env(safe-area-inset-bottom));
@@ -484,10 +484,10 @@ button:focus-visible{
 }
 
 /* =========================
-   HOME NAV
+   HOME NAVIGATION
 ========================= */
 
-.home-navigation{
+.home-navigation {
   position:absolute;
   bottom:0;
   left:0;
@@ -501,7 +501,7 @@ button:focus-visible{
   backdrop-filter:blur(18px);
 }
 
-.home-nav-button{
+.home-nav-button {
   min-width:0;
   height:78px;
   padding:14px 8px 12px;
@@ -515,409 +515,29 @@ button:focus-visible{
   color:var(--ink);
 }
 
-.home-nav-button:last-child{
+.home-nav-button:last-child {
   border-right:0;
 }
 
-.home-nav-button strong{
+.home-nav-button strong {
   font:600 clamp(8px,2.5vw,13px) var(--display);
   letter-spacing:-.04em;
 }
 
-.home-nav-button small{
+.home-nav-button small {
   font:9px var(--mono);
   color:#b989a6;
 }
 
-.home-nav-button:active{
+.home-nav-button:active {
   background:rgba(222,177,205,.22);
-}
-
-/* =========================
-   DARK TRANSITION
-========================= */
-
-#transition{
-  position:absolute;
-  inset:0;
-  z-index:40;
-  visibility:hidden;
-  pointer-events:none;
-  overflow:hidden;
-}
-
-#transition.active{
-  visibility:visible;
-}
-
-.transition-darkness{
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(
-      ellipse at 50% 0%,
-      #34303b 0%,
-      #191720 43%,
-      #0d0c14 100%
-    );
-  clip-path:inset(0 0 100% 0);
-  will-change:clip-path;
-}
-
-#transition.active .transition-darkness{
-  animation:darknessDescend 1.35s cubic-bezier(.42,0,.16,1) forwards;
-}
-
-@keyframes darknessDescend{
-  0%{
-    clip-path:inset(0 0 100% 0);
-  }
-  22%{
-    clip-path:inset(0 0 83% 0);
-  }
-  70%{
-    clip-path:inset(0 0 24% 0);
-  }
-  100%{
-    clip-path:inset(0 0 0 0);
-  }
-}
-
-.transition-text{
-  position:absolute;
-  z-index:5;
-  left:50%;
-  top:54%;
-  transform:translate(-50%,-50%);
-  white-space:nowrap;
-  color:#d7b7cc;
-  font:10px var(--mono);
-  letter-spacing:.18em;
-  opacity:0;
-}
-
-#transition.active .transition-text{
-  animation:transitionText 1.4s ease forwards;
-}
-
-@keyframes transitionText{
-  0%,35%{
-    opacity:0;
-    transform:translate(-50%,-40%);
-  }
-  55%,80%{
-    opacity:1;
-    transform:translate(-50%,-50%);
-  }
-  100%{
-    opacity:0;
-  }
-}
-
-/* =========================
-   CHAIN APPEARANCE
-========================= */
-
-/*
-  Each chain is made with SVG link shapes.
-  They descend from above with different
-  lengths, delays and positions.
-*/
-
-.transition-chains{
-  position:absolute;
-  inset:0;
-  z-index:4;
-  pointer-events:none;
-}
-
-.chain{
-  --duration:1s;
-  --delay:0s;
-  position:absolute;
-  top:0;
-  left:var(--x);
-  width:var(--w,18px);
-  height:var(--length);
-  overflow:visible;
-  transform:translateY(calc(-100% - 30px));
-  transform-origin:top center;
-}
-
-.chain svg{
-  display:block;
-  width:100%;
-  height:100%;
-  overflow:visible;
-}
-
-#transition.active .chain{
-  animation:chainDrop var(--duration)
-    cubic-bezier(.17,.82,.32,1.07)
-    var(--delay) forwards;
-}
-
-@keyframes chainDrop{
-  0%{
-    transform:translateY(calc(-100% - 30px));
-  }
-  75%{
-    transform:translateY(12px);
-  }
-  89%{
-    transform:translateY(-5px);
-  }
-  100%{
-    transform:translateY(0);
-  }
-}
-
-.chain:nth-child(1){
-  --x:7%;
-  --length:55%;
-  --w:16px;
-  --duration:1s;
-  --delay:.05s;
-}
-
-.chain:nth-child(2){
-  --x:23%;
-  --length:29%;
-  --w:14px;
-  --duration:.85s;
-  --delay:.2s;
-}
-
-.chain:nth-child(3){
-  --x:41%;
-  --length:70%;
-  --w:21px;
-  --duration:1.15s;
-  --delay:.1s;
-}
-
-.chain:nth-child(4){
-  --x:63%;
-  --length:38%;
-  --w:16px;
-  --duration:.95s;
-  --delay:.3s;
-}
-
-.chain:nth-child(5){
-  --x:82%;
-  --length:63%;
-  --w:20px;
-  --duration:1.15s;
-  --delay:.15s;
-}
-
-.chain:nth-child(6){
-  --x:96%;
-  --length:25%;
-  --w:13px;
-  --duration:.85s;
-  --delay:.36s;
-}
-
-/* =========================
-   DARK CONTENT PAGE
-========================= */
-
-#panel{
-  position:absolute;
-  inset:0;
-  z-index:16;
-  color:#eee6ef;
-  background:
-    radial-gradient(
-      ellipse at 50% 0%,
-      rgba(78,64,79,.38),
-      transparent 55%
-    ),
-    linear-gradient(
-      180deg,
-      #24212c 0%,
-      #14121c 55%,
-      #0d0c14 100%
-    );
-  visibility:hidden;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .3s,visibility .3s;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-}
-
-#panel.open{
-  visibility:visible;
-  opacity:1;
-  pointer-events:auto;
-}
-
-.panel-grid{
-  position:absolute;
-  inset:0;
-  background-image:
-    linear-gradient(
-      to right,
-      rgba(220,194,216,.035) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(220,194,216,.035) 1px,
-      transparent 1px
-    );
-  background-size:20% 17%;
-  pointer-events:none;
-}
-
-.panel-chain-layer{
-  position:absolute;
-  inset:0;
-  z-index:1;
-  pointer-events:none;
-}
-
-.panel-chain-layer .chain{
-  transform:translateY(0);
-  opacity:.58;
-}
-
-.panel-chain-layer .chain:nth-child(1){
-  --length:37%;
-}
-
-.panel-chain-layer .chain:nth-child(2){
-  --length:23%;
-}
-
-.panel-chain-layer .chain:nth-child(3){
-  --length:51%;
-}
-
-.panel-chain-layer .chain:nth-child(4){
-  --length:27%;
-}
-
-.panel-chain-layer .chain:nth-child(5){
-  --length:42%;
-}
-
-.panel-chain-layer .chain:nth-child(6){
-  --length:19%;
-}
-
-.panel-head{
-  position:relative;
-  z-index:5;
-  height:calc(84px + env(safe-area-inset-top));
-  min-height:calc(84px + env(safe-area-inset-top));
-  padding:env(safe-area-inset-top) 24px 0;
-  border-bottom:1px solid rgba(222,191,215,.2);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:rgba(13,12,20,.55);
-  backdrop-filter:blur(9px);
-}
-
-.panel-brand{
-  color:#d7b9cf;
-  font:10px var(--mono);
-  letter-spacing:.1em;
-}
-
-.back-button{
-  border:1px solid rgba(226,190,216,.45);
-  padding:10px 15px;
-  background:rgba(255,255,255,.04);
-  color:#eee0eb;
-  font:10px var(--mono);
-}
-
-.panel-content{
-  position:relative;
-  z-index:3;
-  flex:1;
-  min-height:0;
-  padding:48px 24px 70px;
-  overflow-y:auto;
-  overscroll-behavior:contain;
-  -webkit-overflow-scrolling:touch;
-  touch-action:pan-y;
-}
-
-.panel-kicker{
-  color:#ca99bb;
-  font:10px var(--mono);
-  letter-spacing:.15em;
-}
-
-.panel-title{
-  margin:26px 0 15px;
-  max-width:100%;
-  font:700 clamp(39px,10.5vw,105px)/1 var(--display);
-  letter-spacing:-.07em;
-  overflow-wrap:anywhere;
-  text-shadow:0 5px 20px rgba(0,0,0,.3);
-}
-
-.panel-title-glow{
-  width:70px;
-  height:2px;
-  background:#c48eaf;
-  box-shadow:0 0 17px rgba(211,145,192,.8);
-  margin:22px 0;
-}
-
-.panel-description{
-  max-width:420px;
-  margin:26px 0;
-  color:#baaebc;
-  font-size:13px;
-  line-height:2;
-}
-
-.panel-placeholder{
-  margin-top:50px;
-  min-height:190px;
-  padding:25px 23px;
-  border:1px solid rgba(214,177,205,.25);
-  background:rgba(12,11,19,.65);
-  backdrop-filter:blur(8px);
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  gap:24px;
-}
-
-.panel-placeholder-number{
-  color:rgba(209,148,187,.65);
-  font:600 75px/1 var(--display);
-  letter-spacing:-.08em;
-}
-
-.panel-placeholder-label{
-  color:#c8a9bf;
-  font:10px var(--mono);
-  letter-spacing:.1em;
-}
-
-.panel-warning{
-  margin-top:25px;
-  color:#8e7b8d;
-  font:9px var(--mono);
-  letter-spacing:.08em;
 }
 
 /* =========================
    MENU
 ========================= */
 
-#menu{
+#menu {
   position:absolute;
   inset:0;
   z-index:18;
@@ -926,7 +546,7 @@ button:focus-visible{
   visibility:hidden;
   opacity:0;
   pointer-events:none;
-  transition:opacity .4s,visibility .4s;
+  transition:opacity .18s,visibility .18s;
   padding:
     max(30px,env(safe-area-inset-top))
     24px
@@ -936,13 +556,13 @@ button:focus-visible{
   overflow:hidden;
 }
 
-#menu.open{
+#menu.open {
   visibility:visible;
   opacity:1;
   pointer-events:auto;
 }
 
-.menu-top{
+.menu-top {
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -950,7 +570,7 @@ button:focus-visible{
   padding-bottom:18px;
 }
 
-.close-menu{
+.close-menu {
   border:1px solid #8e7e8b;
   background:transparent;
   color:white;
@@ -958,11 +578,11 @@ button:focus-visible{
   font:10px var(--mono);
 }
 
-.menu-list{
+.menu-list {
   margin:auto 0;
 }
 
-.menu-item{
+.menu-item {
   display:flex;
   justify-content:space-between;
   align-items:baseline;
@@ -977,12 +597,12 @@ button:focus-visible{
   letter-spacing:-.065em;
 }
 
-.menu-item span{
+.menu-item span {
   font:10px var(--mono);
   color:#d9a4c3;
 }
 
-.menu-footer{
+.menu-footer {
   display:flex;
   justify-content:space-between;
   gap:10px;
@@ -991,68 +611,180 @@ button:focus-visible{
 }
 
 /* =========================
+   LIGHT CONTENT PANELS
+========================= */
+
+#panel {
+  position:absolute;
+  inset:0;
+  z-index:16;
+  background:
+    radial-gradient(
+      ellipse at 85% 20%,
+      rgba(231,201,220,.35),
+      transparent 55%
+    ),
+    #f2edf0;
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .18s,visibility .18s;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+#panel.open {
+  visibility:visible;
+  opacity:1;
+  pointer-events:auto;
+}
+
+.panel-head {
+  position:relative;
+  z-index:2;
+  min-height:calc(84px + env(safe-area-inset-top));
+  padding:env(safe-area-inset-top) 24px 0;
+  border-bottom:1px solid #d1c4cd;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+
+.panel-brand {
+  font:10px var(--mono);
+  letter-spacing:.07em;
+}
+
+.back-button {
+  background:transparent;
+  border:0;
+  color:var(--ink);
+  font:10px var(--mono);
+  padding:12px 0;
+}
+
+.panel-content {
+  position:relative;
+  z-index:2;
+  flex:1;
+  min-height:0;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  padding:38px 24px 60px;
+}
+
+.panel-kicker {
+  font:10px var(--mono);
+  color:#a77797;
+  letter-spacing:.15em;
+}
+
+.panel-title {
+  font:700 clamp(42px,11vw,110px)/1 var(--display);
+  letter-spacing:-.08em;
+  margin:24px 0;
+  overflow-wrap:anywhere;
+}
+
+.panel-rule {
+  height:1px;
+  background:#d2c2cd;
+  margin:30px 0;
+}
+
+.panel-description {
+  font-size:13px;
+  line-height:2;
+  color:#70636d;
+  max-width:520px;
+}
+
+.placeholder {
+  margin-top:35px;
+  border:1px solid #d0beca;
+  padding:28px 24px;
+  display:flex;
+  flex-direction:column;
+  gap:38px;
+  background:rgba(255,255,255,.3);
+}
+
+.placeholder strong {
+  color:#bb91ad;
+  font:600 53px var(--display);
+}
+
+.placeholder span {
+  font:10px var(--mono);
+  color:#857681;
+}
+
+/* =========================
    RESPONSIVE
 ========================= */
 
-@media(min-width:760px){
-  .home-header{
+@media(min-width:760px) {
+  .home-header {
     padding-left:44px;
     padding-right:44px;
   }
 
   .home-side-label,
-  .home-caption{
+  .home-caption {
     left:44px;
   }
 
-  .background-orbit{
+  .background-orbit {
     width:min(80vh,720px);
   }
 
-  .panel-content{
+  .panel-content {
     padding-left:8%;
   }
 
-  .panel-head{
+  .panel-head {
     padding-left:40px;
     padding-right:40px;
   }
 
-  .home-navigation{
+  .home-navigation {
     left:35%;
   }
 }
 
-@media(max-width:450px){
-  .hero{
+@media(max-width:450px) {
+  .hero {
     top:41%;
   }
 
-  .hero-title{
+  .hero-title {
     font-size:clamp(55px,14.5vw,85px);
   }
 
-  .background-orbit{
+  .background-orbit {
     top:42%;
     width:119vw;
   }
 
-  .home-nav-button{
+  .home-nav-button {
     height:70px;
     padding:12px 6px;
   }
 
-  .home-caption{
+  .home-caption {
     bottom:calc(85px + env(safe-area-inset-bottom));
   }
 
-  .panel-title{
+  .panel-title {
     font-size:clamp(37px,10vw,54px);
   }
 }
 
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after {
     animation-duration:.01ms!important;
     animation-iteration-count:1!important;
     transition-duration:.01ms!important;
@@ -1064,10 +796,7 @@ button:focus-visible{
 <body>
 <div id="app">
 
-<!-- =========================
-     ERROR OPENING
-========================= -->
-
+<!-- ERROR OPENING -->
 <section id="entry" class="screen">
   <main class="entry-content">
 
@@ -1115,12 +844,10 @@ button:focus-visible{
   </main>
 </section>
 
+<!-- GLOBAL NOISE -->
 <canvas id="noise" aria-hidden="true"></canvas>
 
-<!-- =========================
-     HOME
-========================= -->
-
+<!-- HOME -->
 <section id="home"
   class="screen"
   aria-hidden="true">
@@ -1148,9 +875,10 @@ button:focus-visible{
 
     <div class="orbit-glow"></div>
 
-    <!-- ROTATING BACKGROUND TEXT -->
+    <!-- ROTATING TEXT BACKGROUND -->
+    <div class="background-orbit"
+      aria-hidden="true">
 
-    <div class="background-orbit" aria-hidden="true">
       <svg viewBox="0 0 400 400">
         <defs>
           <path id="backgroundTextPath"
@@ -1177,6 +905,7 @@ button:focus-visible{
           </textPath>
         </text>
       </svg>
+
     </div>
 
     <div class="home-side-label">
@@ -1188,7 +917,6 @@ button:focus-visible{
     </div>
 
     <!-- MAIN TITLE -->
-
     <div class="hero">
 
       <div class="hero-kicker">
@@ -1212,7 +940,6 @@ button:focus-visible{
     </div>
 
     <!-- NAVIGATION -->
-
     <nav class="home-navigation">
 
       <button class="home-nav-button"
@@ -1244,15 +971,14 @@ button:focus-visible{
   </main>
 </section>
 
-<!-- =========================
-     MENU
-========================= -->
-
+<!-- MENU -->
 <aside id="menu" aria-hidden="true">
 
   <header class="menu-top">
     <span class="mono">SUGERROR / INDEX</span>
-    <button id="menuClose" class="close-menu">
+
+    <button id="menuClose"
+      class="close-menu">
       CLOSE ×
     </button>
   </header>
@@ -1288,46 +1014,18 @@ button:focus-visible{
 
 </aside>
 
-<!-- =========================
-     DARK TRANSITION
-========================= -->
-
-<div id="transition"
-  aria-hidden="true">
-
-  <div class="transition-darkness"></div>
-
-  <div class="transition-chains"
-    id="transitionChains">
-  </div>
-
-  <div class="transition-text">
-    DESCENDING INTO THE UNKNOWN
-  </div>
-
-</div>
-
-<!-- =========================
-     DARK CONTENT PANEL
-========================= -->
-
+<!-- LIGHT CONTENT PANEL -->
 <section id="panel" aria-hidden="true">
-
-  <div class="panel-grid"></div>
-
-  <div class="panel-chain-layer"
-    id="panelChains">
-  </div>
 
   <header class="panel-head">
 
     <span class="panel-brand">
-      SUGERROR / UNKNOWN
+      SUGERROR / DIRECTORY
     </span>
 
     <button id="panelBack"
       class="back-button">
-      ← RETURN
+      ← BACK
     </button>
 
   </header>
@@ -1344,25 +1042,16 @@ button:focus-visible{
       CHARACTERS
     </h2>
 
-    <div class="panel-title-glow"></div>
+    <div class="panel-rule"></div>
 
     <p class="panel-description"
       id="panelDescription"></p>
 
-    <div class="panel-placeholder">
-
-      <div class="panel-placeholder-number">
-        404.
-      </div>
-
-      <div class="panel-placeholder-label">
+    <div class="placeholder">
+      <strong>404.</strong>
+      <span>
         CONTENT IS UNDER CONSTRUCTION.
-      </div>
-
-    </div>
-
-    <div class="panel-warning">
-      [ CAUTION : ARCHIVE INCOMPLETE ]
+      </span>
     </div>
 
   </div>
@@ -1394,9 +1083,6 @@ const menu =
 const panel =
   document.getElementById("panel");
 
-const transition =
-  document.getElementById("transition");
-
 const menuOpen =
   document.getElementById("menuOpen");
 
@@ -1418,13 +1104,13 @@ const reducedMotion =
   );
 
 let entering=false;
+let entered=false;
 let glitchActive=false;
 let frameId=null;
 let lastFrame=0;
-let periodicTimer=null;
+let ambientTimer=null;
+let noiseStopTimer=null;
 let transitionBusy=false;
-let transitionTimer=null;
-let transitionCleanupTimer=null;
 
 /* =========================
    ZOOM PREVENTION
@@ -1501,18 +1187,18 @@ document.addEventListener(
 );
 
 /* =========================
-   NOISE
+   NOISE CANVAS
 ========================= */
 
 function resizeNoise(){
-  noise.width=190;
+  noise.width=220;
 
   noise.height=Math.max(
     180,
     Math.min(
-      420,
+      480,
       Math.round(
-        190*innerHeight/
+        220*innerHeight/
         Math.max(innerWidth,1)
       )
     )
@@ -1524,36 +1210,84 @@ function drawNoise(time){
     return;
   }
 
-  if(time-lastFrame>45){
+  if(time-lastFrame>35){
     lastFrame=time;
 
     const w=noise.width;
     const h=noise.height;
-
     const data=ctx.createImageData(w,h);
     const p=data.data;
 
-    for(let i=0;i<p.length;i+=4){
-      const v=Math.random()>.52?255:0;
+    /*
+      Grainy noise with occasional
+      pink and blue pixels.
+    */
 
-      p[i]=v;
-      p[i+1]=v;
-      p[i+2]=v;
-      p[i+3]=Math.random()*160;
+    for(let i=0;i<p.length;i+=4){
+      const random=Math.random();
+      const v=random>.5?255:0;
+
+      if(random>.985){
+        p[i]=255;
+        p[i+1]=100;
+        p[i+2]=180;
+      }else if(random<.015){
+        p[i]=100;
+        p[i+1]=215;
+        p[i+2]=240;
+      }else{
+        p[i]=v;
+        p[i+1]=v;
+        p[i+2]=v;
+      }
+
+      p[i+3]=Math.random()*195;
     }
 
     ctx.putImageData(data,0,0);
 
-    for(let i=0;i<8;i++){
-      ctx.fillStyle=Math.random()>.5
-        ?"rgba(255,120,177,.65)"
-        :"rgba(110,210,230,.65)";
+    /*
+      Horizontal digital error lines.
+    */
+
+    for(let i=0;i<12;i++){
+      const colors=[
+        "rgba(255,120,177,.75)",
+        "rgba(110,210,230,.7)",
+        "rgba(255,255,255,.5)",
+        "rgba(35,28,48,.7)"
+      ];
+
+      ctx.fillStyle=
+        colors[Math.floor(Math.random()*colors.length)];
+
+      ctx.fillRect(
+        Math.random()*(-w*.2),
+        Math.random()*h,
+        w*(.4+Math.random()*.9),
+        Math.random()*4+1
+      );
+    }
+
+    /*
+      Short horizontal displacement
+      bars for a broken-screen effect.
+    */
+
+    for(let i=0;i<4;i++){
+      const y=Math.random()*h;
+      const barH=Math.random()*9+2;
+
+      ctx.fillStyle=
+        Math.random()>.5
+          ?"rgba(248,189,223,.38)"
+          :"rgba(163,222,239,.35)";
 
       ctx.fillRect(
         0,
-        Math.random()*h,
+        y,
         w,
-        Math.random()*5+1
+        barH
       );
     }
   }
@@ -1591,6 +1325,23 @@ function stopNoise(){
   );
 }
 
+function flashNoise(duration=140){
+  if(
+    reducedMotion.matches ||
+    document.hidden
+  ){
+    return;
+  }
+
+  clearTimeout(noiseStopTimer);
+
+  startNoise();
+
+  noiseStopTimer=setTimeout(()=>{
+    stopNoise();
+  },duration);
+}
+
 /* =========================
    ERROR ENTRY
 ========================= */
@@ -1619,7 +1370,8 @@ function enterWorld(){
       "false"
     );
 
-    startAmbientGlitch();
+    entered=true;
+    scheduleAmbientNoise();
 
   },reducedMotion.matches?100:1100);
 }
@@ -1630,187 +1382,103 @@ enterButton.addEventListener(
 );
 
 /* =========================
-   AMBIENT GLITCH
-========================= */
-
-function startAmbientGlitch(){
-  clearInterval(periodicTimer);
-
-  if(reducedMotion.matches){
-    return;
-  }
-
-  periodicTimer=setInterval(()=>{
-    if(
-      menu.classList.contains("open") ||
-      panel.classList.contains("open") ||
-      transitionBusy
-    ){
-      return;
-    }
-
-    heroTitle.classList.add("glitch");
-
-    setTimeout(()=>{
-      heroTitle.classList.remove(
-        "glitch"
-      );
-    },450);
-
-  },8000);
-}
-
-/* =========================
-   SVG CHAIN GENERATOR
+   RANDOM GLOBAL GLITCH
 ========================= */
 
 /*
-  Draws an actual chain from repeated
-  interlocking oval links.
+  An occasional burst appears across
+  the entire visible screen, including
+  the home page, menu and panels.
 
-  Every chain gets a different length
-  through its CSS variables.
+  The interval varies from around
+  3.5 to 8 seconds, rather than being
+  a fixed repeating animation.
 */
 
-function makeChainSVG(){
-  return `
-    <svg
-      viewBox="0 0 24 800"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg">
+function scheduleAmbientNoise(){
+  clearTimeout(ambientTimer);
 
-      <defs>
-        <linearGradient
-          id="chainMetal"
-          x1="0" y1="0"
-          x2="1" y2="0">
-          <stop offset="0%"
-            stop-color="#443e4c"/>
-          <stop offset="35%"
-            stop-color="#c1aabf"/>
-          <stop offset="65%"
-            stop-color="#837789"/>
-          <stop offset="100%"
-            stop-color="#2c2934"/>
-        </linearGradient>
-
-        <pattern
-          id="chainPattern"
-          width="24"
-          height="29"
-          patternUnits="userSpaceOnUse">
-
-          <ellipse
-            cx="12"
-            cy="8"
-            rx="5.6"
-            ry="10.5"
-            fill="none"
-            stroke="url(#chainMetal)"
-            stroke-width="4"/>
-
-          <ellipse
-            cx="12"
-            cy="22"
-            rx="5.6"
-            ry="10.5"
-            fill="none"
-            stroke="#8f8191"
-            stroke-width="3.3"/>
-
-          <path
-            d="M 10 2 L 10 13"
-            stroke="#ead4e3"
-            stroke-width=".65"
-            opacity=".6"/>
-        </pattern>
-      </defs>
-
-      <rect
-        x="0"
-        y="0"
-        width="24"
-        height="800"
-        fill="url(#chainPattern)"/>
-
-    </svg>
-  `;
-}
-
-function createChains(containerId){
-  const container=
-    document.getElementById(containerId);
-
-  container.innerHTML="";
-
-  for(let i=0;i<6;i++){
-    const chain=document.createElement("div");
-
-    chain.className="chain";
-    chain.innerHTML=makeChainSVG();
-
-    container.appendChild(chain);
+  if(
+    !entered ||
+    reducedMotion.matches ||
+    document.hidden
+  ){
+    return;
   }
-}
 
-createChains("transitionChains");
-createChains("panelChains");
+  const delay=
+    3500+Math.random()*4500;
+
+  ambientTimer=setTimeout(()=>{
+    if(!transitionBusy){
+      const duration=
+        95+Math.random()*115;
+
+      flashNoise(duration);
+
+      /*
+        Occasionally jitter the title
+        alongside the global noise.
+      */
+
+      if(
+        !panel.classList.contains("open") &&
+        !menu.classList.contains("open") &&
+        Math.random()>.4
+      ){
+        heroTitle.classList.add("glitch");
+
+        setTimeout(()=>{
+          heroTitle.classList.remove("glitch");
+        },220);
+      }
+    }
+
+    scheduleAmbientNoise();
+
+  },delay);
+}
 
 /* =========================
-   DARK TRANSITION
+   FAST SCENE TRANSITION
 ========================= */
 
-function descendIntoDarkness(callback){
+function glitchTransition(callback){
   if(transitionBusy){
     return;
   }
 
   transitionBusy=true;
 
-  clearTimeout(transitionTimer);
-  clearTimeout(transitionCleanupTimer);
-
   if(reducedMotion.matches){
     callback();
     transitionBusy=false;
     return;
   }
 
-  /*
-    Restart the animations each time
-    a navigation button is pressed.
-  */
+  clearTimeout(noiseStopTimer);
 
-  transition.classList.remove("active");
+  startNoise();
 
-  void transition.offsetWidth;
-
-  transition.classList.add("active");
-  transition.setAttribute(
-    "aria-hidden",
-    "false"
-  );
+  heroTitle.classList.add("glitch");
 
   /*
-    The screen is covered from top
-    to bottom before the new page
-    appears.
+    A faster 180ms transition.
+    Callback occurs during the noise
+    rather than after a long pause.
   */
 
-  transitionTimer=setTimeout(()=>{
+  setTimeout(()=>{
     callback();
-  },1280);
 
-  transitionCleanupTimer=setTimeout(()=>{
-    transition.classList.remove("active");
-    transition.setAttribute(
-      "aria-hidden",
-      "true"
-    );
+    heroTitle.classList.remove("glitch");
 
-    transitionBusy=false;
-  },1450);
+    setTimeout(()=>{
+      stopNoise();
+      transitionBusy=false;
+    },35);
+
+  },145);
 }
 
 /* =========================
@@ -1818,10 +1486,6 @@ function descendIntoDarkness(callback){
 ========================= */
 
 function openMenu(){
-  if(transitionBusy){
-    return;
-  }
-
   menu.classList.add("open");
   menu.setAttribute(
     "aria-hidden",
@@ -1837,18 +1501,16 @@ function closeMenu(){
   );
 }
 
-menuOpen.addEventListener(
-  "click",
-  openMenu
-);
+menuOpen.addEventListener("click",()=>{
+  glitchTransition(openMenu);
+});
 
-menuClose.addEventListener(
-  "click",
-  closeMenu
-);
+menuClose.addEventListener("click",()=>{
+  glitchTransition(closeMenu);
+});
 
 /* =========================
-   PAGES
+   CONTENT PAGES
 ========================= */
 
 const pages={
@@ -1897,10 +1559,9 @@ function openPanel(name){
     "panelDescription"
   ).textContent=page.description;
 
-  const panelContent=
-    document.querySelector(".panel-content");
-
-  panelContent.scrollTop=0;
+  document.querySelector(
+    ".panel-content"
+  ).scrollTop=0;
 
   panel.classList.add("open");
   panel.setAttribute(
@@ -1910,10 +1571,6 @@ function openPanel(name){
 }
 
 function closePanel(){
-  if(transitionBusy){
-    return;
-  }
-
   panel.classList.remove("open");
   panel.setAttribute(
     "aria-hidden",
@@ -1922,7 +1579,7 @@ function closePanel(){
 }
 
 /* =========================
-   NAVIGATION EVENTS
+   BUTTON EVENTS
 ========================= */
 
 document.querySelectorAll(
@@ -1939,27 +1596,26 @@ document.querySelectorAll(
 
       const name=button.dataset.page;
 
-      /*
-        Close the menu first, then
-        animate chains and darkness.
-      */
+      glitchTransition(()=>{
+        if(menu.classList.contains("open")){
+          closeMenu();
+        }
 
-      if(menu.classList.contains("open")){
-        closeMenu();
-      }
-
-      descendIntoDarkness(()=>{
         openPanel(name);
       });
-
     }
   );
-
 });
 
 panelBack.addEventListener(
   "click",
-  closePanel
+  ()=>{
+    if(transitionBusy){
+      return;
+    }
+
+    glitchTransition(closePanel);
+  }
 );
 
 /* =========================
@@ -1979,7 +1635,11 @@ document.addEventListener(
   "visibilitychange",
   ()=>{
     if(document.hidden){
+      clearTimeout(ambientTimer);
+      clearTimeout(noiseStopTimer);
       stopNoise();
+    }else if(entered){
+      scheduleAmbientNoise();
     }
   }
 );
