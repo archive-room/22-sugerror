@@ -12,13 +12,22 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+@font-face{
+  font-family:"Saint Timothy";
+  src:url("./Saint%20Timothy.otf") format("opentype");
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+}
+
 :root{
   --paper:#f5f1f2;
   --ink:#28272c;
   --pink:#d99dbd;
   --line:#d6d2d5;
-  --mono:'DM Mono',monospace;
-  --display:'Space Grotesk',sans-serif;
+  --mono:"DM Mono",monospace;
+  --display:"Space Grotesk",sans-serif;
+  --script:"Saint Timothy",cursive;
 }
 *{
   box-sizing:border-box;
@@ -32,7 +41,6 @@ html,body{
   overscroll-behavior:none;
   touch-action:manipulation;
   -webkit-text-size-adjust:100%;
-  text-size-adjust:100%;
 }
 html{
   position:fixed;
@@ -43,7 +51,7 @@ body{
   inset:0;
   background:#fff;
   color:var(--ink);
-  font-family:'DM Sans',sans-serif;
+  font-family:"DM Sans",sans-serif;
   -webkit-tap-highlight-color:transparent;
 }
 button{
@@ -322,11 +330,18 @@ button:focus-visible{
   animation:rotateBack 40s linear infinite;
 }
 @keyframes rotate{
-  to{transform:rotate(360deg)}
+  to{
+    transform:rotate(360deg);
+  }
 }
 @keyframes rotateBack{
-  to{transform:rotate(-360deg)}
+  to{
+    transform:rotate(-360deg);
+  }
 }
+
+/* SAINT TIMOTHY TITLE */
+
 .hero{
   position:absolute;
   z-index:3;
@@ -345,9 +360,15 @@ button:focus-visible{
 .hero-title{
   display:inline-block;
   position:relative;
+  max-width:100%;
+  padding:12px 8px 20px;
   margin:0;
-  font:700 clamp(52px,13vw,180px)/.95 var(--display);
-  letter-spacing:-.09em;
+  font-family:var(--script);
+  font-size:clamp(56px,14vw,150px);
+  font-weight:400;
+  line-height:1.1;
+  letter-spacing:0;
+  white-space:nowrap;
 }
 .hero-title .pink{
   color:var(--pink);
@@ -356,7 +377,7 @@ button:focus-visible{
   animation:shake .08s steps(2) 5;
 }
 .hero-sub{
-  margin-top:24px;
+  margin-top:16px;
   font:10px var(--mono);
   letter-spacing:.12em;
   color:#8c7484;
@@ -473,7 +494,7 @@ button:focus-visible{
   color:#c3aebd;
 }
 
-/* CONTENT PANEL */
+/* CONTENT */
 
 #panel{
   position:absolute;
@@ -760,7 +781,6 @@ button:focus-visible{
       data-page="FILES">
       FILES <span>04 ↗</span>
     </button>
-
   </div>
 
   <footer class="menu-footer">
@@ -834,17 +854,15 @@ let lastFrame=0;
 let periodicTimer=null;
 let transitionBusy=false;
 
-/* ZOOM PREVENTION */
+/* ZOOM CONTROL */
 
-/* Safari's gesture events */
 ["gesturestart","gesturechange","gestureend"]
-  .forEach(type=>{
-    document.addEventListener(type,event=>{
-      event.preventDefault();
-    },{passive:false});
-  });
+.forEach(type=>{
+  document.addEventListener(type,event=>{
+    event.preventDefault();
+  },{passive:false});
+});
 
-/* Prevent multi-finger page zoom */
 document.addEventListener("touchstart",event=>{
   if(event.touches.length>1){
     event.preventDefault();
@@ -857,8 +875,6 @@ document.addEventListener("touchmove",event=>{
   }
 },{passive:false});
 
-/* Prevent double-tap zoom while keeping
-   ordinary single taps functional */
 let lastTapTime=0;
 let lastTapX=0;
 let lastTapY=0;
@@ -869,12 +885,13 @@ document.addEventListener("touchend",event=>{
   const touch=event.changedTouches[0];
   const now=Date.now();
   const delta=now-lastTapTime;
+
   const distance=Math.hypot(
     touch.clientX-lastTapX,
     touch.clientY-lastTapY
   );
 
-  if(delta>0 && delta<300 && distance<30){
+  if(delta>0&&delta<300&&distance<30){
     event.preventDefault();
     lastTapTime=0;
   }else{
@@ -956,11 +973,10 @@ function stopNoise(){
   );
 }
 
-/* OPENING */
+/* ENTRY */
 
 function enterWorld(){
   if(entering)return;
-
   entering=true;
   enterButton.disabled=true;
 
@@ -975,20 +991,16 @@ function enterWorld(){
 
     home.classList.add("visible");
     home.setAttribute("aria-hidden","false");
-
     startAmbientGlitch();
   },reducedMotion.matches?100:1100);
 }
 
-enterButton.addEventListener(
-  "click",enterWorld
-);
+enterButton.addEventListener("click",enterWorld);
 
 /* AMBIENT GLITCH */
 
 function startAmbientGlitch(){
   clearInterval(periodicTimer);
-
   if(reducedMotion.matches)return;
 
   periodicTimer=setInterval(()=>{
@@ -1002,7 +1014,6 @@ function startAmbientGlitch(){
     setTimeout(()=>{
       heroTitle.classList.remove("glitch");
     },450);
-
   },8000);
 }
 
@@ -1010,7 +1021,6 @@ function startAmbientGlitch(){
 
 function glitchTransition(callback){
   if(transitionBusy)return;
-
   transitionBusy=true;
 
   if(reducedMotion.matches){
@@ -1046,11 +1056,9 @@ menuOpen.addEventListener("click",()=>{
   glitchTransition(openMenu);
 });
 
-menuClose.addEventListener(
-  "click",closeMenu
-);
+menuClose.addEventListener("click",closeMenu);
 
-/* CONTENT */
+/* PAGES */
 
 const pages={
   CHARACTERS:{
@@ -1098,39 +1106,28 @@ function closePanel(){
 }
 
 document.querySelectorAll("[data-page]")
-  .forEach(button=>{
-    button.addEventListener("click",()=>{
-      const name=button.dataset.page;
+.forEach(button=>{
+  button.addEventListener("click",()=>{
+    const name=button.dataset.page;
 
-      if(menu.classList.contains("open")){
-        closeMenu();
-
-        setTimeout(()=>{
-          openPanel(name);
-        },250);
-      }else{
-        glitchTransition(()=>{
-          openPanel(name);
-        });
-      }
-    });
+    if(menu.classList.contains("open")){
+      closeMenu();
+      setTimeout(()=>openPanel(name),250);
+    }else{
+      glitchTransition(()=>openPanel(name));
+    }
   });
+});
 
-panelBack.addEventListener(
-  "click",closePanel
-);
-
-/* WINDOW */
+panelBack.addEventListener("click",closePanel);
 
 window.addEventListener("resize",()=>{
   if(glitchActive)resizeNoise();
 });
 
-document.addEventListener(
-  "visibilitychange",()=>{
-    if(document.hidden)stopNoise();
-  }
-);
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden)stopNoise();
+});
 </script>
 </body>
 </html>
