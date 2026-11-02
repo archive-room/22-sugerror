@@ -3,411 +3,1055 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>SUGERROR</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#f4f1f0">
+<title>SUGERROR — A Sweet Malfunction</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Jost:wght@300;400;500;600;700;800&display=swap');
+:root{
+  --paper:#f4f1f0;
+  --ink:#26232c;
+  --pink:#d89aba;
+  --pale:#eecfdf;
+  --blue:#a9d4e0;
+  --line:#d4cbd0;
+  --mono:'DM Mono',monospace;
+  --display:'Space Grotesk',sans-serif;
+  --body:'DM Sans',sans-serif;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;width:100%;height:100%;
+  overflow:hidden;overscroll-behavior:none;
+}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  -webkit-tap-highlight-color:transparent;
+}
+button{font:inherit;cursor:pointer}
+button:focus-visible{
+  outline:2px solid #aa628c;
+  outline-offset:4px;
+}
+.screen{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  height:100dvh;
+  overflow:hidden;
+}
+.mono{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.1em;
+}
+.hidden{display:none!important}
 
-:root {
-  --ink: #29262d;
-  --pink: #df9bbf;
-  --blue: #a6d7e3;
+/* ===== ENTRY SCREEN ===== */
+#entry{
+  z-index:20;
+  background:var(--paper);
+  padding:
+    max(26px,env(safe-area-inset-top))
+    25px
+    max(24px,env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column;
+  transition:background .2s,color .2s;
 }
-* { box-sizing: border-box; }
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
+.entry-top,.entry-bottom{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  font-family:var(--mono);
+  font-size:9px;
+  letter-spacing:.08em;
 }
-body {
-  font-family: 'Jost', sans-serif;
-  background: #f5f4f2;
-  color: var(--ink);
+.entry-top{
+  border-bottom:1px solid var(--ink);
+  padding-bottom:15px;
 }
-button { font: inherit; }
-.screen {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
+.entry-bottom{
+  border-top:1px solid var(--ink);
+  padding-top:15px;
+}
+.entry-content{
+  margin:auto 0;
+  position:relative;
+}
+.entry-kicker{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font:10px var(--mono);
+  letter-spacing:.17em;
+}
+.entry-kicker::before{
+  content:"";
+  width:22px;height:1px;
+  background:currentColor;
+}
+.error-number{
+  font-family:var(--display);
+  font-size:clamp(96px,28vw,290px);
+  font-weight:700;
+  letter-spacing:-.105em;
+  line-height:.86;
+  margin:24px 0 26px -9px;
+  position:relative;
+}
+.error-number span{display:block}
+.error-info{
+  border-top:1px solid var(--line);
+  padding-top:17px;
+  max-width:340px;
+  font:10px/2 var(--mono);
+  letter-spacing:.04em;
+}
+.entry-button{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:30px;
+  padding:16px 18px;
+  min-width:215px;
+  background:var(--ink);
+  color:white;
+  border:0;
+  font:11px var(--mono);
+  letter-spacing:.08em;
+}
+.entry-button span:last-child{font-size:21px}
+.entry-side{
+  position:absolute;
+  right:0;top:0;
+  writing-mode:vertical-rl;
+  font:9px var(--mono);
+  letter-spacing:.2em;
+  opacity:.45;
+}
+#entry.corrupt{
+  background:#19151e;
+  color:#fff;
+}
+#entry.corrupt .entry-top,
+#entry.corrupt .entry-bottom{
+  border-color:#5c5361;
+}
+#entry.corrupt .error-number{
+  animation:entryJitter .095s steps(2,end) infinite;
+}
+#entry.corrupt .error-number::before,
+#entry.corrupt .error-number::after{
+  content:"ERROR\A 404";
+  white-space:pre;
+  position:absolute;inset:0;
+  pointer-events:none;
+}
+#entry.corrupt .error-number::before{
+  color:#ff7ab5;
+  clip-path:inset(12% 0 57% 0);
+  animation:splitLeft .11s steps(2,end) infinite;
+}
+#entry.corrupt .error-number::after{
+  color:#76d4e5;
+  clip-path:inset(56% 0 12% 0);
+  animation:splitRight .08s steps(2,end) infinite;
+}
+@keyframes entryJitter{
+  0%{transform:translateX(-4px)}
+  50%{transform:translateX(6px) skewX(-2deg)}
+  100%{transform:translateX(-2px)}
+}
+@keyframes splitLeft{
+  0%{transform:translate(-12px,2px)}
+  50%{transform:translate(10px,-3px)}
+  100%{transform:translate(-5px,0)}
+}
+@keyframes splitRight{
+  0%{transform:translate(10px,-1px)}
+  50%{transform:translate(-9px,3px)}
+  100%{transform:translate(4px,-2px)}
+}
+#noise{
+  position:fixed;
+  inset:0;
+  width:100%;height:100%;
+  opacity:0;
+  pointer-events:none;
+  z-index:80;
+  image-rendering:pixelated;
+}
+#noise.on{opacity:.66}
+
+/* ===== MAIN ===== */
+#home{
+  z-index:2;
+  background:var(--paper);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .8s ease;
+}
+#home.visible{
+  opacity:1;
+  pointer-events:auto;
+}
+.home-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(to right,rgba(51,43,57,.055) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(51,43,57,.055) 1px,transparent 1px);
+  background-size:20% 20%;
+  mask-image:linear-gradient(130deg,transparent 5%,black 100%);
+  pointer-events:none;
+}
+.home-header{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:76px;
+  padding:env(safe-area-inset-top) 24px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  z-index:9;
+}
+.brand{
+  font-family:var(--display);
+  font-size:15px;
+  font-weight:700;
+  letter-spacing:-.055em;
+}
+.brand sup{
+  font:8px var(--mono);
+  vertical-align:top;
+  margin-left:3px;
+}
+.header-middle{
+  font:9px var(--mono);
+  letter-spacing:.09em;
+  color:#807480;
+}
+.menu-trigger{
+  width:44px;height:44px;
+  border:1px solid var(--ink);
+  background:transparent;
+  display:grid;
+  place-content:center;
+  gap:6px;
+}
+.menu-trigger span{
+  display:block;
+  width:19px;height:1px;
+  background:var(--ink);
+  transition:transform .3s;
+}
+.menu-trigger:hover span:first-child{
+  transform:translateX(4px);
+}
+.menu-trigger:hover span:last-child{
+  transform:translateX(-4px);
 }
 
-/* ERROR SCREEN */
-#error {
-  display: flex;
-  flex-direction: column;
-  padding: 28px;
-  background: #f5f4f2;
-  z-index: 2;
-  cursor: pointer;
+/* Floating graphics */
+.artboard{
+  position:absolute;
+  inset:76px 0 84px;
+  overflow:hidden;
+  isolation:isolate;
 }
-.topline, .bottomline {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font: 10px 'DM Mono', monospace;
-  letter-spacing: 1px;
-}
-.topline {
-  padding-bottom: 14px;
-  border-bottom: 1px solid #bebbc0;
-}
-.bottomline {
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid #bebbc0;
-}
-.error-center {
-  margin: auto 0;
-  position: relative;
-}
-.micro {
-  font: 10px 'DM Mono', monospace;
-  letter-spacing: 2px;
-  color: #87818a;
-}
-.error-title {
-  margin: 18px 0;
-  font-size: clamp(65px, 18vw, 180px);
-  font-weight: 800;
-  letter-spacing: -.085em;
-  line-height: .88;
-  position: relative;
-}
-.error-title span {
-  display: block;
-}
-.error-description {
-  margin-top: 28px;
-  font: 11px/2 'DM Mono', monospace;
-  color: #77717b;
-}
-.enter {
-  margin-top: 36px;
-  display: inline-flex;
-  align-items: center;
-  gap: 18px;
-  background: transparent;
-  border: 1px solid #b6b1b9;
-  padding: 14px 18px;
-  color: var(--ink);
-  font: 11px 'DM Mono', monospace;
-  letter-spacing: 2px;
-  cursor: pointer;
-}
-.enter i {
-  font-style: normal;
-  font-size: 18px;
-}
-
-/* GLITCH */
-#error.corrupt {
-  background: #141219;
-  color: white;
-  animation: shake .07s steps(2) infinite;
-}
-.corrupt .error-title {
-  animation: jitter .1s steps(2) infinite;
-}
-.corrupt .error-title::before,
-.corrupt .error-title::after {
-  content: "ERROR\A 404";
-  white-space: pre;
-  position: absolute;
-  inset: 0;
-  line-height: .88;
-  pointer-events: none;
-}
-.corrupt .error-title::before {
-  color: #ff78ae;
-  animation: splitA .13s steps(2) infinite;
-  clip-path: inset(12% 0 53% 0);
-}
-.corrupt .error-title::after {
-  color: #6bd8e8;
-  animation: splitB .09s steps(2) infinite;
-  clip-path: inset(57% 0 13% 0);
-}
-@keyframes shake {
-  0% { transform: translate(0,0); }
-  50% { transform: translate(-3px,2px); }
-  100% { transform: translate(4px,-1px); }
-}
-@keyframes jitter {
-  0% { transform: translateX(-5px); }
-  50% { transform: translateX(7px) skewX(3deg); }
-  100% { transform: translateX(-2px); }
-}
-@keyframes splitA {
-  0% { transform: translate(-12px,1px); }
-  50% { transform: translate(9px,-3px); }
-  100% { transform: translate(-4px,2px); }
-}
-@keyframes splitB {
-  0% { transform: translate(10px,-2px); }
-  50% { transform: translate(-8px,3px); }
-  100% { transform: translate(5px,0); }
-}
-#noise {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  opacity: 0;
-  z-index: 5;
-  mix-blend-mode: screen;
-}
-#noise.active { opacity: .75; }
-
-/* MAIN WORLD */
-#world {
-  z-index: 1;
+.halo{
+  position:absolute;
+  width:min(100vw,580px);
+  aspect-ratio:1;
+  border-radius:50%;
+  left:50%;
+  top:46%;
+  transform:translate(-50%,-50%);
   background:
-    radial-gradient(ellipse at 72% 25%, #e8d8ee 0%, transparent 52%),
-    radial-gradient(ellipse at 12% 85%, #f3cedf 0%, transparent 48%),
-    #fcf9fa;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 1s ease;
+    radial-gradient(circle at 47% 44%,
+      #f7edf2 0%,
+      #efd6e3 28%,
+      #ead5e4 42%,
+      transparent 69%);
+  filter:blur(18px);
+  opacity:.9;
+  animation:haloBreathe 9s ease-in-out infinite alternate;
 }
-#world.visible { opacity: 1; }
-.world-top {
-  position: absolute;
-  top: 28px;
-  left: 28px;
-  right: 28px;
-  display: flex;
-  justify-content: space-between;
-  font: 10px 'DM Mono', monospace;
-  letter-spacing: 1px;
+@keyframes haloBreathe{
+  from{opacity:.57;scale:.91}
+  to{opacity:1;scale:1.06}
 }
-.orbit {
-  width: min(80vw, 370px);
-  aspect-ratio: 1;
-  position: absolute;
-  display: grid;
-  place-items: center;
+.orbit-area{
+  position:absolute;
+  width:min(91vw,490px);
+  aspect-ratio:1;
+  left:50%;top:45%;
+  transform:translate(-50%,-50%);
+  pointer-events:none;
 }
-.orbit svg {
-  width: 100%;
-  height: 100%;
-  animation: rotate 26s linear infinite;
-  overflow: visible;
+.orbit-svg{
+  width:100%;height:100%;
+  overflow:visible;
+  animation:spin 33s linear infinite;
 }
-@keyframes rotate {
-  to { transform: rotate(360deg); }
+.orbit-svg text{
+  font:10px var(--mono);
+  letter-spacing:3px;
+  fill:#a16c89;
 }
-.orbit text {
-  fill: #c997b5;
-  font: 12px 'DM Mono', monospace;
-  letter-spacing: 3px;
+.orbit-inner{
+  position:absolute;
+  inset:12%;
+  border:1px solid #caa4b9;
+  border-radius:50%;
+  opacity:.6;
+  animation:spinReverse 40s linear infinite;
 }
-.orbit::after {
-  content: "";
-  position: absolute;
-  inset: 16%;
-  border: 1px solid #dbbdcf;
-  border-radius: 50%;
-  opacity: .6;
+.orbit-inner::before,
+.orbit-inner::after{
+  content:"";
+  position:absolute;
+  width:7px;height:7px;
+  border:1px solid #9b7491;
+  border-radius:50%;
+  background:var(--paper);
 }
-.world-title {
-  position: relative;
-  z-index: 1;
-  font-size: clamp(36px, 11vw, 84px);
-  font-weight: 700;
-  letter-spacing: -.06em;
-  color: #74566d;
-  text-align: center;
+.orbit-inner::before{top:12%;left:12%}
+.orbit-inner::after{right:12%;bottom:12%}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinReverse{to{transform:rotate(-360deg)}}
+.cross{
+  position:absolute;
+  width:19px;height:19px;
+  opacity:.6;
 }
-.world-sub {
-  position: relative;
-  z-index: 1;
-  margin-top: 14px;
-  font: 10px 'DM Mono', monospace;
-  letter-spacing: 2px;
-  color: #ae89a4;
-  text-align: center;
+.cross::before,.cross::after{
+  content:"";position:absolute;
+  background:#9e8298;
 }
-.world-bottom {
-  position: absolute;
-  bottom: 28px;
-  left: 28px;
-  right: 28px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font: 10px 'DM Mono', monospace;
+.cross::before{
+  width:1px;height:100%;
+  left:50%;
 }
-#restart {
-  padding: 8px;
-  border: 0;
-  background: transparent;
-  color: #8a6c82;
-  cursor: pointer;
+.cross::after{
+  height:1px;width:100%;
+  top:50%;
 }
-@media (prefers-reduced-motion: reduce) {
-  .orbit svg { animation: none; }
-  #world { transition: none; }
+.cross-a{top:16%;left:9%}
+.cross-b{right:13%;bottom:17%;scale:.7}
+
+/* Main typography */
+.hero{
+  position:absolute;
+  top:44%;
+  left:0;right:0;
+  transform:translateY(-50%);
+  z-index:3;
+  text-align:center;
+  pointer-events:none;
+}
+.hero-label{
+  font:9px var(--mono);
+  letter-spacing:.35em;
+  margin-bottom:22px;
+}
+.hero-title{
+  position:relative;
+  display:inline-block;
+  margin:0;
+  font-family:var(--display);
+  font-size:clamp(58px,14vw,190px);
+  font-weight:700;
+  letter-spacing:-.105em;
+  line-height:.86;
+  padding-right:.1em;
+}
+.hero-title .pink{
+  color:var(--pink);
+}
+.hero-title.is-glitch{
+  animation:heroJump .09s steps(2) 5;
+}
+.hero-title.is-glitch::after{
+  content:attr(data-text);
+  position:absolute;
+  left:4px;top:-2px;
+  color:#8acbdc;
+  opacity:.5;
+  clip-path:inset(30% 0 40% 0);
+}
+@keyframes heroJump{
+  0%{transform:translateX(-3px)}
+  50%{transform:translateX(5px)}
+  100%{transform:translateX(0)}
+}
+.hero-sub{
+  margin-top:24px;
+  font:10px var(--mono);
+  letter-spacing:.15em;
+  color:#77707a;
+}
+.hero-caption{
+  position:absolute;
+  left:24px;
+  bottom:33px;
+  font:9px/1.9 var(--mono);
+  letter-spacing:.08em;
+  z-index:3;
+}
+.vertical-note{
+  position:absolute;
+  right:20px;
+  top:11%;
+  writing-mode:vertical-rl;
+  font:9px var(--mono);
+  letter-spacing:.2em;
+  z-index:3;
+}
+.index-number{
+  position:absolute;
+  right:25px;bottom:26px;
+  font:38px var(--display);
+  font-weight:500;
+  letter-spacing:-.08em;
+  color:#ca9db8;
+  z-index:3;
+}
+.sweep{
+  position:absolute;
+  top:0;bottom:0;
+  width:1px;
+  left:25%;
+  background:linear-gradient(
+    transparent,#c9a7bc,transparent
+  );
+  opacity:.45;
+  animation:sweepMove 12s ease-in-out infinite alternate;
+}
+@keyframes sweepMove{
+  to{transform:translateX(52vw);opacity:.1}
+}
+
+/* Navigation strip */
+.bottom-nav{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  min-height:84px;
+  padding-bottom:env(safe-area-inset-bottom);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--line);
+}
+.nav-link{
+  background:transparent;
+  border:0;
+  border-right:1px solid var(--line);
+  color:var(--ink);
+  font:9px var(--mono);
+  letter-spacing:.04em;
+  padding:12px 3px;
+  transition:background .25s,color .25s;
+}
+.nav-link:last-child{border-right:0}
+.nav-link small{
+  display:block;
+  margin-top:8px;
+  font-size:8px;
+  color:#a68c9a;
+}
+.nav-link:active{
+  background:var(--ink);
+  color:white;
+}
+
+/* ===== MENU OVERLAY ===== */
+#menu{
+  position:absolute;
+  z-index:12;
+  inset:0;
+  background:#24212a;
+  color:#f8f1f5;
+  transform:translateY(105%);
+  transition:transform .75s cubic-bezier(.76,0,.18,1);
+  padding:
+    max(30px,env(safe-area-inset-top))
+    24px
+    max(30px,env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column;
+}
+#menu.open{transform:translateY(0)}
+.menu-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding-bottom:18px;
+  border-bottom:1px solid #71636d;
+}
+.close-menu{
+  border:1px solid #968795;
+  background:transparent;color:white;
+  padding:10px 15px;
+  font:10px var(--mono);
+}
+.menu-list{
+  margin:auto 0;
+}
+.menu-item{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  width:100%;
+  background:transparent;
+  border:0;
+  border-bottom:1px solid #514752;
+  color:white;
+  padding:19px 0;
+  text-align:left;
+  font:clamp(34px,9vw,80px) var(--display);
+  font-weight:600;
+  letter-spacing:-.08em;
+  transition:color .2s,padding .3s;
+}
+.menu-item span{
+  font:10px var(--mono);
+  letter-spacing:0;
+  color:#d49ab9;
+}
+.menu-item:active{
+  color:var(--pink);
+  padding-left:12px;
+}
+.menu-footer{
+  display:flex;
+  justify-content:space-between;
+  font:9px var(--mono);
+  color:#c0adbd;
+}
+
+/* ===== CONTENT PANEL ===== */
+#panel{
+  position:absolute;
+  z-index:10;
+  inset:0;
+  background:#eee8ec;
+  transform:translateX(105%);
+  transition:transform .7s cubic-bezier(.76,0,.18,1);
+  display:flex;
+  flex-direction:column;
+}
+#panel.open{transform:translateX(0)}
+.panel-head{
+  min-height:88px;
+  padding:
+    max(25px,env(safe-area-inset-top))
+    24px 15px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid #cbbec7;
+}
+.back-button{
+  border:0;
+  background:none;
+  font:10px var(--mono);
+  letter-spacing:.08em;
+  color:var(--ink);
+  padding:10px 0;
+}
+.panel-content{
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  flex:1;
+  padding:35px 24px 60px;
+}
+.panel-kicker{
+  font:10px var(--mono);
+  color:#a57596;
+  letter-spacing:.2em;
+}
+.panel-title{
+  font:700 clamp(49px,12vw,120px)/.95 var(--display);
+  letter-spacing:-.085em;
+  margin:22px 0;
+  overflow-wrap:anywhere;
+}
+.panel-rule{
+  height:1px;
+  background:#c6b4bf;
+  margin:28px 0;
+}
+.panel-copy{
+  max-width:530px;
+  font:13px/2 var(--body);
+  color:#655862;
+}
+.placeholder{
+  margin-top:35px;
+  border:1px solid #ccbac6;
+  padding:30px 22px;
+  min-height:170px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+.placeholder .big{
+  font:700 52px var(--display);
+  letter-spacing:-.08em;
+  color:#bf8fac;
+}
+.placeholder .small{
+  font:10px var(--mono);
+  color:#7b6878;
+}
+
+@media(min-width:760px){
+  .home-header{padding-left:45px;padding-right:45px}
+  .hero-title{font-size:clamp(100px,13vw,220px)}
+  .hero-caption{left:45px}
+  .vertical-note{right:45px}
+  .bottom-nav{left:35%;height:84px}
+  .nav-link{font-size:11px}
+  #menu{padding-left:8%;padding-right:8%}
+  .menu-list{max-width:1000px;width:100%}
+  #panel .panel-content{padding-left:8%}
+}
+@media(max-width:370px){
+  .hero-title{font-size:13vw}
+  .hero-label{font-size:8px}
+  .bottom-nav{min-height:74px}
+  .nav-link{font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
 }
 </style>
 </head>
+
 <body>
 
-<section id="error" class="screen" aria-label="Opening">
-  <div class="topline">
-    <span>SYS. / UNKNOWN</span>
-    <span>STATUS: FAILED</span>
+<!-- OPENING -->
+<section id="entry" class="screen">
+  <div class="entry-top">
+    <span>SYS://SUGERROR</span>
+    <span>CONNECTION FAILED</span>
   </div>
-  <div class="error-center">
-    <div class="micro">AN UNEXPECTED EXCEPTION</div>
-    <h1 class="error-title">
+
+  <div class="entry-content">
+    <div class="entry-kicker">
+      SYSTEM EXCEPTION
+    </div>
+
+    <h1 class="error-number">
       <span>ERROR</span>
       <span>404</span>
     </h1>
-    <div class="error-description">
-      THE REQUESTED WORLD COULD NOT BE FOUND.<br>
-      PLEASE VERIFY YOUR EXISTENCE.
+
+    <div class="entry-side">
+      UNIDENTIFIED WORLD / 000
     </div>
-    <button class="enter" id="enter">
-      TAP TO CONTINUE <i>↗</i>
+
+    <div class="error-info">
+      THE REQUESTED WORLD COULD NOT BE FOUND.<br>
+      AN UNKNOWN ENTITY HAS BEEN DETECTED.<br>
+      PLEASE PROCEED WITH CAUTION.
+    </div>
+
+    <button id="enterButton" class="entry-button">
+      <span>INITIALIZE WORLD</span>
+      <span>↗</span>
     </button>
   </div>
-  <div class="bottomline">
-    <span>REF: 000-404</span>
+
+  <div class="entry-bottom">
+    <span>REF / 000-404</span>
     <span>© SUGERROR</span>
   </div>
 </section>
 
 <canvas id="noise" aria-hidden="true"></canvas>
 
-<section id="world" class="screen" aria-label="SUGERROR">
-  <div class="world-top">
-    <span>SUGERROR / HOME</span>
-    <span>01 — 00</span>
+<!-- MAIN PAGE -->
+<section id="home" class="screen">
+
+  <div class="home-grid"></div>
+
+  <header class="home-header">
+    <div class="brand">SUGERROR<sup>®</sup></div>
+    <div class="header-middle">WORLD / 001</div>
+    <button class="menu-trigger" id="menuOpen"
+      aria-label="メニューを開く">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <div class="artboard">
+
+    <div class="halo"></div>
+    <div class="sweep"></div>
+
+    <div class="orbit-area">
+      <div class="orbit-inner"></div>
+      <svg class="orbit-svg" viewBox="0 0 400 400">
+        <defs>
+          <path id="orbitPath"
+            d="M200 200 m-176 0
+               a176 176 0 1 1 352 0
+               a176 176 0 1 1-352 0"/>
+        </defs>
+        <text>
+          <textPath href="#orbitPath">
+            A SWEET LITTLE MALFUNCTION ·
+            WELCOME TO THE UNREAL WORLD ·
+            A SWEET LITTLE MALFUNCTION ·
+          </textPath>
+        </text>
+      </svg>
+    </div>
+
+    <div class="cross cross-a"></div>
+    <div class="cross cross-b"></div>
+
+    <div class="vertical-note">
+      THIS WORLD IS NOT SUPPOSED TO EXIST.
+    </div>
+
+    <main class="hero">
+      <div class="hero-label">
+        THE WORLD OF BEAUTIFUL ERRORS
+      </div>
+      <h1 class="hero-title" id="heroTitle"
+        data-text="SUGERROR">
+        SUG<span class="pink">ERROR</span>
+      </h1>
+      <div class="hero-sub">
+        A SWEET LITTLE MALFUNCTION.
+      </div>
+    </main>
+
+    <div class="hero-caption">
+      [ SYSTEM STATUS : UNKNOWN ]<br>
+      000 — AN UNREAL ARCHIVE<br>
+      PLEASE ENJOY YOUR STAY.
+    </div>
+
+    <div class="index-number">01.</div>
   </div>
-  <div class="orbit">
-    <svg viewBox="0 0 300 300">
-      <defs>
-        <path id="circleText"
-          d="M150,150 m-125,0
-          a125,125 0 1,1 250,0
-          a125,125 0 1,1 -250,0"/>
-      </defs>
-      <text>
-        <textPath href="#circleText">
-          WELCOME TO A SWEET LITTLE ERROR ·
-          WELCOME TO A SWEET LITTLE ERROR ·
-        </textPath>
-      </text>
-    </svg>
+
+  <nav class="bottom-nav">
+    <button class="nav-link" data-page="CHARACTERS">
+      CHARACTERS<small>01 ↗</small>
+    </button>
+    <button class="nav-link" data-page="STORIES">
+      STORIES<small>02 ↗</small>
+    </button>
+    <button class="nav-link" data-page="WORLDS">
+      WORLDS<small>03 ↗</small>
+    </button>
+    <button class="nav-link" data-page="FILES">
+      FILES<small>04 ↗</small>
+    </button>
+  </nav>
+
+</section>
+
+<!-- DARK MENU -->
+<aside id="menu" aria-hidden="true">
+  <div class="menu-top">
+    <span class="mono">SUGERROR / INDEX</span>
+    <button id="menuClose" class="close-menu">
+      CLOSE ×
+    </button>
   </div>
-  <div class="world-title">SUGERROR</div>
-  <div class="world-sub">A SWEET LITTLE MISTAKE.</div>
-  <div class="world-bottom">
-    <span>WELCOME TO MY WORLD</span>
-    <button id="restart">↺ REPLAY</button>
+
+  <div class="menu-list">
+    <button class="menu-item" data-page="CHARACTERS">
+      CHARACTERS <span>01 ↗</span>
+    </button>
+    <button class="menu-item" data-page="STORIES">
+      STORIES <span>02 ↗</span>
+    </button>
+    <button class="menu-item" data-page="WORLDS">
+      WORLDS <span>03 ↗</span>
+    </button>
+    <button class="menu-item" data-page="FILES">
+      FILES <span>04 ↗</span>
+    </button>
+  </div>
+
+  <div class="menu-footer">
+    <span>THE UNREAL ARCHIVE</span>
+    <span>STATUS / ACTIVE</span>
+  </div>
+</aside>
+
+<!-- PLACEHOLDER CONTENT -->
+<section id="panel" aria-hidden="true">
+  <header class="panel-head">
+    <span class="mono">SUGERROR / DIRECTORY</span>
+    <button class="back-button" id="panelBack">
+      ← BACK
+    </button>
+  </header>
+
+  <div class="panel-content">
+    <div class="panel-kicker" id="panelKicker">
+      DIRECTORY / 001
+    </div>
+    <h2 class="panel-title" id="panelTitle">
+      CHARACTERS
+    </h2>
+    <div class="panel-rule"></div>
+    <p class="panel-copy" id="panelDescription"></p>
+
+    <div class="placeholder">
+      <span class="big">404.</span>
+      <span class="small">
+        CONTENT IS UNDER CONSTRUCTION.
+      </span>
+    </div>
   </div>
 </section>
 
 <script>
-const error = document.getElementById('error');
-const world = document.getElementById('world');
-const canvas = document.getElementById('noise');
-const ctx = canvas.getContext('2d');
-const enter = document.getElementById('enter');
-const restart = document.getElementById('restart');
+const entry = document.getElementById("entry");
+const enterButton = document.getElementById("enterButton");
+const home = document.getElementById("home");
+const heroTitle = document.getElementById("heroTitle");
+const noise = document.getElementById("noise");
+const ctx = noise.getContext("2d");
 
-let running = false;
-let timer = null;
-let frame = null;
+const menu = document.getElementById("menu");
+const panel = document.getElementById("panel");
 
-function resizeNoise() {
-  canvas.width = 240;
-  canvas.height = Math.max(
-    160,
-    Math.round(240 * innerHeight / innerWidth)
+const menuOpen = document.getElementById("menuOpen");
+const menuClose = document.getElementById("menuClose");
+const panelBack = document.getElementById("panelBack");
+
+const reducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+);
+
+let entering = false;
+let glitchActive = false;
+let frameId = null;
+let glitchTimer = null;
+let periodicTimer = null;
+let lastNoiseFrame = 0;
+
+function sizeNoise(){
+  noise.width = 190;
+  noise.height = Math.max(
+    180,
+    Math.min(420,
+      Math.round(190 * innerHeight / innerWidth)
+    )
   );
 }
 
-function drawNoise() {
-  if (!running) return;
-  const w = canvas.width;
-  const h = canvas.height;
-  const image = ctx.createImageData(w, h);
-  const p = image.data;
+function noiseFrame(time){
+  if(!glitchActive) return;
 
-  for (let i = 0; i < p.length; i += 4) {
-    const value = Math.random() > .52 ? 255 : 0;
-    p[i] = value;
-    p[i+1] = value;
-    p[i+2] = value;
-    p[i+3] = Math.random() * 170;
+  if(time - lastNoiseFrame > 45){
+    lastNoiseFrame = time;
+
+    const w = noise.width;
+    const h = noise.height;
+    const data = ctx.createImageData(w,h);
+    const p = data.data;
+
+    for(let i=0;i<p.length;i+=4){
+      const v = Math.random()>.52 ? 255 : 0;
+      p[i]=v;
+      p[i+1]=v;
+      p[i+2]=v;
+      p[i+3]=Math.random()*155;
+    }
+
+    ctx.putImageData(data,0,0);
+
+    for(let n=0;n<8;n++){
+      ctx.fillStyle = Math.random()>.5
+        ? "rgba(255,117,174,.65)"
+        : "rgba(110,220,235,.65)";
+
+      ctx.fillRect(
+        0,
+        Math.random()*h,
+        w,
+        Math.random()*4+1
+      );
+    }
   }
-  ctx.putImageData(image, 0, 0);
 
-  for (let n = 0; n < 8; n++) {
-    ctx.fillStyle = Math.random() > .5
-      ? 'rgba(255,100,170,.6)'
-      : 'rgba(100,210,230,.6)';
-    ctx.fillRect(
-      0,
-      Math.random() * h,
-      w,
-      Math.random() * 5 + 1
-    );
-  }
-
-  frame = requestAnimationFrame(drawNoise);
+  frameId = requestAnimationFrame(noiseFrame);
 }
 
-function stopNoise() {
-  running = false;
-  cancelAnimationFrame(frame);
-  canvas.classList.remove('active');
+function startNoise(){
+  if(reducedMotion.matches || glitchActive) return;
+  sizeNoise();
+  glitchActive=true;
+  lastNoiseFrame=0;
+  noise.classList.add("on");
+  frameId=requestAnimationFrame(noiseFrame);
 }
 
-function start() {
-  if (running || error.style.display === 'none') return;
+function stopNoise(){
+  glitchActive=false;
+  cancelAnimationFrame(frameId);
+  noise.classList.remove("on");
+}
 
-  const reduced = matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
+function enterWorld(){
+  if(entering) return;
+  entering=true;
+  enterButton.disabled=true;
 
-  enter.disabled = true;
-
-  if (!reduced) {
-    running = true;
-    error.classList.add('corrupt');
-    canvas.classList.add('active');
-    resizeNoise();
-    drawNoise();
+  if(!reducedMotion.matches){
+    entry.classList.add("corrupt");
+    startNoise();
   }
 
-  timer = setTimeout(() => {
+  setTimeout(()=>{
     stopNoise();
-    error.style.display = 'none';
-    world.classList.add('visible');
-  }, reduced ? 150 : 1100);
+    entry.classList.add("hidden");
+    home.classList.add("visible");
+    startAmbientGlitch();
+  },reducedMotion.matches ? 100 : 1200);
 }
 
-function reset() {
-  clearTimeout(timer);
-  stopNoise();
-  world.classList.remove('visible');
-  error.classList.remove('corrupt');
-  error.style.display = 'flex';
-  enter.disabled = false;
+enterButton.addEventListener("click",enterWorld);
+
+function startAmbientGlitch(){
+  clearInterval(periodicTimer);
+
+  if(reducedMotion.matches) return;
+
+  periodicTimer=setInterval(()=>{
+    if(menu.classList.contains("open") ||
+       panel.classList.contains("open")) return;
+
+    heroTitle.classList.add("is-glitch");
+
+    setTimeout(()=>{
+      heroTitle.classList.remove("is-glitch");
+    },480);
+  },8500);
 }
 
-error.addEventListener('click', start);
-enter.addEventListener('click', start);
-restart.addEventListener('click', reset);
+function transitionGlitch(callback){
+  clearTimeout(glitchTimer);
+
+  if(reducedMotion.matches){
+    callback();
+    return;
+  }
+
+  heroTitle.classList.add("is-glitch");
+  startNoise();
+
+  glitchTimer=setTimeout(()=>{
+    callback();
+    stopNoise();
+    heroTitle.classList.remove("is-glitch");
+  },420);
+}
+
+function openMenu(){
+  menu.classList.add("open");
+  menu.setAttribute("aria-hidden","false");
+}
+
+function closeMenu(){
+  menu.classList.remove("open");
+  menu.setAttribute("aria-hidden","true");
+}
+
+menuOpen.addEventListener("click",()=>{
+  transitionGlitch(openMenu);
+});
+menuClose.addEventListener("click",closeMenu);
+
+const pages={
+  CHARACTERS:{
+    number:"001",
+    description:
+      "A collection of identities that exist beyond reality. "+
+      "ここには創作キャラクターたちの記録を収める予定です。"
+  },
+  STORIES:{
+    number:"002",
+    description:
+      "Fragments of stories from another world. "+
+      "ここには物語や小説を収める予定です。"
+  },
+  WORLDS:{
+    number:"003",
+    description:
+      "A directory of imaginary universes. "+
+      "ここには創作世界の設定を収める予定です。"
+  },
+  FILES:{
+    number:"004",
+    description:
+      "Records, fragments and forgotten data. "+
+      "ここにはその他の創作資料を収める予定です。"
+  }
+};
+
+function openPanel(name){
+  const page=pages[name];
+  if(!page) return;
+
+  document.getElementById("panelTitle").textContent=name;
+  document.getElementById("panelKicker").textContent=
+    "DIRECTORY / "+page.number;
+  document.getElementById("panelDescription").textContent=
+    page.description;
+
+  panel.classList.add("open");
+  panel.setAttribute("aria-hidden","false");
+}
+
+function closePanel(){
+  panel.classList.remove("open");
+  panel.setAttribute("aria-hidden","true");
+}
+
+document.querySelectorAll("[data-page]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const name=btn.dataset.page;
+    if(menu.classList.contains("open")){
+      closeMenu();
+      setTimeout(()=>openPanel(name),300);
+    }else{
+      transitionGlitch(()=>openPanel(name));
+    }
+  });
+});
+
+panelBack.addEventListener("click",closePanel);
+window.addEventListener("resize",()=>{
+  if(glitchActive) sizeNoise();
+});
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden) stopNoise();
+});
+
 </script>
 </body>
 </html>
