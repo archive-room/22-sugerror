@@ -5,19 +5,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#080b0d">
-<title>AQUA2UMU — LIQUID ARCHIVE</title>
-
+<title>AQUA2UMU — LIQUID EXPERIMENT</title>
 <style>
 :root{
-  --bg:#07090b;
-  --fg:#e8eee9;
-  --muted:#889995;
-  --accent:#d8e88d;
-  --line:rgba(200,225,218,.23);
+  --bg:#070a0c;
+  --fg:#e7f0ed;
+  --muted:#90a6a0;
+  --accent:#d9e8a2;
+  --line:rgba(205,230,222,.25);
 }
 *{box-sizing:border-box}
 html,body{
-  width:100%;height:100%;margin:0;
+  margin:0;width:100%;height:100%;
   overflow:hidden;overscroll-behavior:none;
   -webkit-text-size-adjust:100%;
 }
@@ -28,38 +27,27 @@ body{
   -webkit-tap-highlight-color:transparent;
 }
 button{font:inherit;cursor:pointer}
-button:focus-visible{
-  outline:2px solid var(--accent);
-  outline-offset:3px;
-}
+button:focus-visible{outline:2px solid var(--accent)}
 #app{
   position:fixed;inset:0;
   width:100%;height:100dvh;
   overflow:hidden;isolation:isolate;
 }
-.screen{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  overflow:hidden;
-}
+.screen{position:absolute;inset:0;overflow:hidden}
 
-/* =========================
-   404 ENTRY
-========================= */
+/* 404 ENTRY */
 #entry{
-  z-index:30;
-  background:#fff;color:#303134;
+  z-index:30;background:#fff;color:#303134;
   display:flex;align-items:center;
-  justify-content:center;
-  padding:36px 30px;
+  justify-content:center;padding:36px 30px;
 }
 .entry-content{
   width:100%;max-width:450px;
   transform:translateY(-7%);
 }
 .error-icon{
-  width:38px;height:43px;
-  color:#757575;margin-bottom:30px;
+  width:38px;height:43px;color:#757575;
+  margin-bottom:30px;
 }
 .error-heading{
   position:relative;display:table;
@@ -74,13 +62,10 @@ button:focus-visible{
   margin-top:20px;
 }
 .entry-button{
-  margin-top:35px;
-  background:#f7f7f7;
-  border:1px solid #dedede;
-  border-radius:3px;
+  margin-top:35px;background:#f7f7f7;
+  border:1px solid #dedede;border-radius:3px;
   color:#555;padding:11px 20px;
-  font:12px Arial,sans-serif;
-  min-height:42px;
+  font:12px Arial,sans-serif;min-height:42px;
 }
 #entry.corrupt{
   color:#f3edf1;background:#17151c;
@@ -91,18 +76,15 @@ button:focus-visible{
 #entry.corrupt .error-heading::before,
 #entry.corrupt .error-heading::after{
   content:"This page isn't working";
-  position:absolute;inset:0;
-  white-space:nowrap;pointer-events:none;
-  font:inherit;
+  position:absolute;inset:0;white-space:nowrap;
+  pointer-events:none;font:inherit;
 }
 #entry.corrupt .error-heading::before{
-  color:#ff84b9;
-  clip-path:inset(0 0 53% 0);
+  color:#ff84b9;clip-path:inset(0 0 53% 0);
   animation:splitA .09s steps(2) infinite;
 }
 #entry.corrupt .error-heading::after{
-  color:#83d9e9;
-  clip-path:inset(55% 0 0 0);
+  color:#83d9e9;clip-path:inset(55% 0 0 0);
   animation:splitB .12s steps(2) infinite;
 }
 #entry.corrupt .error-description,
@@ -126,25 +108,25 @@ button:focus-visible{
   50%{transform:translate(-7px,2px)}
   100%{transform:translate(4px,0)}
 }
+
+/* RESTORED ORIGINAL NOISE */
 #noise{
   position:absolute;inset:0;
-  z-index:40;width:100%;height:100%;
-  pointer-events:none;opacity:0;
+  width:100%;height:100%;
+  z-index:90;
+  pointer-events:none;
+  opacity:0;
+  image-rendering:pixelated;
 }
 #noise.active{opacity:.65}
 
-/* =========================
-   AQUA2UMU WORLD
-========================= */
+/* WORLD */
 #world{
-  z-index:5;
-  background:#07090b;
-  opacity:0;visibility:hidden;
-  pointer-events:none;
+  z-index:5;background:var(--bg);
+  opacity:0;visibility:hidden;pointer-events:none;
 }
 #world.visible{
-  opacity:1;visibility:visible;
-  pointer-events:auto;
+  opacity:1;visibility:visible;pointer-events:auto;
 }
 #liquidCanvas{
   position:absolute;inset:0;
@@ -152,35 +134,22 @@ button:focus-visible{
   display:block;touch-action:none;
 }
 .world-vignette{
-  position:absolute;inset:0;
-  pointer-events:none;
+  position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(
-    ellipse at 50% 47%,
+    ellipse at 50% 48%,
     transparent 15%,
-    rgba(2,4,6,.08) 55%,
-    rgba(0,0,0,.58) 100%
-  );
-}
-.world-grid{
-  position:absolute;inset:0;
-  pointer-events:none;opacity:.14;
-  background-image:
-    linear-gradient(rgba(180,215,205,.18) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(180,215,205,.18) 1px,transparent 1px);
-  background-size:48px 48px;
-  mask-image:linear-gradient(
-    to bottom,transparent 10%,black 45%,transparent 90%
+    rgba(2,5,7,.06) 52%,
+    rgba(0,0,0,.55) 100%
   );
 }
 .world-ui{
-  position:absolute;inset:0;
-  pointer-events:none;
+  position:absolute;inset:0;pointer-events:none;
 }
 .world-ui button{pointer-events:auto}
 .topbar{
   position:absolute;
   top:max(25px,env(safe-area-inset-top));
-  left:24px;right:24px;
+  left:22px;right:22px;
   display:flex;justify-content:space-between;
   align-items:flex-start;gap:15px;
 }
@@ -233,7 +202,7 @@ button:focus-visible{
   color:#a6b6b0;
 }
 .side-data{
-  position:absolute;left:24px;top:40%;
+  position:absolute;left:22px;top:40%;
   font-family:monospace;
   font-size:9px;line-height:2.3;
   letter-spacing:.06em;color:#9cb0a8;
@@ -242,18 +211,18 @@ button:focus-visible{
   color:var(--accent);font-weight:400;
 }
 .side-label{
-  position:absolute;right:22px;top:39%;
+  position:absolute;right:20px;top:39%;
   writing-mode:vertical-rl;
   font-size:8px;letter-spacing:.24em;
   color:#92a7a0;
 }
 .object-label{
-  position:absolute;right:24px;bottom:23%;
+  position:absolute;right:22px;bottom:23%;
   text-align:right;
 }
 .object-label .number{
-  color:var(--accent);font-size:9px;
-  letter-spacing:.18em;
+  color:var(--accent);
+  font-size:9px;letter-spacing:.18em;
 }
 .object-label h2{
   font-size:19px;margin:9px 0 6px;
@@ -266,7 +235,7 @@ button:focus-visible{
 .bottom-bar{
   position:absolute;
   bottom:max(25px,env(safe-area-inset-bottom));
-  left:24px;right:24px;
+  left:22px;right:22px;
   border-top:1px solid var(--line);
   padding-top:13px;
   display:flex;justify-content:space-between;
@@ -283,42 +252,31 @@ button:focus-visible{
   letter-spacing:.1em;
 }
 .status-dot{
-  display:inline-block;
-  width:5px;height:5px;border-radius:50%;
-  background:var(--accent);
+  display:inline-block;width:5px;height:5px;
+  border-radius:50%;background:var(--accent);
   box-shadow:0 0 8px var(--accent);
   margin-right:7px;
 }
 #renderStatus{
-  position:absolute;
-  left:50%;top:56%;
+  position:absolute;left:50%;top:56%;
   transform:translate(-50%,-50%);
-  color:#aebeb6;
-  font:9px monospace;
-  letter-spacing:.16em;
-  text-align:center;
+  color:#aebeb6;font:9px monospace;
+  letter-spacing:.16em;text-align:center;
   pointer-events:none;
 }
 
-/* =========================
-   MAP
-========================= */
+/* DIRECTORY */
 #directory{
-  position:absolute;inset:0;
-  z-index:12;
+  position:absolute;inset:0;z-index:12;
   background:rgba(7,9,11,.97);
-  opacity:0;visibility:hidden;
-  pointer-events:none;
+  opacity:0;visibility:hidden;pointer-events:none;
   transition:opacity .3s,visibility .3s;
-  padding:
-    max(30px,env(safe-area-inset-top))
-    24px
+  padding:max(30px,env(safe-area-inset-top)) 24px
     max(26px,env(safe-area-inset-bottom));
   display:flex;flex-direction:column;
 }
 #directory.open{
-  opacity:1;visibility:visible;
-  pointer-events:auto;
+  opacity:1;visibility:visible;pointer-events:auto;
 }
 .directory-head{
   display:flex;align-items:flex-start;
@@ -330,8 +288,7 @@ button:focus-visible{
 }
 .directory-head h2{
   font-size:clamp(36px,10vw,70px);
-  letter-spacing:-.07em;
-  margin:13px 0 0;
+  letter-spacing:-.07em;margin:13px 0 0;
 }
 .close-button{
   border:1px solid var(--line);
@@ -340,8 +297,7 @@ button:focus-visible{
   border-radius:50%;font-size:20px;
 }
 .directory-list{
-  margin:auto 0;
-  display:flex;flex-direction:column;
+  margin:auto 0;display:flex;flex-direction:column;
   min-height:0;overflow-y:auto;
 }
 .directory-item{
@@ -349,12 +305,10 @@ button:focus-visible{
   gap:15px;width:100%;
   background:transparent;
   border:0;border-bottom:1px solid var(--line);
-  padding:19px 0;text-align:left;
-  color:var(--fg);
+  padding:19px 0;text-align:left;color:var(--fg);
 }
 .directory-item .index{
-  font:10px monospace;
-  color:var(--accent);width:28px;
+  font:10px monospace;color:var(--accent);width:28px;
 }
 .directory-item .name{
   flex:1;font-size:clamp(20px,6vw,30px);
@@ -369,76 +323,55 @@ button:focus-visible{
   color:var(--muted);
 }
 
-/* =========================
-   DETAIL
-========================= */
+/* DETAIL */
 #detail{
-  position:absolute;inset:0;
-  z-index:13;
+  position:absolute;inset:0;z-index:13;
   background:#0a0e10;
-  opacity:0;visibility:hidden;
-  pointer-events:none;
+  opacity:0;visibility:hidden;pointer-events:none;
   transition:opacity .3s,visibility .3s;
   display:flex;flex-direction:column;
-  padding:
-    max(30px,env(safe-area-inset-top))
-    24px
+  padding:max(30px,env(safe-area-inset-top)) 24px
     max(26px,env(safe-area-inset-bottom));
 }
 #detail.open{
-  opacity:1;visibility:visible;
-  pointer-events:auto;
+  opacity:1;visibility:visible;pointer-events:auto;
 }
 .detail-back{
   align-self:flex-start;
-  background:none;border:0;
-  color:var(--accent);
+  background:none;border:0;color:var(--accent);
   font-size:11px;letter-spacing:.12em;
   padding:10px 0;
 }
-.detail-center{
-  margin:auto 0;
-}
+.detail-center{margin:auto 0}
 .detail-code{
-  font:10px monospace;
-  color:var(--accent);
+  font:10px monospace;color:var(--accent);
   letter-spacing:.2em;
 }
 .detail-title{
   font-size:clamp(42px,12vw,85px);
-  letter-spacing:-.08em;
-  margin:18px 0;
+  letter-spacing:-.08em;margin:18px 0;
 }
 .detail-description{
-  font-size:12px;
-  line-height:2.2;
-  color:#a9b8b0;
-  max-width:400px;
+  font-size:12px;line-height:2.2;
+  color:#a9b8b0;max-width:400px;
 }
 .detail-divider{
   width:100%;height:1px;
-  background:var(--line);
-  margin:30px 0;
+  background:var(--line);margin:30px 0;
 }
 .detail-note{
-  font:9px monospace;
-  color:var(--muted);
+  font:9px monospace;color:var(--muted);
   letter-spacing:.18em;
 }
 .detail-footer{
   border-top:1px solid var(--line);
-  padding-top:14px;
-  font:9px monospace;
+  padding-top:14px;font:9px monospace;
   color:var(--muted);
 }
 @media(max-width:600px){
-  .topbar{left:20px;right:20px}
   .main-heading{top:20%}
-  .side-data{left:20px;top:41%;font-size:8px}
-  .side-label{right:18px}
-  .object-label{right:20px;bottom:23%}
+  .side-data{top:41%;font-size:8px}
   .object-label h2{font-size:15px}
-  .bottom-bar{left:20px;right:20px}
   .bottom-bar .left{font-size:8px}
   .bottom-bar .right{font-size:7px}
 }
@@ -455,7 +388,6 @@ button:focus-visible{
 }
 </style>
 </head>
-
 <body>
 <div id="app">
 
@@ -477,11 +409,10 @@ button:focus-visible{
   </main>
 </section>
 
-<canvas id="noise"></canvas>
+<canvas id="noise" aria-hidden="true"></canvas>
 
 <section id="world" class="screen">
   <canvas id="liquidCanvas"></canvas>
-  <div class="world-grid"></div>
   <div class="world-vignette"></div>
 
   <div class="world-ui">
@@ -491,7 +422,7 @@ button:focus-visible{
         <small>EXPERIMENTAL AQUARIUM ARCHIVE</small>
       </div>
       <button id="mapButton" class="map-button" aria-label="Open map">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
+        <svg viewBox="0 0 24 24">
           <path d="M3 5.5L9 3L15 5.5L21 3V18.5L15 21L9 18.5L3 21Z"/>
           <path d="M9 3V18.5M15 5.5V21"/>
         </svg>
@@ -530,7 +461,7 @@ button:focus-visible{
         AQUA2UMU / RESEARCH DIVISION
       </div>
       <div class="right">
-        INTERACTIVE SPECIMEN<br>
+        REFRACTIVE LIQUID / EXPERIMENTAL<br>
         © 2026
       </div>
     </footer>
@@ -542,33 +473,23 @@ button:focus-visible{
         <small>AQUA2UMU / NAVIGATION</small>
         <h2>DIRECTORY.</h2>
       </div>
-      <button id="closeDirectory" class="close-button" aria-label="Close">×</button>
+      <button id="closeDirectory" class="close-button">×</button>
     </div>
     <div class="directory-list">
       <button class="directory-item" data-index="0">
-        <span class="index">01</span>
-        <span class="name">EXHIBITS</span>
-        <span class="arrow">↗</span>
+        <span class="index">01</span><span class="name">EXHIBITS</span><span class="arrow">↗</span>
       </button>
       <button class="directory-item" data-index="1">
-        <span class="index">02</span>
-        <span class="name">CHARACTERS</span>
-        <span class="arrow">↗</span>
+        <span class="index">02</span><span class="name">CHARACTERS</span><span class="arrow">↗</span>
       </button>
       <button class="directory-item" data-index="2">
-        <span class="index">03</span>
-        <span class="name">STORIES</span>
-        <span class="arrow">↗</span>
+        <span class="index">03</span><span class="name">STORIES</span><span class="arrow">↗</span>
       </button>
       <button class="directory-item" data-index="3">
-        <span class="index">04</span>
-        <span class="name">WORLDS</span>
-        <span class="arrow">↗</span>
+        <span class="index">04</span><span class="name">WORLDS</span><span class="arrow">↗</span>
       </button>
       <button class="directory-item" data-index="4">
-        <span class="index">05</span>
-        <span class="name">ARCHIVE</span>
-        <span class="arrow">↗</span>
+        <span class="index">05</span><span class="name">ARCHIVE</span><span class="arrow">↗</span>
       </button>
     </div>
     <div class="directory-footer">
@@ -590,68 +511,122 @@ button:focus-visible{
     </div>
   </div>
 </section>
-
 </div>
 
 <script>
-/* =========================
-   VIEWPORT PROTECTION
-========================= */
+/* MOBILE ZOOM PREVENTION */
 ["gesturestart","gesturechange","gestureend"].forEach(type=>{
-  document.addEventListener(type,e=>e.preventDefault(),{
-    passive:false
-  });
+  document.addEventListener(type,e=>e.preventDefault(),{passive:false});
 });
 document.addEventListener("touchmove",e=>{
   if(e.touches.length>1)e.preventDefault();
 },{passive:false});
 
-/* =========================
-   404 GLITCH
-========================= */
+/* RESTORED ORIGINAL 404 GLITCH */
 const entry=document.getElementById("entry");
-const enterButton=document.getElementById("enterButton");
 const world=document.getElementById("world");
 const noise=document.getElementById("noise");
 const noiseCtx=noise.getContext("2d");
+const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
+
 let entering=false;
 let glitchActive=false;
+let frameId=null;
+let lastFrame=0;
 
-function drawNoise(){
-  if(!glitchActive)return;
-  noise.width=150;
-  noise.height=250;
-  const img=noiseCtx.createImageData(150,250);
-  for(let i=0;i<img.data.length;i+=4){
-    const v=Math.random()>.5?255:0;
-    img.data[i]=v;
-    img.data[i+1]=v;
-    img.data[i+2]=v;
-    img.data[i+3]=Math.random()*140;
-  }
-  noiseCtx.putImageData(img,0,0);
-  requestAnimationFrame(drawNoise);
+function resizeNoise(){
+  noise.width=190;
+  noise.height=Math.max(
+    180,
+    Math.min(
+      420,
+      Math.round(190*innerHeight/Math.max(innerWidth,1))
+    )
+  );
 }
-enterButton.addEventListener("click",()=>{
+
+function drawNoise(time){
+  if(!glitchActive)return;
+
+  if(time-lastFrame>45){
+    lastFrame=time;
+
+    const w=noise.width;
+    const h=noise.height;
+    const data=noiseCtx.createImageData(w,h);
+    const p=data.data;
+
+    for(let i=0;i<p.length;i+=4){
+      const v=Math.random()>.52?255:0;
+      p[i]=v;
+      p[i+1]=v;
+      p[i+2]=v;
+      p[i+3]=Math.random()*160;
+    }
+
+    noiseCtx.putImageData(data,0,0);
+
+    for(let i=0;i<8;i++){
+      noiseCtx.fillStyle=Math.random()>.5
+        ?"rgba(255,120,177,.65)"
+        :"rgba(110,210,230,.65)";
+
+      noiseCtx.fillRect(
+        0,
+        Math.random()*h,
+        w,
+        Math.random()*5+1
+      );
+    }
+  }
+
+  frameId=requestAnimationFrame(drawNoise);
+}
+
+function startNoise(){
+  if(reducedMotion.matches||glitchActive)return;
+
+  resizeNoise();
+  glitchActive=true;
+  lastFrame=0;
+
+  noise.classList.add("active");
+  frameId=requestAnimationFrame(drawNoise);
+}
+
+function stopNoise(){
+  glitchActive=false;
+  cancelAnimationFrame(frameId);
+  noise.classList.remove("active");
+  noiseCtx.clearRect(0,0,noise.width,noise.height);
+}
+
+document.getElementById("enterButton").addEventListener("click",()=>{
   if(entering)return;
   entering=true;
-  entry.classList.add("corrupt");
-  noise.classList.add("active");
-  glitchActive=true;
-  drawNoise();
+
+  if(!reducedMotion.matches){
+    entry.classList.add("corrupt");
+    startNoise();
+  }
 
   setTimeout(()=>{
-    glitchActive=false;
-    noise.classList.remove("active");
+    stopNoise();
     entry.style.display="none";
     world.classList.add("visible");
     window.dispatchEvent(new Event("aquarium-start"));
-  },1100);
+  },reducedMotion.matches?100:1100);
 });
 
-/* =========================
-   DIRECTORY
-========================= */
+window.addEventListener("resize",()=>{
+  if(glitchActive)resizeNoise();
+});
+
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden)stopNoise();
+});
+
+/* NAVIGATION */
 const directory=document.getElementById("directory");
 const detail=document.getElementById("detail");
 
@@ -661,10 +636,12 @@ function openDirectory(){
   directory.classList.add("open");
   directory.setAttribute("aria-hidden","false");
 }
+
 function closeDirectory(){
   directory.classList.remove("open");
   directory.setAttribute("aria-hidden","true");
 }
+
 document.getElementById("mapButton").onclick=openDirectory;
 document.getElementById("closeDirectory").onclick=closeDirectory;
 document.getElementById("detailBack").onclick=openDirectory;
@@ -676,15 +653,20 @@ const sections=[
   ["WORLDS","世界観や設定資料を整理する場所。"],
   ["ARCHIVE","保存データや資料を管理する場所。"]
 ];
+
 document.querySelectorAll(".directory-item").forEach(button=>{
   button.addEventListener("click",()=>{
     const index=Number(button.dataset.index);
+
     document.getElementById("detailCode").textContent=
       "SECTION "+String(index+1).padStart(2,"0");
+
     document.getElementById("detailTitle").textContent=
       sections[index][0];
+
     document.getElementById("detailDescription").textContent=
       sections[index][1];
+
     closeDirectory();
     detail.classList.add("open");
     detail.setAttribute("aria-hidden","false");
@@ -699,11 +681,12 @@ const canvas=document.getElementById("liquidCanvas");
 const status=document.getElementById("renderStatus");
 
 let renderer;
+
 try{
   renderer=new THREE.WebGLRenderer({
     canvas,
     antialias:true,
-    alpha:true,
+    alpha:false,
     powerPreference:"high-performance"
   });
 }catch(error){
@@ -711,254 +694,307 @@ try{
   throw error;
 }
 
-renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));
+renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.6));
 renderer.outputColorSpace=THREE.SRGBColorSpace;
 
 const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(36,1,.1,100);
-camera.position.set(0,0,7.4);
+scene.background=new THREE.Color("#070a0c");
 
-const geometry=new THREE.IcosahedronGeometry(1.45,64);
+const camera=new THREE.PerspectiveCamera(38,1,.1,100);
+camera.position.set(0,0,7.5);
 
-const uniforms={
-  uTime:{value:0},
-  uPulse:{value:0},
-  uPointer:{value:new THREE.Vector2(0,0)},
-  uLightColor:{value:new THREE.Color("#c5fff3")},
-  uDeepColor:{value:new THREE.Color("#0c667c")}
-};
+/* ENVIRONMENT */
+const ambient=new THREE.AmbientLight(0x90b9c1,.65);
+scene.add(ambient);
 
-const material=new THREE.ShaderMaterial({
-  uniforms,
+const keyLight=new THREE.DirectionalLight(0xffffff,2.1);
+keyLight.position.set(-3,5,5);
+scene.add(keyLight);
+
+const fillLight=new THREE.PointLight(0x6de5dc,45,12);
+fillLight.position.set(3,-2,4);
+scene.add(fillLight);
+
+const rimLight=new THREE.DirectionalLight(0x9cbfff,1.8);
+rimLight.position.set(2,2,-4);
+scene.add(rimLight);
+
+/* BACKGROUND OBJECTS FOR REFRACTION */
+const backgroundGroup=new THREE.Group();
+scene.add(backgroundGroup);
+
+const ringMaterial=new THREE.MeshBasicMaterial({
+  color:0x3b777d,
   transparent:true,
-  depthWrite:true,
-  side:THREE.FrontSide,
-  vertexShader:`
-    uniform float uTime;
-    uniform float uPulse;
-    uniform vec2 uPointer;
-
-    varying vec3 vNormal;
-    varying vec3 vPosition;
-    varying float vWave;
-
-    float wave(vec3 p){
-      float a=sin(p.x*3.3+uTime*.7);
-      float b=sin(p.y*4.1-uTime*.55);
-      float c=sin(p.z*5.2+uTime*.48);
-      float d=sin((p.x+p.y+p.z)*6.0-uTime*.9);
-      return a*.075+b*.065+c*.045+d*.025;
-    }
-
-    void main(){
-      vec3 p=position;
-      float w=wave(p);
-
-      float pulse=sin(length(p.xy)*8.0-uTime*7.0)
-        *uPulse*.14;
-
-      float pointerWave=sin(
-        length(p.xy-uPointer)*9.0-uTime*9.0
-      )*uPulse*.08;
-
-      p+=normal*(w+pulse+pointerWave);
-
-      vNormal=normalize(normalMatrix*normal);
-      vPosition=p;
-      vWave=w+pulse;
-
-      gl_Position=projectionMatrix*
-        modelViewMatrix*vec4(p,1.0);
-    }
-  `,
-  fragmentShader:`
-    uniform vec3 uLightColor;
-    uniform vec3 uDeepColor;
-    uniform float uTime;
-
-    varying vec3 vNormal;
-    varying vec3 vPosition;
-    varying float vWave;
-
-    void main(){
-      vec3 n=normalize(vNormal);
-
-      vec3 viewDir=normalize(
-        cameraPosition-vPosition
-      );
-
-      float fresnel=pow(
-        1.0-abs(dot(n,viewDir)),2.3
-      );
-
-      float lighting=
-        max(dot(n,normalize(vec3(-.4,.8,1.0))),0.0);
-
-      float secondary=
-        max(dot(n,normalize(vec3(.8,-.4,.5))),0.0);
-
-      float shimmer=sin(
-        vPosition.y*6.0+
-        vPosition.x*4.0+
-        uTime*.65
-      )*.5+.5;
-
-      vec3 color=mix(
-        uDeepColor,
-        uLightColor,
-        lighting*.42+fresnel*.62
-      );
-
-      color+=vec3(.18,.3,.28)*secondary*.3;
-      color+=vec3(.08,.2,.22)*shimmer*.13;
-      color+=fresnel*vec3(.25,.4,.34);
-
-      float alpha=.83+fresnel*.17;
-
-      gl_FragColor=vec4(color,alpha);
-    }
-  `
-});
-
-const liquid=new THREE.Mesh(geometry,material);
-scene.add(liquid);
-
-const outerGeometry=new THREE.IcosahedronGeometry(1.51,32);
-const outerMaterial=new THREE.MeshBasicMaterial({
-  color:0x8ce8df,
-  transparent:true,
-  opacity:.055,
-  wireframe:true,
+  opacity:.22,
+  side:THREE.DoubleSide,
   depthWrite:false
 });
-const outer=new THREE.Mesh(outerGeometry,outerMaterial);
-scene.add(outer);
+
+for(let i=0;i<5;i++){
+  const ring=new THREE.Mesh(
+    new THREE.TorusGeometry(1.8+i*.42,.006,5,120),
+    ringMaterial
+  );
+
+  ring.position.z=-2.8-i*.4;
+  ring.rotation.x=.1+i*.13;
+  ring.rotation.y=i*.15;
+
+  backgroundGroup.add(ring);
+}
 
 const particlesGeometry=new THREE.BufferGeometry();
-const particleCount=160;
-const positions=new Float32Array(particleCount*3);
+const particleCount=140;
+const particlePositions=new Float32Array(particleCount*3);
+
 for(let i=0;i<particleCount;i++){
-  positions[i*3]=(Math.random()-.5)*13;
-  positions[i*3+1]=(Math.random()-.5)*11;
-  positions[i*3+2]=(Math.random()-.5)*8;
+  particlePositions[i*3]=(Math.random()-.5)*14;
+  particlePositions[i*3+1]=(Math.random()-.5)*12;
+  particlePositions[i*3+2]=-1-Math.random()*7;
 }
+
 particlesGeometry.setAttribute(
   "position",
-  new THREE.BufferAttribute(positions,3)
+  new THREE.BufferAttribute(particlePositions,3)
 );
-const particleMaterial=new THREE.PointsMaterial({
-  color:0xa9dcd5,
-  size:.018,
-  transparent:true,
-  opacity:.38,
-  sizeAttenuation:true
-});
+
 const particles=new THREE.Points(
-  particlesGeometry,particleMaterial
+  particlesGeometry,
+  new THREE.PointsMaterial({
+    color:0xb6f5ed,
+    size:.022,
+    transparent:true,
+    opacity:.43,
+    sizeAttenuation:true
+  })
 );
+
 scene.add(particles);
 
-let targetRotX=0,targetRotY=0;
+/* REFRACTIVE LIQUID */
+const liquidGeometry=new THREE.IcosahedronGeometry(1.48,40);
+
+const liquidMaterial=new THREE.MeshPhysicalMaterial({
+  color:0xd8fffa,
+  metalness:0,
+  roughness:.035,
+  transmission:1,
+  thickness:2.3,
+  ior:1.333,
+  transparent:true,
+  opacity:1,
+  clearcoat:1,
+  clearcoatRoughness:.025,
+  attenuationColor:new THREE.Color("#55e5d7"),
+  attenuationDistance:3.7,
+  envMapIntensity:1.4,
+  side:THREE.FrontSide
+});
+
+const liquid=new THREE.Mesh(liquidGeometry,liquidMaterial);
+scene.add(liquid);
+
+/* PROCEDURAL SURFACE DEFORMATION */
+const basePositions=liquidGeometry.attributes.position.array.slice();
+const baseNormals=liquidGeometry.attributes.normal.array.slice();
+
+let time=0;
+let rippleAmplitude=0;
+let rippleVelocity=0;
+let rippleOrigin=new THREE.Vector3(0,0,1);
+let dragEnergy=0;
+let dragEnergyVelocity=0;
+
+function deformLiquid(t){
+  const positions=liquidGeometry.attributes.position;
+  const arr=positions.array;
+
+  for(let i=0;i<positions.count;i++){
+    const j=i*3;
+
+    const x=basePositions[j];
+    const y=basePositions[j+1];
+    const z=basePositions[j+2];
+
+    const nx=baseNormals[j];
+    const ny=baseNormals[j+1];
+    const nz=baseNormals[j+2];
+
+    const flow1=Math.sin(x*2.9+t*.75)*.075;
+    const flow2=Math.sin(y*3.7-t*.63)*.065;
+    const flow3=Math.sin(z*4.1+t*.48)*.055;
+    const flow4=Math.sin((x+y+z)*5.5-t*.82)*.025;
+
+    const distance=Math.sqrt(
+      (x-rippleOrigin.x)**2+
+      (y-rippleOrigin.y)**2+
+      (z-rippleOrigin.z)**2
+    );
+
+    const ripple=Math.sin(distance*9-t*9)*
+      Math.exp(-distance*1.2)*
+      rippleAmplitude*.24;
+
+    const dragWave=Math.sin(
+      x*4+y*3-t*5
+    )*dragEnergy*.1;
+
+    const displacement=
+      flow1+flow2+flow3+flow4+
+      ripple+dragWave;
+
+    arr[j]=x+nx*displacement;
+    arr[j+1]=y+ny*displacement;
+    arr[j+2]=z+nz*displacement;
+  }
+
+  positions.needsUpdate=true;
+  liquidGeometry.computeVertexNormals();
+  liquidGeometry.computeBoundingSphere();
+}
+
+/* INTERACTION */
+let targetX=0,targetY=0;
 let velocityX=0,velocityY=0;
 let dragging=false,moved=false;
 let downX=0,downY=0,lastX=0,lastY=0;
-let pulseVelocity=0;
-let pulseValue=0;
-let running=false;
 
-function resize(){
-  const w=canvas.clientWidth;
-  const h=canvas.clientHeight;
-  if(!w||!h)return;
-  renderer.setSize(w,h,false);
-  camera.aspect=w/h;
-  camera.position.z=w<600?8.3:7.4;
-  camera.updateProjectionMatrix();
-}
-window.addEventListener("resize",resize);
+const raycaster=new THREE.Raycaster();
+const pointer=new THREE.Vector2();
 
 canvas.addEventListener("pointerdown",e=>{
   dragging=true;
   moved=false;
+
   downX=lastX=e.clientX;
   downY=lastY=e.clientY;
+
   velocityX=velocityY=0;
   canvas.setPointerCapture(e.pointerId);
 });
+
 canvas.addEventListener("pointermove",e=>{
   if(!dragging)return;
+
+  const dx=e.clientX-lastX;
+  const dy=e.clientY-lastY;
+
   if(Math.hypot(e.clientX-downX,e.clientY-downY)>8){
     moved=true;
   }
-  const dx=e.clientX-lastX;
-  const dy=e.clientY-lastY;
+
   if(moved){
-    targetRotY+=dx*.009;
-    targetRotX+=dy*.007;
-    targetRotX=THREE.MathUtils.clamp(
-      targetRotX,-1.2,1.2
-    );
-    velocityY=dx*.002;
+    targetY+=dx*.009;
+    targetX+=dy*.007;
+
+    targetX=THREE.MathUtils.clamp(targetX,-1.1,1.1);
+
+    velocityY=dx*.0018;
     velocityX=dy*.0015;
+
+    dragEnergyVelocity=Math.min(
+      dragEnergyVelocity+.012,.1
+    );
   }
+
   lastX=e.clientX;
   lastY=e.clientY;
 });
+
 canvas.addEventListener("pointerup",e=>{
   if(!dragging)return;
+
   if(!moved){
-    pulseVelocity=Math.min(
-      pulseVelocity+.24,.5
-    );
-    uniforms.uPointer.value.set(
-      (e.clientX/window.innerWidth-.5)*2,
-      (e.clientY/window.innerHeight-.5)*-2
-    );
+    const rect=canvas.getBoundingClientRect();
+
+    pointer.x=((e.clientX-rect.left)/rect.width)*2-1;
+    pointer.y=-((e.clientY-rect.top)/rect.height)*2+1;
+
+    raycaster.setFromCamera(pointer,camera);
+    const hits=raycaster.intersectObject(liquid);
+
+    if(hits.length){
+      rippleOrigin.copy(
+        liquid.worldToLocal(hits[0].point.clone())
+      );
+
+      rippleVelocity=Math.min(
+        rippleVelocity+.4,.8
+      );
+    }
   }
+
   dragging=false;
 });
+
 canvas.addEventListener("pointercancel",()=>{
   dragging=false;
 });
 
+/* RESIZE */
+function resize(){
+  const w=canvas.clientWidth;
+  const h=canvas.clientHeight;
+
+  if(!w||!h)return;
+
+  renderer.setSize(w,h,false);
+  camera.aspect=w/h;
+  camera.position.z=w<600?8.2:7.5;
+  camera.updateProjectionMatrix();
+}
+
+window.addEventListener("resize",resize);
+
+/* ANIMATION */
 const clock=new THREE.Clock();
+let running=false;
+
 function animate(){
   if(!running)return;
+
   requestAnimationFrame(animate);
 
-  const t=clock.getElapsedTime();
-  uniforms.uTime.value=t;
+  const dt=Math.min(clock.getDelta(),.04);
+  time+=dt;
 
   if(!dragging){
-    targetRotY+=velocityY;
-    targetRotX+=velocityX;
-    velocityY*=.96;
-    velocityX*=.96;
+    targetY+=velocityY;
+    targetX+=velocityX;
+
+    velocityY*=.95;
+    velocityX*=.95;
   }
 
   liquid.rotation.x+=(
-    targetRotX-liquid.rotation.x
+    targetX-liquid.rotation.x
   )*.07;
+
   liquid.rotation.y+=(
-    targetRotY-liquid.rotation.y
+    targetY-liquid.rotation.y
   )*.07;
 
-  liquid.rotation.y+=.0007;
+  liquid.rotation.y+=.0005;
 
-  pulseVelocity-=pulseValue*.07;
-  pulseVelocity*=.83;
-  pulseValue+=pulseVelocity;
-  uniforms.uPulse.value=Math.abs(pulseValue);
+  rippleVelocity-=rippleAmplitude*.065;
+  rippleVelocity*=.82;
+  rippleAmplitude+=rippleVelocity;
 
-  const breathe=1+Math.sin(t*.8)*.025;
-  liquid.scale.setScalar(breathe);
-  liquid.position.y=Math.sin(t*.5)*.08;
+  dragEnergyVelocity-=dragEnergy*.06;
+  dragEnergyVelocity*=.85;
+  dragEnergy+=dragEnergyVelocity;
 
-  outer.rotation.copy(liquid.rotation);
-  outer.position.copy(liquid.position);
-  outer.scale.setScalar(breathe);
+  deformLiquid(time);
 
-  particles.rotation.y=t*.006;
+  liquid.position.y=Math.sin(time*.65)*.08;
+
+  liquid.scale.setScalar(
+    1+Math.sin(time*.8)*.018
+  );
+
+  backgroundGroup.rotation.z=time*.006;
+  particles.rotation.y=time*.004;
 
   renderer.render(scene,camera);
 }
@@ -966,6 +1002,7 @@ function animate(){
 window.addEventListener("aquarium-start",()=>{
   resize();
   status.style.display="none";
+
   if(!running){
     running=true;
     clock.start();
@@ -976,10 +1013,10 @@ window.addEventListener("aquarium-start",()=>{
 document.addEventListener("visibilitychange",()=>{
   if(document.hidden){
     running=false;
-  }else if(document.getElementById("world").classList.contains("visible")){
+  }else if(world.classList.contains("visible")){
     if(!running){
       running=true;
-      clock.start();
+      clock.getDelta();
       animate();
     }
   }
