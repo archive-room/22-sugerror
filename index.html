@@ -11,6 +11,10 @@
 <style>
 :root{
   --app-height:100dvh;
+  --aqua:#a5f5f3;
+  --cyan:#6de5ed;
+  --blue:#071b30;
+  --muted:#8caebb;
 }
 
 *{box-sizing:border-box}
@@ -223,52 +227,37 @@ button:focus-visible{
   pointer-events:auto;
 }
 
-#threeContainer{
+#oceanCanvas{
   position:absolute;
   inset:0;
   width:100%;
   height:100%;
-  touch-action:none;
-}
-
-#threeContainer canvas{
   display:block;
-  width:100%;
-  height:100%;
+  touch-action:none;
 }
 
 .ocean-vignette{
   position:absolute;
   inset:0;
   pointer-events:none;
-  background:radial-gradient(
-    ellipse at 50% 48%,
-    transparent 14%,
-    rgba(2,9,21,.12) 58%,
-    rgba(1,7,17,.68) 100%
-  );
-}
-
-.scan-lines{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  opacity:.12;
-  background:repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 3px,
-    rgba(170,230,244,.09) 4px
-  );
+  background:
+    radial-gradient(
+      ellipse at 50% 45%,
+      transparent 12%,
+      rgba(2,9,21,.13) 55%,
+      rgba(1,7,17,.68) 100%
+    );
 }
 
 .interface{
   position:absolute;
   inset:0;
   pointer-events:none;
+  font-family:Arial,Helvetica,sans-serif;
 }
 
-.interface button{
+.interface button,
+.interface a{
   pointer-events:auto;
 }
 
@@ -277,7 +266,10 @@ button:focus-visible{
   top:0;
   left:0;
   right:0;
-  padding:max(26px,env(safe-area-inset-top)) 26px 0;
+  min-height:88px;
+  padding:
+    max(26px,env(safe-area-inset-top))
+    26px 0;
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
@@ -299,6 +291,8 @@ button:focus-visible{
   color:#83b7c9;
 }
 
+/* MAP BUTTON */
+
 .map-button{
   width:65px;
   height:65px;
@@ -310,45 +304,29 @@ button:focus-visible{
   flex-direction:column;
   align-items:center;
   justify-content:center;
-  gap:3px;
+  gap:4px;
   backdrop-filter:blur(12px);
 }
 
+.map-button:active{
+  background:rgba(105,218,230,.18);
+}
+
 .map-icon{
-  font-size:22px;
-  line-height:1;
+  width:24px;
+  height:24px;
+  display:block;
+}
+
+.map-icon svg{
+  width:100%;
+  height:100%;
+  display:block;
 }
 
 .map-text{
   font-size:9px;
   letter-spacing:.14em;
-}
-
-.hero-title{
-  position:absolute;
-  left:50%;
-  top:19%;
-  transform:translateX(-50%);
-  width:100%;
-  text-align:center;
-  white-space:nowrap;
-  font-size:clamp(31px,8.5vw,104px);
-  font-weight:800;
-  letter-spacing:-.075em;
-  line-height:1;
-  color:rgba(229,252,255,.92);
-  mix-blend-mode:screen;
-}
-
-.hero-subtitle{
-  position:absolute;
-  left:50%;
-  top:calc(19% + clamp(41px,9vw,115px));
-  transform:translateX(-50%);
-  font-size:9px;
-  letter-spacing:.45em;
-  color:#a2dce8;
-  white-space:nowrap;
 }
 
 .side-data{
@@ -384,14 +362,32 @@ button:focus-visible{
   color:#8cc9d7;
 }
 
-.coordinates{
+.hero-title{
   position:absolute;
-  left:26px;
-  top:54%;
-  font-size:8px;
-  line-height:2.1;
-  letter-spacing:.1em;
-  color:#7ea6b8;
+  left:50%;
+  top:19%;
+  transform:translateX(-50%);
+  width:100%;
+  text-align:center;
+  white-space:nowrap;
+  font-size:clamp(31px,8.5vw,104px);
+  font-weight:800;
+  letter-spacing:-.075em;
+  line-height:1;
+  color:rgba(229,252,255,.92);
+  mix-blend-mode:screen;
+  text-shadow:0 0 28px rgba(87,213,230,.1);
+}
+
+.hero-subtitle{
+  position:absolute;
+  left:50%;
+  top:calc(19% + clamp(41px,9vw,115px));
+  transform:translateX(-50%);
+  font-size:9px;
+  letter-spacing:.45em;
+  color:#a2dce8;
+  white-space:nowrap;
 }
 
 .specimen-label{
@@ -428,19 +424,6 @@ button:focus-visible{
   color:#9cc5d2;
   font-size:9px;
   line-height:1.8;
-}
-
-.bottom-line{
-  position:absolute;
-  bottom:82px;
-  left:26px;
-  right:26px;
-  height:1px;
-  background:linear-gradient(
-    90deg,
-    rgba(139,216,229,.6),
-    rgba(139,216,229,.08)
-  );
 }
 
 .bottom-panel{
@@ -487,11 +470,49 @@ button:focus-visible{
   font-size:14px;
 }
 
+.bottom-line{
+  position:absolute;
+  bottom:82px;
+  left:26px;
+  right:26px;
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    rgba(139,216,229,.6),
+    rgba(139,216,229,.08)
+  );
+}
+
+.coordinates{
+  position:absolute;
+  left:26px;
+  top:54%;
+  font-size:8px;
+  line-height:2.1;
+  letter-spacing:.1em;
+  color:#7ea6b8;
+}
+
+.scan-lines{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.12;
+  background:repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(170,230,244,.09) 4px
+  );
+}
+
+/* MAP OVERLAY */
+
 .world-menu{
   position:absolute;
   z-index:10;
   inset:0;
-  background:rgba(3,15,28,.96);
+  background:rgba(3,15,28,.95);
   backdrop-filter:blur(22px);
   display:flex;
   align-items:center;
@@ -581,7 +602,10 @@ button:focus-visible{
     height:58px;
   }
 
-  .map-icon{font-size:20px}
+  .map-icon{
+    width:22px;
+    height:22px;
+  }
 
   .side-data{
     left:19px;
@@ -655,6 +679,7 @@ button:focus-visible{
 <body>
 <div id="app">
 
+<!-- ORIGINAL 404 -->
 <section id="entry" class="screen">
   <main class="entry-content">
     <svg class="error-icon" viewBox="0 0 40 45" fill="none" aria-hidden="true">
@@ -672,15 +697,17 @@ button:focus-visible{
     </div>
 
     <div class="error-code">HTTP ERROR 404</div>
+
     <button id="enterButton" class="entry-button">Reload</button>
   </main>
 </section>
 
 <canvas id="noise" aria-hidden="true"></canvas>
 
+<!-- AQUARIUM -->
 <section id="world" class="screen" aria-hidden="true">
 
-  <div id="threeContainer"></div>
+  <canvas id="oceanCanvas"></canvas>
 
   <div class="ocean-vignette"></div>
   <div class="scan-lines"></div>
@@ -694,7 +721,23 @@ button:focus-visible{
       </div>
 
       <button class="map-button" id="mapButton" aria-label="MAP">
-        <span class="map-icon">🗺️</span>
+        <span class="map-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M3 5.5L9 3L15 5.5L21 3V18.5L15 21L9 18.5L3 21V5.5Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M9 3V18.5M15 5.5V21"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            />
+          </svg>
+        </span>
         <span class="map-text">MAP</span>
       </button>
     </header>
@@ -775,8 +818,6 @@ button:focus-visible{
 
 </section>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.1/three.min.js"></script>
 
 <script>
 /* =============================
@@ -968,383 +1009,499 @@ window.addEventListener("resize",()=>{
   if(glitchActive)resizeNoise();
 });
 
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden)stopNoise();
+});
+
 /* =============================
-   REAL 3D AQUARIUM
+   AQUARIUM CANVAS
+   PSEUDO 3D JELLYFISH
 ============================= */
 
-let scene;
-let camera;
-let renderer;
-let jellyfish;
-let bell;
-let tentacles=[];
-let particles;
+const ocean=document.getElementById("oceanCanvas");
+const oc=ocean.getContext("2d",{alpha:false});
 
-let aquariumStarted=false;
+let W=0;
+let H=0;
+let DPR=1;
+
+let aquariumRunning=false;
 let aquariumFrame=null;
 
-let targetRotationX=0.12;
-let targetRotationY=0.2;
+let rotationX=-0.12;
+let rotationY=0.25;
 
-let pointerDown=false;
-let previousPointerX=0;
-let previousPointerY=0;
+let targetX=-0.12;
+let targetY=0.25;
 
-const clock=new THREE.Clock();
+let dragging=false;
+let previousX=0;
+let previousY=0;
 
-function createJellyfish(){
+let particles=[];
+let fish=[];
 
-  jellyfish=new THREE.Group();
+const TAU=Math.PI*2;
 
-  const bellGeometry=new THREE.SphereGeometry(
-    1.15,
-    48,
-    32,
-    0,
-    Math.PI*2,
-    0,
-    Math.PI*.54
-  );
-
-  bellGeometry.scale(1,.7,1);
-
-  const bellMaterial=new THREE.MeshPhysicalMaterial({
-    color:0x91e8f2,
-    transparent:true,
-    opacity:.3,
-    roughness:.12,
-    metalness:.05,
-    side:THREE.DoubleSide,
-    depthWrite:false,
-    transmission:.15,
-    thickness:.6
-  });
-
-  bell=new THREE.Mesh(bellGeometry,bellMaterial);
-  bell.position.y=.25;
-  jellyfish.add(bell);
-
-  const wireMaterial=new THREE.MeshBasicMaterial({
-    color:0x9cf9ff,
-    wireframe:true,
-    transparent:true,
-    opacity:.2,
-    depthWrite:false
-  });
-
-  const wireBell=new THREE.Mesh(
-    bellGeometry.clone(),
-    wireMaterial
-  );
-
-  wireBell.position.y=.25;
-  jellyfish.add(wireBell);
-
-  const rimGeometry=new THREE.TorusGeometry(
-    1.14,
-    .012,
-    6,
-    100
-  );
-
-  const rimMaterial=new THREE.MeshBasicMaterial({
-    color:0xa6ffff,
-    transparent:true,
-    opacity:.8
-  });
-
-  const rim=new THREE.Mesh(
-    rimGeometry,
-    rimMaterial
-  );
-
-  rim.rotation.x=Math.PI/2;
-  rim.position.y=.25-Math.cos(Math.PI*.54)*.7;
-
-  jellyfish.add(rim);
-
-  const organMaterial=new THREE.MeshBasicMaterial({
-    color:0x99f3ff,
-    transparent:true,
-    opacity:.24,
-    side:THREE.DoubleSide
-  });
-
-  for(let i=0;i<4;i++){
-    const organ=new THREE.Mesh(
-      new THREE.SphereGeometry(.16,16,20),
-      organMaterial
-    );
-
-    const angle=i/4*Math.PI*2;
-
-    organ.scale.set(.8,2.7,.8);
-    organ.position.set(
-      Math.cos(angle)*.23,
-      -.18,
-      Math.sin(angle)*.23
-    );
-
-    jellyfish.add(organ);
-  }
-
-  const tentacleMaterial=new THREE.MeshBasicMaterial({
-    color:0x8bdbe9,
-    transparent:true,
-    opacity:.55
-  });
-
-  for(let i=0;i<32;i++){
-
-    const angle=i/32*Math.PI*2;
-    const radius=.25+(i%7)/7*.8;
-
-    const length=1.4+(i%8)*.14;
-
-    const points=[];
-
-    for(let j=0;j<=35;j++){
-      const t=j/35;
-
-      points.push(
-        new THREE.Vector3(
-          Math.cos(angle)*radius,
-          -.1-t*length,
-          Math.sin(angle)*radius
-        )
-      );
-    }
-
-    const curve=new THREE.CatmullRomCurve3(points);
-
-    const geometry=new THREE.TubeGeometry(
-      curve,
-      35,
-      i%4===0?.012:.006,
-      4,
-      false
-    );
-
-    const mesh=new THREE.Mesh(
-      geometry,
-      tentacleMaterial
-    );
-
-    mesh.userData={
-      angle,
-      radius,
-      length,
-      index:i
-    };
-
-    tentacles.push(mesh);
-    jellyfish.add(mesh);
-  }
-
-  scene.add(jellyfish);
+function random(min,max){
+  return min+Math.random()*(max-min);
 }
 
-function createParticles(){
+function resizeAquarium(){
+  const rect=ocean.getBoundingClientRect();
 
-  const count=180;
-  const positions=new Float32Array(count*3);
+  W=Math.max(1,rect.width);
+  H=Math.max(1,rect.height);
 
-  for(let i=0;i<count;i++){
-    positions[i*3]=(Math.random()-.5)*16;
-    positions[i*3+1]=(Math.random()-.5)*12;
-    positions[i*3+2]=(Math.random()-.5)*10;
-  }
+  DPR=Math.min(window.devicePixelRatio||1,2);
 
-  const geometry=new THREE.BufferGeometry();
+  ocean.width=Math.round(W*DPR);
+  ocean.height=Math.round(H*DPR);
 
-  geometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(positions,3)
+  oc.setTransform(DPR,0,0,DPR,0,0);
+}
+
+function makeParticles(){
+  particles=Array.from({length:85},()=>({
+    x:Math.random(),
+    y:Math.random(),
+    size:random(.5,2),
+    speed:random(.00004,.0002),
+    alpha:random(.1,.55)
+  }));
+
+  fish=Array.from({length:16},()=>({
+    x:Math.random(),
+    y:random(.16,.85),
+    scale:random(.35,1.1),
+    speed:random(.000025,.000085),
+    alpha:random(.12,.4),
+    direction:Math.random()>.5?1:-1
+  }));
+}
+
+function project3D(x,y,z){
+  const cy=Math.cos(rotationY);
+  const sy=Math.sin(rotationY);
+
+  const cx=Math.cos(rotationX);
+  const sx=Math.sin(rotationX);
+
+  const x1=x*cy-z*sy;
+  const z1=x*sy+z*cy;
+
+  const y1=y*cx-z1*sx;
+  const z2=y*sx+z1*cx;
+
+  const perspective=650/(650+z2);
+
+  return {
+    x:x1*perspective,
+    y:y1*perspective,
+    z:z2,
+    scale:perspective
+  };
+}
+
+function drawBackground(time){
+  const bg=oc.createLinearGradient(0,0,0,H);
+
+  bg.addColorStop(0,"#061322");
+  bg.addColorStop(.48,"#092d43");
+  bg.addColorStop(1,"#04111e");
+
+  oc.fillStyle=bg;
+  oc.fillRect(0,0,W,H);
+
+  const glow=oc.createRadialGradient(
+    W*.5,H*.51,0,
+    W*.5,H*.51,Math.max(W,H)*.6
   );
 
-  const material=new THREE.PointsMaterial({
-    color:0x8ddfeb,
-    size:.025,
-    transparent:true,
-    opacity:.45,
-    sizeAttenuation:true
-  });
+  glow.addColorStop(0,"rgba(28,133,159,.30)");
+  glow.addColorStop(.45,"rgba(20,79,110,.13)");
+  glow.addColorStop(1,"rgba(0,0,0,0)");
 
-  particles=new THREE.Points(geometry,material);
-  scene.add(particles);
+  oc.fillStyle=glow;
+  oc.fillRect(0,0,W,H);
+
+  const beamShift=Math.sin(time*.00018)*W*.04;
+
+  oc.save();
+  oc.globalAlpha=.045;
+
+  for(let i=0;i<5;i++){
+    const x=W*(i/4)+beamShift;
+
+    const beam=oc.createLinearGradient(
+      x,0,x+W*.15,H
+    );
+
+    beam.addColorStop(0,"rgba(130,237,255,.8)");
+    beam.addColorStop(1,"rgba(130,237,255,0)");
+
+    oc.fillStyle=beam;
+
+    oc.beginPath();
+    oc.moveTo(x,0);
+    oc.lineTo(x+W*.04,0);
+    oc.lineTo(x+W*.23,H);
+    oc.lineTo(x-W*.12,H);
+    oc.closePath();
+    oc.fill();
+  }
+
+  oc.restore();
+}
+
+function drawParticles(time){
+  for(const p of particles){
+    const y=((p.y-time*p.speed)%1+1)%1;
+
+    oc.beginPath();
+    oc.arc(
+      p.x*W+Math.sin(time*.0005+p.y*12)*8,
+      y*H,
+      p.size,
+      0,TAU
+    );
+
+    oc.fillStyle=`rgba(169,237,246,${p.alpha})`;
+    oc.fill();
+  }
+}
+
+function drawFish(time){
+  for(const f of fish){
+    const progress=(
+      f.x+time*f.speed*f.direction
+    )%1;
+
+    const x=((progress+1)%1)*W;
+    const y=f.y*H+Math.sin(time*.0008+f.x*10)*8;
+
+    oc.save();
+    oc.translate(x,y);
+    oc.scale(f.direction*f.scale,f.scale);
+    oc.globalAlpha=f.alpha;
+
+    oc.fillStyle="#b3f2f5";
+
+    oc.beginPath();
+    oc.ellipse(0,0,10,3.2,0,0,TAU);
+    oc.fill();
+
+    oc.beginPath();
+    oc.moveTo(-8,0);
+    oc.lineTo(-17,-6);
+    oc.lineTo(-17,6);
+    oc.closePath();
+    oc.fill();
+
+    oc.restore();
+  }
+}
+
+function drawJellyfish(time){
+  const centerX=W*.5;
+  const centerY=H*.51;
+
+  const size=Math.min(W*.57,H*.38,285);
+  const pulse=1+Math.sin(time*.0015)*.035;
+  const floatY=Math.sin(time*.00075)*12;
+
+  oc.save();
+  oc.translate(centerX,centerY+floatY);
+
+  const radius=size*.48*pulse;
+  const domeHeight=size*.45;
+
+  // Soft surrounding glow
+  const halo=oc.createRadialGradient(
+    0,-domeHeight*.15,0,
+    0,0,size*.9
+  );
+
+  halo.addColorStop(0,"rgba(117,239,246,.18)");
+  halo.addColorStop(.55,"rgba(80,178,219,.07)");
+  halo.addColorStop(1,"rgba(80,178,219,0)");
+
+  oc.fillStyle=halo;
+  oc.beginPath();
+  oc.arc(0,0,size*.9,0,TAU);
+  oc.fill();
+
+  // 3D bell wireframe
+  const rings=17;
+  const segments=56;
+
+  oc.lineWidth=.8;
+
+  for(let ring=1;ring<=rings;ring++){
+    const theta=(ring/rings)*Math.PI*.52;
+
+    const r=Math.sin(theta)*radius;
+    const y=-Math.cos(theta)*domeHeight;
+
+    oc.beginPath();
+
+    for(let i=0;i<=segments;i++){
+      const phi=(i/segments)*TAU;
+
+      const point=project3D(
+        Math.cos(phi)*r,
+        y,
+        Math.sin(phi)*r
+      );
+
+      if(i===0)oc.moveTo(point.x,point.y);
+      else oc.lineTo(point.x,point.y);
+    }
+
+    oc.strokeStyle=`rgba(126,238,248,${
+      .11+(ring/rings)*.28
+    })`;
+
+    oc.stroke();
+  }
+
+  // Longitude curves
+  for(let line=0;line<28;line++){
+    const phi=line/28*TAU;
+
+    oc.beginPath();
+
+    for(let i=0;i<=36;i++){
+      const theta=i/36*Math.PI*.52;
+
+      const r=Math.sin(theta)*radius;
+      const y=-Math.cos(theta)*domeHeight;
+
+      const point=project3D(
+        Math.cos(phi)*r,
+        y,
+        Math.sin(phi)*r
+      );
+
+      if(i===0)oc.moveTo(point.x,point.y);
+      else oc.lineTo(point.x,point.y);
+    }
+
+    oc.strokeStyle="rgba(139,241,247,.22)";
+    oc.stroke();
+  }
+
+  // Translucent bell
+  const bell=oc.createRadialGradient(
+    -radius*.25,
+    -domeHeight*.55,
+    radius*.04,
+    0,
+    -domeHeight*.25,
+    radius*1.2
+  );
+
+  bell.addColorStop(0,"rgba(197,255,255,.24)");
+  bell.addColorStop(.4,"rgba(98,219,236,.13)");
+  bell.addColorStop(1,"rgba(95,144,232,.025)");
+
+  oc.fillStyle=bell;
+  oc.beginPath();
+  oc.ellipse(
+    0,
+    -domeHeight*.38,
+    radius*.98,
+    domeHeight*.62,
+    0,Math.PI,TAU
+  );
+  oc.closePath();
+  oc.fill();
+
+  // Rim
+  oc.beginPath();
+
+  for(let i=0;i<=80;i++){
+    const a=i/80*TAU;
+    const point=project3D(
+      Math.cos(a)*radius,
+      0,
+      Math.sin(a)*radius
+    );
+
+    if(i===0)oc.moveTo(point.x,point.y);
+    else oc.lineTo(point.x,point.y);
+  }
+
+  oc.strokeStyle="rgba(159,255,250,.8)";
+  oc.lineWidth=1.4;
+  oc.shadowColor="#7ef5f5";
+  oc.shadowBlur=13;
+  oc.stroke();
+  oc.shadowBlur=0;
+
+  // Tentacles
+  const tentacleCount=24;
+
+  for(let i=0;i<tentacleCount;i++){
+    const angle=i/tentacleCount*TAU;
+
+    const baseRadius=radius*randomStable(i);
+    const baseX=Math.cos(angle)*baseRadius;
+    const baseZ=Math.sin(angle)*baseRadius;
+
+    const length=size*(.65+(i%6)*.075);
+
+    oc.beginPath();
+
+    for(let j=0;j<=42;j++){
+      const t=j/42;
+
+      const sway=Math.sin(
+        time*.0014+i*1.7+t*5
+      )*t*radius*.18;
+
+      const x=baseX+sway;
+      const y=t*length;
+      const z=baseZ+Math.cos(
+        time*.001+i+t*4
+      )*t*radius*.12;
+
+      const point=project3D(x,y,z);
+
+      if(j===0)oc.moveTo(point.x,point.y);
+      else oc.lineTo(point.x,point.y);
+    }
+
+    oc.strokeStyle=i%4===0
+      ?"rgba(178,241,255,.54)"
+      :"rgba(105,209,229,.3)";
+
+    oc.lineWidth=i%4===0?1.2:.65;
+    oc.stroke();
+  }
+
+  // Central luminous organs
+  for(let i=0;i<4;i++){
+    const a=i/4*TAU+rotationY*.5;
+
+    oc.beginPath();
+    oc.ellipse(
+      Math.cos(a)*radius*.17,
+      domeHeight*.12,
+      radius*.095,
+      domeHeight*.31,
+      Math.sin(a)*.25,
+      0,TAU
+    );
+
+    oc.strokeStyle="rgba(166,248,255,.38)";
+    oc.lineWidth=2;
+    oc.stroke();
+  }
+
+  oc.restore();
+}
+
+function randomStable(i){
+  return .23+((Math.sin(i*91.7)*43758.5453)%1+1)%1*.57;
+}
+
+function drawTargetMarkers(time){
+  const x=W*.5;
+  const y=H*.51+Math.sin(time*.00075)*12;
+
+  oc.save();
+
+  oc.strokeStyle="rgba(150,233,244,.4)";
+  oc.lineWidth=.8;
+
+  const r=Math.min(W*.38,H*.32,230);
+
+  const corners=[
+    [-r,-r*.75,-1,-1],
+    [r,-r*.75,1,-1],
+    [-r,r*.75,-1,1],
+    [r,r*.75,1,1]
+  ];
+
+  for(const [cx,cy,sx,sy] of corners){
+    oc.beginPath();
+    oc.moveTo(x+cx,y+cy-sy*12);
+    oc.lineTo(x+cx,y+cy);
+    oc.lineTo(x+cx-sx*12,y+cy);
+    oc.stroke();
+  }
+
+  oc.restore();
+}
+
+function renderAquarium(time){
+  if(!aquariumRunning)return;
+
+  rotationX+=(targetX-rotationX)*.045;
+  rotationY+=(targetY-rotationY)*.045;
+
+  drawBackground(time);
+  drawParticles(time);
+  drawFish(time);
+  drawJellyfish(time);
+  drawTargetMarkers(time);
+
+  aquariumFrame=requestAnimationFrame(renderAquarium);
 }
 
 function startAquarium(){
+  if(aquariumRunning)return;
 
-  if(aquariumStarted)return;
+  resizeAquarium();
+  makeParticles();
 
-  if(typeof THREE==="undefined"){
-    console.error("Three.js could not be loaded.");
-    return;
+  aquariumRunning=true;
+  aquariumFrame=requestAnimationFrame(renderAquarium);
+}
+
+ocean.addEventListener("pointerdown",event=>{
+  dragging=true;
+  previousX=event.clientX;
+  previousY=event.clientY;
+
+  ocean.setPointerCapture(event.pointerId);
+});
+
+ocean.addEventListener("pointermove",event=>{
+  if(!dragging)return;
+
+  const dx=event.clientX-previousX;
+  const dy=event.clientY-previousY;
+
+  targetY+=dx*.008;
+  targetX+=dy*.006;
+
+  targetX=Math.max(-.8,Math.min(.8,targetX));
+
+  previousX=event.clientX;
+  previousY=event.clientY;
+});
+
+function stopDragging(){
+  dragging=false;
+}
+
+ocean.addEventListener("pointerup",stopDragging);
+ocean.addEventListener("pointercancel",stopDragging);
+
+window.addEventListener("resize",()=>{
+  if(aquariumRunning)resizeAquarium();
+});
+
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){
+    aquariumRunning=false;
+    cancelAnimationFrame(aquariumFrame);
+  }else if(world.classList.contains("visible")){
+    startAquarium();
   }
-
-  aquariumStarted=true;
-
-  const container=document.getElementById("threeContainer");
-
-  scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x061b2c);
-  scene.fog=new THREE.FogExp2(0x061b2c,.045);
-
-  camera=new THREE.PerspectiveCamera(
-    45,
-    container.clientWidth/container.clientHeight,
-    .1,
-    100
-  );
-
-  camera.position.set(0,0,8);
-
-  renderer=new THREE.WebGLRenderer({
-    antialias:true,
-    alpha:false,
-    powerPreference:"high-performance"
-  });
-
-  renderer.setPixelRatio(
-    Math.min(window.devicePixelRatio,2)
-  );
-
-  renderer.setSize(
-    container.clientWidth,
-    container.clientHeight
-  );
-
-  renderer.outputColorSpace=THREE.SRGBColorSpace;
-
-  container.appendChild(renderer.domElement);
-
-  scene.add(new THREE.AmbientLight(0x8ddfff,1.2));
-
-  const light=new THREE.PointLight(
-    0x70e9ff,
-    12,
-    15
-  );
-
-  light.position.set(2,3,4);
-  scene.add(light);
-
-  const purpleLight=new THREE.PointLight(
-    0x7777ff,
-    7,
-    12
-  );
-
-  purpleLight.position.set(-3,-1,2);
-  scene.add(purpleLight);
-
-  createJellyfish();
-  createParticles();
-
-  renderer.domElement.addEventListener(
-    "pointerdown",
-    event=>{
-      pointerDown=true;
-      previousPointerX=event.clientX;
-      previousPointerY=event.clientY;
-      renderer.domElement.setPointerCapture(event.pointerId);
-    }
-  );
-
-  renderer.domElement.addEventListener(
-    "pointermove",
-    event=>{
-      if(!pointerDown)return;
-
-      const dx=event.clientX-previousPointerX;
-      const dy=event.clientY-previousPointerY;
-
-      targetRotationY+=dx*.008;
-      targetRotationX+=dy*.006;
-
-      targetRotationX=Math.max(
-        -.8,
-        Math.min(.8,targetRotationX)
-      );
-
-      previousPointerX=event.clientX;
-      previousPointerY=event.clientY;
-    }
-  );
-
-  renderer.domElement.addEventListener(
-    "pointerup",
-    ()=>pointerDown=false
-  );
-
-  renderer.domElement.addEventListener(
-    "pointercancel",
-    ()=>pointerDown=false
-  );
-
-  window.addEventListener(
-    "resize",
-    resizeThree
-  );
-
-  animateThree();
-}
-
-function resizeThree(){
-  if(!renderer||!camera)return;
-
-  const container=document.getElementById("threeContainer");
-
-  const width=container.clientWidth;
-  const height=container.clientHeight;
-
-  camera.aspect=width/height;
-  camera.updateProjectionMatrix();
-
-  renderer.setSize(width,height);
-}
-
-function animateThree(){
-
-  aquariumFrame=requestAnimationFrame(animateThree);
-
-  const time=clock.getElapsedTime();
-
-  jellyfish.rotation.y+=(
-    targetRotationY-jellyfish.rotation.y
-  )*.04;
-
-  jellyfish.rotation.x+=(
-    targetRotationX-jellyfish.rotation.x
-  )*.04;
-
-  jellyfish.position.y=Math.sin(time*.7)*.1;
-
-  const pulse=1+Math.sin(time*1.5)*.035;
-
-  bell.scale.set(
-    pulse,
-    1/pulse,
-    pulse
-  );
-
-  tentacles.forEach(mesh=>{
-    const {angle,index}=mesh.userData;
-
-    mesh.rotation.z=Math.sin(
-      time*1.2+index*.45
-    )*.08;
-
-    mesh.rotation.x=Math.cos(
-      time*.9+angle
-    )*.06;
-  });
-
-  particles.rotation.y=time*.006;
-
-  renderer.render(scene,camera);
-}
+});
 
 /* =============================
    MAP MENU
@@ -1379,7 +1536,10 @@ function showToast(message){
 document.querySelectorAll("[data-page]").forEach(button=>{
   button.addEventListener("click",()=>{
     worldMenu.classList.remove("open");
-    showToast(button.dataset.page+" — COMING SOON");
+
+    showToast(
+      button.dataset.page+" — COMING SOON"
+    );
   });
 });
 </script>
