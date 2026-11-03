@@ -5,75 +5,111 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#080b0d">
-<title>SUGERROR LAND — DEEP SEA ARCHIVE</title>
+<title>AQUA2UMU — LIQUID ARCHIVE</title>
+
 <style>
 :root{
-  --yellow:#e9e04c;
-  --green:#8ee0a0;
-  --white:#f0f0e7;
-  --gray:#929b99;
-  --line:#333b3d;
-  --bg:#080b0d;
-  --height:100dvh;
+  --bg:#07090b;
+  --fg:#e8eee9;
+  --muted:#889995;
+  --accent:#d8e88d;
+  --line:rgba(200,225,218,.23);
 }
 *{box-sizing:border-box}
 html,body{
-  margin:0;width:100%;height:100%;
+  width:100%;height:100%;margin:0;
   overflow:hidden;overscroll-behavior:none;
   -webkit-text-size-adjust:100%;
 }
 body{
-  background:var(--bg);color:var(--white);
-  font-family:Arial,"Helvetica Neue",sans-serif;
+  position:fixed;inset:0;
+  background:var(--bg);color:var(--fg);
+  font-family:Arial,Helvetica,sans-serif;
   -webkit-tap-highlight-color:transparent;
 }
 button{font:inherit;cursor:pointer}
-button:focus-visible{outline:2px solid var(--yellow)}
+button:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+}
 #app{
   position:fixed;inset:0;
-  height:var(--height);overflow:hidden;
+  width:100%;height:100dvh;
+  overflow:hidden;isolation:isolate;
 }
-.screen{position:absolute;inset:0;overflow:hidden}
-.mono{font-family:monospace}
-.upper{letter-spacing:.17em;text-transform:uppercase}
+.screen{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  overflow:hidden;
+}
 
-/* ENTRY */
+/* =========================
+   404 ENTRY
+========================= */
 #entry{
-  z-index:30;background:white;color:#303134;
-  display:flex;align-items:center;justify-content:center;
-  padding:35px 30px;
+  z-index:30;
+  background:#fff;color:#303134;
+  display:flex;align-items:center;
+  justify-content:center;
+  padding:36px 30px;
 }
-.entry-inner{width:100%;max-width:450px;transform:translateY(-7%)}
-.error-icon{width:38px;height:43px;color:#757575;margin-bottom:30px}
+.entry-content{
+  width:100%;max-width:450px;
+  transform:translateY(-7%);
+}
+.error-icon{
+  width:38px;height:43px;
+  color:#757575;margin-bottom:30px;
+}
 .error-heading{
   position:relative;display:table;
-  font-size:22px;font-weight:500;margin:0 0 18px;
+  font:500 22px/1.45 Arial,sans-serif;
+  margin:0 0 18px;
 }
-.error-desc{font-size:13px;line-height:1.9;color:#646464}
-.error-code{font-size:11px;color:#777;margin-top:20px}
-.reload{
-  margin-top:35px;background:#f7f7f7;
-  border:1px solid #dedede;border-radius:3px;
-  padding:11px 20px;font-size:12px;color:#555;
+.error-description{
+  color:#646464;font:13px/1.85 Arial,sans-serif;
 }
-#entry.corrupt{background:#17151c;color:#f3edf1}
-#entry.corrupt .error-heading{animation:shake .07s steps(2) infinite}
-#entry.corrupt .error-heading:before,
-#entry.corrupt .error-heading:after{
+.error-code{
+  color:#777;font:11px/1.8 Arial,sans-serif;
+  margin-top:20px;
+}
+.entry-button{
+  margin-top:35px;
+  background:#f7f7f7;
+  border:1px solid #dedede;
+  border-radius:3px;
+  color:#555;padding:11px 20px;
+  font:12px Arial,sans-serif;
+  min-height:42px;
+}
+#entry.corrupt{
+  color:#f3edf1;background:#17151c;
+}
+#entry.corrupt .error-heading{
+  animation:shake .07s steps(2) infinite;
+}
+#entry.corrupt .error-heading::before,
+#entry.corrupt .error-heading::after{
   content:"This page isn't working";
-  position:absolute;inset:0;white-space:nowrap;
+  position:absolute;inset:0;
+  white-space:nowrap;pointer-events:none;
+  font:inherit;
 }
-#entry.corrupt .error-heading:before{
-  color:#ff84b9;clip-path:inset(0 0 53% 0);
+#entry.corrupt .error-heading::before{
+  color:#ff84b9;
+  clip-path:inset(0 0 53% 0);
   animation:splitA .09s steps(2) infinite;
 }
-#entry.corrupt .error-heading:after{
-  color:#83d9e9;clip-path:inset(55% 0 0 0);
+#entry.corrupt .error-heading::after{
+  color:#83d9e9;
+  clip-path:inset(55% 0 0 0);
   animation:splitB .12s steps(2) infinite;
 }
-#entry.corrupt .error-desc,#entry.corrupt .error-code{color:#aaa1ad}
-#entry.corrupt .reload{
-  background:#26212b;color:#eee;border-color:#554a5b;
+#entry.corrupt .error-description,
+#entry.corrupt .error-code{color:#aaa1ad}
+#entry.corrupt .entry-button{
+  background:#26212b;color:#eee;
+  border-color:#554a5b;
 }
 @keyframes shake{
   0%{transform:translate(-3px,0)}
@@ -91,417 +127,371 @@ button:focus-visible{outline:2px solid var(--yellow)}
   100%{transform:translate(4px,0)}
 }
 #noise{
-  position:absolute;inset:0;width:100%;height:100%;
-  z-index:50;pointer-events:none;opacity:0;
+  position:absolute;inset:0;
+  z-index:40;width:100%;height:100%;
+  pointer-events:none;opacity:0;
 }
 #noise.active{opacity:.65}
 
-/* WORLD */
+/* =========================
+   AQUA2UMU WORLD
+========================= */
 #world{
-  background:var(--bg);opacity:0;visibility:hidden;
-  transition:opacity .45s;
-}
-#world.visible{opacity:1;visibility:visible}
-#sea{
-  position:absolute;inset:0;width:100%;height:100%;
-  touch-action:none;
-}
-.shade{
-  position:absolute;inset:0;pointer-events:none;
-  background:linear-gradient(
-    180deg,rgba(0,0,0,.48),transparent 27%,
-    transparent 60%,rgba(0,0,0,.77)
-  );
-}
-.noise-lines{
-  position:absolute;inset:0;pointer-events:none;
-  opacity:.13;
-  background:repeating-linear-gradient(
-    0deg,transparent 0,transparent 3px,
-    rgba(255,255,255,.08) 4px
-  );
-}
-#home{
-  position:absolute;inset:0;
-  opacity:1;transition:opacity .35s;
-  pointer-events:none;
-}
-#home.hidden{opacity:0;visibility:hidden}
-#home button{pointer-events:auto}
-.topbar{
-  position:absolute;
-  top:max(23px,env(safe-area-inset-top));
-  left:22px;right:22px;
-  display:flex;justify-content:space-between;
-  align-items:start;gap:12px;
-}
-.brand{
-  font-size:11px;font-weight:900;
-  letter-spacing:.15em;line-height:1.4;
-}
-.brand-sub{
-  margin-top:5px;font-size:7px;
-  color:#a2aaaa;letter-spacing:.14em;
-}
-.status{
-  margin-top:10px;font-size:8px;
-  color:var(--green);letter-spacing:.13em;
-}
-.status:before{
-  content:"";display:inline-block;
-  width:5px;height:5px;border-radius:50%;
-  background:var(--green);margin-right:7px;
-  box-shadow:0 0 9px var(--green);
-}
-.map-button{
-  width:60px;height:60px;flex-shrink:0;
-  border:1px solid #818d88;border-radius:50%;
-  background:rgba(5,8,10,.75);color:var(--yellow);
-  display:flex;align-items:center;justify-content:center;
-  flex-direction:column;gap:4px;
-}
-.map-button svg{
-  width:23px;height:23px;fill:none;
-  stroke:currentColor;stroke-width:1.4;
-  stroke-linecap:round;stroke-linejoin:round;
-}
-.map-button span{font-size:9px;letter-spacing:.12em}
-.home-index{
-  position:absolute;top:20%;left:22px;
-  font-size:8px;letter-spacing:.16em;color:#a4aaa4;
-}
-.home-title{
-  position:absolute;top:24%;left:0;right:0;
-  text-align:center;padding:0 8px;
-}
-.home-title small{
-  display:block;color:var(--yellow);
-  font-size:9px;letter-spacing:.35em;margin-bottom:12px;
-}
-.home-title h1{
-  font-size:clamp(43px,12.8vw,125px);
-  font-weight:950;line-height:.86;
-  letter-spacing:-.085em;margin:0;
-  color:#eeeede;
-}
-.home-title .outline{
-  display:block;color:transparent;
-  -webkit-text-stroke:1px rgba(239,240,220,.65);
-}
-.home-title p{
-  font-size:8px;letter-spacing:.24em;
-  color:#b1bdb6;margin-top:15px;
-}
-.vertical{
-  position:absolute;right:17px;top:41%;
-  writing-mode:vertical-rl;font-size:8px;
-  letter-spacing:.25em;color:#abb6ac;
-}
-.measure{
-  position:absolute;left:22px;top:45%;
-  font-size:8px;letter-spacing:.13em;
-  line-height:2.1;color:#9ba8a3;
-}
-.measure strong{color:var(--yellow);font-size:12px}
-.specimen{
-  position:absolute;right:22px;bottom:21%;
-  text-align:right;
-}
-.specimen .tag{
-  display:inline-block;background:var(--yellow);
-  color:#10140f;font-size:8px;font-weight:800;
-  padding:5px 8px;letter-spacing:.12em;
-}
-.specimen h2{
-  font-size:17px;margin:9px 0 4px;
-  letter-spacing:.05em;
-}
-.specimen p{
-  font-size:8px;color:#a7b6b2;
-  letter-spacing:.12em;margin:0;
-}
-.home-bottom{
-  position:absolute;bottom:max(24px,env(safe-area-inset-bottom));
-  left:22px;right:22px;
-  border-top:1px solid #69736a;
-  padding-top:13px;display:flex;
-  align-items:end;justify-content:space-between;
-  gap:12px;
-}
-.home-bottom .left{
-  font-size:9px;line-height:1.9;letter-spacing:.1em;
-}
-.home-bottom .left b{color:var(--yellow)}
-.home-bottom .right{
-  font-size:8px;text-align:right;line-height:1.9;
-  color:#a8b0a8;
-}
-.enter-map{
-  position:absolute;left:22px;bottom:20%;
-  background:none;border:0;color:var(--yellow);
-  font-size:11px;font-weight:800;letter-spacing:.16em;
-  padding:12px 0;
-}
-.enter-map:after{content:" ↗";font-size:16px}
-
-/* DIRECTORY */
-#directory{
-  position:absolute;inset:0;
-  background:rgba(8,10,11,.97);
+  z-index:5;
+  background:#07090b;
   opacity:0;visibility:hidden;
   pointer-events:none;
-  transition:opacity .3s;
+}
+#world.visible{
+  opacity:1;visibility:visible;
+  pointer-events:auto;
+}
+#liquidCanvas{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  display:block;touch-action:none;
+}
+.world-vignette{
+  position:absolute;inset:0;
+  pointer-events:none;
+  background:radial-gradient(
+    ellipse at 50% 47%,
+    transparent 15%,
+    rgba(2,4,6,.08) 55%,
+    rgba(0,0,0,.58) 100%
+  );
+}
+.world-grid{
+  position:absolute;inset:0;
+  pointer-events:none;opacity:.14;
+  background-image:
+    linear-gradient(rgba(180,215,205,.18) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(180,215,205,.18) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(
+    to bottom,transparent 10%,black 45%,transparent 90%
+  );
+}
+.world-ui{
+  position:absolute;inset:0;
+  pointer-events:none;
+}
+.world-ui button{pointer-events:auto}
+.topbar{
+  position:absolute;
+  top:max(25px,env(safe-area-inset-top));
+  left:24px;right:24px;
+  display:flex;justify-content:space-between;
+  align-items:flex-start;gap:15px;
+}
+.brand{
+  font-size:14px;font-weight:900;
+  letter-spacing:-.04em;
+}
+.brand small{
+  display:block;margin-top:7px;
+  font-size:8px;letter-spacing:.19em;
+  font-weight:400;color:var(--muted);
+}
+.map-button{
+  width:59px;height:59px;
+  border:1px solid rgba(218,234,207,.6);
+  border-radius:50%;
+  background:rgba(7,10,12,.65);
+  color:var(--fg);
   display:flex;flex-direction:column;
-  padding:max(26px,env(safe-area-inset-top)) 22px
-    max(20px,env(safe-area-inset-bottom));
+  align-items:center;justify-content:center;
+  gap:4px;backdrop-filter:blur(8px);
 }
-#directory.open{
-  opacity:1;visibility:visible;pointer-events:auto;
+.map-button svg{
+  width:22px;height:22px;
+  fill:none;stroke:currentColor;
+  stroke-width:1.3;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
-.dir-head{
-  display:flex;justify-content:space-between;align-items:start;
+.map-button span{
+  font-size:9px;letter-spacing:.12em;
 }
-.dir-head .tiny{
-  font-size:8px;letter-spacing:.18em;color:#c1c3b7;
+.main-heading{
+  position:absolute;top:17%;
+  left:0;right:0;text-align:center;
+  padding:0 15px;
 }
-.dir-head h2{
-  font-size:37px;line-height:.9;
-  margin:12px 0 0;letter-spacing:-.04em;
+.main-heading .eyebrow{
+  font-size:9px;letter-spacing:.34em;
+  color:var(--accent);
 }
-.close{
-  border:1px solid #7b817a;background:none;
-  color:var(--white);width:49px;height:49px;
-  border-radius:50%;font-size:10px;letter-spacing:.1em;
+.main-heading h1{
+  font-size:clamp(44px,12.2vw,128px);
+  letter-spacing:-.085em;
+  line-height:.95;margin:13px 0;
+  font-weight:900;
 }
-.dir-sub{
-  display:flex;justify-content:space-between;
-  margin-top:18px;padding-bottom:10px;
-  border-bottom:1px solid var(--line);
-  color:#9a9e95;font-size:8px;letter-spacing:.14em;
+.main-heading .subtitle{
+  font-size:8px;letter-spacing:.24em;
+  color:#a6b6b0;
 }
-.dir-list{
-  flex:1;min-height:0;overflow-y:auto;
-  scrollbar-width:none;
-}
-.dir-list::-webkit-scrollbar{display:none}
-.dir-item{
-  display:grid;
-  grid-template-columns:49px minmax(0,1fr) 20px;
-  width:100%;gap:8px;align-items:center;
-  padding:18px 0;border:0;
-  border-bottom:1px solid #303433;
-  background:transparent;color:var(--white);
-  text-align:left;
-}
-.dir-number{
-  font-size:10px;color:#b7b8a8;
+.side-data{
+  position:absolute;left:24px;top:40%;
   font-family:monospace;
+  font-size:9px;line-height:2.3;
+  letter-spacing:.06em;color:#9cb0a8;
 }
-.dir-name{
-  font-size:clamp(18px,5.8vw,27px);
-  font-weight:900;letter-spacing:.11em;
-  color:var(--yellow);
-  overflow-wrap:anywhere;
+.side-data strong{
+  color:var(--accent);font-weight:400;
 }
-.dir-description{
-  display:block;font-size:9px;
-  font-weight:400;letter-spacing:.08em;
-  color:#a7aba2;margin-top:7px;
+.side-label{
+  position:absolute;right:22px;top:39%;
+  writing-mode:vertical-rl;
+  font-size:8px;letter-spacing:.24em;
+  color:#92a7a0;
 }
-.dir-arrow{font-size:19px;color:#b9beb2}
-.dir-item:active .dir-name{color:white}
-.dir-foot{
+.object-label{
+  position:absolute;right:24px;bottom:23%;
+  text-align:right;
+}
+.object-label .number{
+  color:var(--accent);font-size:9px;
+  letter-spacing:.18em;
+}
+.object-label h2{
+  font-size:19px;margin:9px 0 6px;
+  letter-spacing:.06em;
+}
+.object-label p{
+  color:#9eb0a9;font-size:9px;
+  line-height:1.8;margin:0;
+}
+.bottom-bar{
+  position:absolute;
+  bottom:max(25px,env(safe-area-inset-bottom));
+  left:24px;right:24px;
+  border-top:1px solid var(--line);
+  padding-top:13px;
   display:flex;justify-content:space-between;
-  border-top:1px solid #4c534d;
-  padding-top:12px;font-size:8px;
-  color:#b3b8ad;letter-spacing:.13em;
+  gap:15px;align-items:flex-end;
+}
+.bottom-bar .left{
+  font-size:9px;line-height:1.8;
+  letter-spacing:.12em;
+}
+.bottom-bar .left b{color:var(--accent)}
+.bottom-bar .right{
+  text-align:right;color:#a5b6ad;
+  font-size:8px;line-height:1.8;
+  letter-spacing:.1em;
+}
+.status-dot{
+  display:inline-block;
+  width:5px;height:5px;border-radius:50%;
+  background:var(--accent);
+  box-shadow:0 0 8px var(--accent);
+  margin-right:7px;
+}
+#renderStatus{
+  position:absolute;
+  left:50%;top:56%;
+  transform:translate(-50%,-50%);
+  color:#aebeb6;
+  font:9px monospace;
+  letter-spacing:.16em;
+  text-align:center;
+  pointer-events:none;
 }
 
-/* CONTENT PAGE */
-#page{
+/* =========================
+   MAP
+========================= */
+#directory{
   position:absolute;inset:0;
-  background:#0b0e10;
-  opacity:0;visibility:hidden;pointer-events:none;
-  transition:opacity .3s;
+  z-index:12;
+  background:rgba(7,9,11,.97);
+  opacity:0;visibility:hidden;
+  pointer-events:none;
+  transition:opacity .3s,visibility .3s;
+  padding:
+    max(30px,env(safe-area-inset-top))
+    24px
+    max(26px,env(safe-area-inset-bottom));
   display:flex;flex-direction:column;
 }
-#page.open{opacity:1;visibility:visible;pointer-events:auto}
-.page-head{
-  padding:max(26px,env(safe-area-inset-top)) 22px 17px;
-  border-bottom:1px solid #343a37;
-  display:flex;justify-content:space-between;align-items:center;
+#directory.open{
+  opacity:1;visibility:visible;
+  pointer-events:auto;
 }
-.back{
-  border:0;background:none;color:var(--yellow);
-  padding:10px 0;font-size:10px;letter-spacing:.12em;
+.directory-head{
+  display:flex;align-items:flex-start;
+  justify-content:space-between;
 }
-.page-code{font-size:8px;color:#b0b7af;letter-spacing:.14em}
-.page-scroll{
-  flex:1;min-height:0;overflow-y:auto;
-  overscroll-behavior:contain;
-  scrollbar-width:none;
+.directory-head small{
+  font-size:9px;color:var(--muted);
+  letter-spacing:.2em;
 }
-.page-scroll::-webkit-scrollbar{display:none}
-.page-hero{
-  padding:40px 22px 35px;
-  background:linear-gradient(160deg,#181f21,#090d0e);
-  border-bottom:1px solid #353d39;
-  position:relative;overflow:hidden;
+.directory-head h2{
+  font-size:clamp(36px,10vw,70px);
+  letter-spacing:-.07em;
+  margin:13px 0 0;
 }
-.page-hero:before{
-  content:"";position:absolute;
-  width:220px;height:220px;border:1px solid #343f3a;
-  border-radius:50%;right:-100px;top:-80px;
+.close-button{
+  border:1px solid var(--line);
+  background:transparent;color:var(--fg);
+  width:50px;height:50px;
+  border-radius:50%;font-size:20px;
 }
-.page-label{
-  font-size:9px;letter-spacing:.2em;color:var(--yellow);
+.directory-list{
+  margin:auto 0;
+  display:flex;flex-direction:column;
+  min-height:0;overflow-y:auto;
 }
-.page-title{
-  font-size:clamp(37px,11vw,75px);
-  line-height:.95;letter-spacing:-.065em;
-  margin:22px 0;font-weight:900;
-  overflow-wrap:anywhere;
+.directory-item{
+  display:flex;align-items:center;
+  gap:15px;width:100%;
+  background:transparent;
+  border:0;border-bottom:1px solid var(--line);
+  padding:19px 0;text-align:left;
+  color:var(--fg);
 }
-.page-intro{
-  font-size:11px;color:#c3cac2;
-  line-height:2;max-width:400px;
+.directory-item .index{
+  font:10px monospace;
+  color:var(--accent);width:28px;
 }
-.page-meta{
-  margin-top:35px;
-  display:grid;grid-template-columns:repeat(3,1fr);
-  border-top:1px solid #4a514b;
+.directory-item .name{
+  flex:1;font-size:clamp(20px,6vw,30px);
+  font-weight:800;letter-spacing:.07em;
 }
-.page-meta div{
-  padding:13px 7px 0 0;
-  border-right:1px solid #353e38;
+.directory-item .arrow{
+  font-size:20px;color:var(--accent);
 }
-.page-meta div:last-child{border-right:0;padding-left:9px}
-.page-meta small{
-  display:block;color:#8e9a91;
-  font-size:8px;letter-spacing:.12em;
+.directory-footer{
+  border-top:1px solid var(--line);
+  padding-top:13px;font:9px monospace;
+  color:var(--muted);
 }
-.page-meta strong{
-  display:block;margin-top:8px;
-  color:var(--yellow);font-size:12px;
+
+/* =========================
+   DETAIL
+========================= */
+#detail{
+  position:absolute;inset:0;
+  z-index:13;
+  background:#0a0e10;
+  opacity:0;visibility:hidden;
+  pointer-events:none;
+  transition:opacity .3s,visibility .3s;
+  display:flex;flex-direction:column;
+  padding:
+    max(30px,env(safe-area-inset-top))
+    24px
+    max(26px,env(safe-area-inset-bottom));
 }
-.section-heading{
-  padding:23px 22px 12px;
-  font-size:10px;letter-spacing:.2em;
-  color:var(--yellow);
+#detail.open{
+  opacity:1;visibility:visible;
+  pointer-events:auto;
 }
-.exhibit-card{
-  margin:0 22px 15px;
-  border:1px solid #3e4742;
-  background:#13191a;
+.detail-back{
+  align-self:flex-start;
+  background:none;border:0;
+  color:var(--accent);
+  font-size:11px;letter-spacing:.12em;
+  padding:10px 0;
 }
-.exhibit-art{
-  height:180px;position:relative;
-  background:
-    radial-gradient(ellipse at 50% 40%,#235d64 0%,#0b2c36 36%,#07151d 80%);
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;
+.detail-center{
+  margin:auto 0;
 }
-.exhibit-art svg{
-  width:130px;height:130px;
-  stroke:#a5e3e0;stroke-width:1.2;fill:none;
-  filter:drop-shadow(0 0 12px #7ec9d0);
+.detail-code{
+  font:10px monospace;
+  color:var(--accent);
+  letter-spacing:.2em;
 }
-.exhibit-art:after{
-  content:"SGL / OBSERVATION FILE";
-  position:absolute;bottom:12px;left:12px;
-  color:#bbd6d3;font:8px monospace;letter-spacing:.15em;
+.detail-title{
+  font-size:clamp(42px,12vw,85px);
+  letter-spacing:-.08em;
+  margin:18px 0;
 }
-.exhibit-info{padding:16px}
-.exhibit-info small{
-  font-size:8px;color:var(--green);letter-spacing:.2em;
+.detail-description{
+  font-size:12px;
+  line-height:2.2;
+  color:#a9b8b0;
+  max-width:400px;
 }
-.exhibit-info h3{
-  margin:9px 0;font-size:21px;letter-spacing:.05em;
+.detail-divider{
+  width:100%;height:1px;
+  background:var(--line);
+  margin:30px 0;
 }
-.exhibit-info p{
-  font-size:11px;line-height:1.9;color:#a9b7b0;
+.detail-note{
+  font:9px monospace;
+  color:var(--muted);
+  letter-spacing:.18em;
 }
-.archive-row{
-  display:flex;justify-content:space-between;
-  align-items:center;gap:10px;
-  border-top:1px solid #353e38;
-  padding:17px 22px;
+.detail-footer{
+  border-top:1px solid var(--line);
+  padding-top:14px;
+  font:9px monospace;
+  color:var(--muted);
 }
-.archive-row .num{
-  color:var(--yellow);font:10px monospace;
+@media(max-width:600px){
+  .topbar{left:20px;right:20px}
+  .main-heading{top:20%}
+  .side-data{left:20px;top:41%;font-size:8px}
+  .side-label{right:18px}
+  .object-label{right:20px;bottom:23%}
+  .object-label h2{font-size:15px}
+  .bottom-bar{left:20px;right:20px}
+  .bottom-bar .left{font-size:8px}
+  .bottom-bar .right{font-size:7px}
 }
-.archive-row .label{
-  flex:1;font-size:12px;letter-spacing:.1em;
-}
-.archive-row .status-text{
-  font-size:8px;color:var(--green);letter-spacing:.1em;
-}
-.page-footer{
-  padding:16px 22px 30px;
-  color:#77857e;font-size:9px;
-  letter-spacing:.14em;
-}
-@media(min-width:800px){
-  .topbar,.home-bottom{left:5%;right:5%}
-  .home-index,.measure,.enter-map{left:5%}
-  .specimen{right:5%}
-  .vertical{right:5%}
-  #directory{padding-left:8%;padding-right:8%}
-  .dir-item{padding:20px 0}
-  .page-scroll{max-width:950px;width:100%;margin:auto}
-}
-@media(max-height:700px){
-  .home-title{top:19%}
-  .home-index{top:16%}
-  .measure{top:40%}
-  .specimen{bottom:19%}
-  .enter-map{bottom:17%}
+@media(max-height:680px){
+  .main-heading{top:16%}
+  .side-data{top:35%}
+  .object-label{bottom:20%}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*:before,*:after{
+  *,*::before,*::after{
     animation-duration:.01ms!important;
     transition-duration:.01ms!important;
   }
 }
 </style>
 </head>
+
 <body>
 <div id="app">
 
 <section id="entry" class="screen">
-  <div class="entry-inner">
-    <svg class="error-icon" viewBox="0 0 40 45" fill="none">
+  <main class="entry-content">
+    <svg class="error-icon" viewBox="0 0 40 45" fill="none" aria-hidden="true">
       <path d="M5 1H25L35 11V43H5Z" stroke="currentColor" stroke-width="2"/>
       <path d="M25 1V11H35" stroke="currentColor" stroke-width="2"/>
       <path d="M13 20H27M13 26H27" stroke="currentColor" stroke-width="2"/>
       <path d="M15 35H25" stroke="currentColor" stroke-width="2"/>
     </svg>
     <h1 class="error-heading">This page isn't working</h1>
-    <div class="error-desc">
+    <div class="error-description">
       The requested page could not be found.<br>
       Please check the address and try again.
     </div>
     <div class="error-code">HTTP ERROR 404</div>
-    <button class="reload" id="reload">Reload</button>
-  </div>
+    <button id="enterButton" class="entry-button">Reload</button>
+  </main>
 </section>
 
 <canvas id="noise"></canvas>
 
 <section id="world" class="screen">
-  <canvas id="sea"></canvas>
-  <div class="shade"></div>
-  <div class="noise-lines"></div>
+  <canvas id="liquidCanvas"></canvas>
+  <div class="world-grid"></div>
+  <div class="world-vignette"></div>
 
-  <div id="home">
+  <div class="world-ui">
     <header class="topbar">
-      <div>
-        <div class="brand">SUGERROR<br>LAND.</div>
-        <div class="brand-sub">DEEP SEA ARCHIVE / 2026</div>
-        <div class="status">SYSTEM ONLINE</div>
+      <div class="brand">
+        AQUA2UMU
+        <small>EXPERIMENTAL AQUARIUM ARCHIVE</small>
       </div>
       <button id="mapButton" class="map-button" aria-label="Open map">
-        <svg viewBox="0 0 24 24">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M3 5.5L9 3L15 5.5L21 3V18.5L15 21L9 18.5L3 21Z"/>
           <path d="M9 3V18.5M15 5.5V21"/>
         </svg>
@@ -509,195 +499,129 @@ button:focus-visible{outline:2px solid var(--yellow)}
       </button>
     </header>
 
-    <div class="home-index mono">01 / MARINE OBSERVATION UNIT</div>
-
-    <div class="home-title">
-      <small>WELCOME TO THE UNKNOWN</small>
-      <h1>DEEP<span class="outline">SEA.</span></h1>
-      <p>AN INTERACTIVE AQUARIUM ARCHIVE</p>
+    <div class="main-heading">
+      <div class="eyebrow">WELCOME TO THE UNKNOWN</div>
+      <h1>AQUA2UMU</h1>
+      <div class="subtitle">AN ARCHIVE OF UNCLASSIFIED FORMS</div>
     </div>
 
-    <div class="measure mono">
-      DEPTH<br><strong>2,400 M</strong><br>
-      TEMP. 02.8 °C<br>
-      PRESSURE 24.1 MPa
+    <div class="side-data">
+      OBJECT ID <strong>000-01</strong><br>
+      MATERIAL <strong>UNKNOWN</strong><br>
+      MORPHOLOGY <strong>VARIABLE</strong><br>
+      SYSTEM <strong>ONLINE</strong>
     </div>
 
-    <div class="vertical mono">SPECIMEN MONITORING SYSTEM / SGL-001</div>
-
-    <button id="enterMap" class="enter-map">EXPLORE THE ARCHIVE</button>
-
-    <div class="specimen">
-      <span class="tag">SPECIMEN 001</span>
-      <h2>LUMINOUS JELLY</h2>
-      <p>TOUCH TO INTERACT / DRAG TO ROTATE</p>
+    <div class="side-label">
+      INTERACTIVE LIQUID OBSERVATION / 001
     </div>
 
-    <footer class="home-bottom">
+    <div class="object-label">
+      <div class="number">SPECIMEN / 001</div>
+      <h2>LIQUID ENTITY</h2>
+      <p>TOUCH TO DISTURB<br>DRAG TO ROTATE</p>
+    </div>
+
+    <div id="renderStatus">INITIALIZING LIQUID...</div>
+
+    <footer class="bottom-bar">
       <div class="left">
-        <b>OBSERVATION IN PROGRESS</b><br>
-        UNKNOWN LIFE FORMS DETECTED
+        <b><span class="status-dot"></span>OBSERVATION ACTIVE</b><br>
+        AQUA2UMU / RESEARCH DIVISION
       </div>
-      <div class="right mono">
-        SGL / 0001<br>
+      <div class="right">
+        INTERACTIVE SPECIMEN<br>
         © 2026
       </div>
     </footer>
   </div>
 
-  <section id="directory" aria-hidden="true">
-    <div class="dir-head">
+  <div id="directory" aria-hidden="true">
+    <div class="directory-head">
       <div>
-        <div class="tiny mono">SUGERROR LAND / NAVIGATION SYSTEM</div>
-        <h2>DEPARTURES</h2>
+        <small>AQUA2UMU / NAVIGATION</small>
+        <h2>DIRECTORY.</h2>
       </div>
-      <button class="close" id="closeDirectory">CLOSE</button>
+      <button id="closeDirectory" class="close-button" aria-label="Close">×</button>
     </div>
-
-    <div class="dir-sub mono">
-      <span>NO. / DESTINATION</span>
-      <span>STATUS / OPEN</span>
-    </div>
-
-    <div class="dir-list">
-      <button class="dir-item" data-page="0">
-        <span class="dir-number">01:01</span>
-        <span class="dir-name">EXHIBITS
-          <span class="dir-description">深海生物と展示標本</span>
-        </span>
-        <span class="dir-arrow">↗</span>
+    <div class="directory-list">
+      <button class="directory-item" data-index="0">
+        <span class="index">01</span>
+        <span class="name">EXHIBITS</span>
+        <span class="arrow">↗</span>
       </button>
-      <button class="dir-item" data-page="1">
-        <span class="dir-number">01:02</span>
-        <span class="dir-name">CHARACTERS
-          <span class="dir-description">キャラクター記録室</span>
-        </span>
-        <span class="dir-arrow">↗</span>
+      <button class="directory-item" data-index="1">
+        <span class="index">02</span>
+        <span class="name">CHARACTERS</span>
+        <span class="arrow">↗</span>
       </button>
-      <button class="dir-item" data-page="2">
-        <span class="dir-number">01:03</span>
-        <span class="dir-name">STORIES
-          <span class="dir-description">物語と世界の記録</span>
-        </span>
-        <span class="dir-arrow">↗</span>
+      <button class="directory-item" data-index="2">
+        <span class="index">03</span>
+        <span class="name">STORIES</span>
+        <span class="arrow">↗</span>
       </button>
-      <button class="dir-item" data-page="3">
-        <span class="dir-number">01:04</span>
-        <span class="dir-name">WORLDS
-          <span class="dir-description">世界観資料室</span>
-        </span>
-        <span class="dir-arrow">↗</span>
+      <button class="directory-item" data-index="3">
+        <span class="index">04</span>
+        <span class="name">WORLDS</span>
+        <span class="arrow">↗</span>
       </button>
-      <button class="dir-item" data-page="4">
-        <span class="dir-number">01:05</span>
-        <span class="dir-name">ARCHIVE
-          <span class="dir-description">保存データと記録</span>
-        </span>
-        <span class="dir-arrow">↗</span>
+      <button class="directory-item" data-index="4">
+        <span class="index">05</span>
+        <span class="name">ARCHIVE</span>
+        <span class="arrow">↗</span>
       </button>
     </div>
-
-    <div class="dir-foot mono">
-      <span>ALL SECTORS ACCESSIBLE</span>
-      <span>SGL / 2026</span>
+    <div class="directory-footer">
+      ALL SECTORS / AQUA2UMU SYSTEM 2026
     </div>
-  </section>
+  </div>
 
-  <section id="page" aria-hidden="true">
-    <div class="page-head">
-      <button id="backToMap" class="back">← BACK TO MAP</button>
-      <div class="page-code mono">SGL / SECTOR <span id="sectorNumber">01</span></div>
+  <div id="detail" aria-hidden="true">
+    <button id="detailBack" class="detail-back">← BACK TO DIRECTORY</button>
+    <div class="detail-center">
+      <div class="detail-code" id="detailCode">SECTION 01</div>
+      <h2 class="detail-title" id="detailTitle">EXHIBITS</h2>
+      <div class="detail-description" id="detailDescription"></div>
+      <div class="detail-divider"></div>
+      <div class="detail-note">SECTION UNDER CONSTRUCTION</div>
     </div>
-    <div class="page-scroll">
-      <div class="page-hero">
-        <div class="page-label mono" id="pageLabel">EXHIBITION 001</div>
-        <h2 class="page-title" id="pageTitle">EXHIBITS</h2>
-        <div class="page-intro" id="pageIntro"></div>
-        <div class="page-meta mono">
-          <div><small>SECTOR</small><strong id="metaSector">A-01</strong></div>
-          <div><small>ACCESS</small><strong>FREE</strong></div>
-          <div><small>STATUS</small><strong>ONLINE</strong></div>
-        </div>
-      </div>
-
-      <div class="section-heading mono">01 / OBSERVATION FILES</div>
-
-      <article class="exhibit-card">
-        <div class="exhibit-art">
-          <svg viewBox="0 0 160 160">
-            <path d="M30 78C30 40 50 22 80 22S130 40 130 78"/>
-            <ellipse cx="80" cy="78" rx="50" ry="12"/>
-            <path d="M45 81C40 105 55 121 48 151"/>
-            <path d="M62 85C73 111 54 129 69 158"/>
-            <path d="M80 89C70 117 94 134 80 160"/>
-            <path d="M98 85C86 112 110 136 104 158"/>
-            <path d="M116 81C125 105 106 130 121 153"/>
-            <path d="M53 40C70 55 91 56 108 40"/>
-            <path d="M41 56C66 70 94 70 119 56"/>
-            <path d="M80 22V89M60 28L67 87M100 28L93 87"/>
-          </svg>
-        </div>
-        <div class="exhibit-info">
-          <small>SPECIMEN NO. 001 / ACTIVE</small>
-          <h3 id="cardTitle">LUMINOUS JELLY</h3>
-          <p id="cardDescription">
-            深海に漂う発光性の標本。
-            その生態は、現在も観測が続けられている。
-          </p>
-        </div>
-      </article>
-
-      <div class="section-heading mono">02 / ARCHIVE INDEX</div>
-      <div class="archive-row">
-        <span class="num">001</span>
-        <span class="label">OBSERVATION RECORD</span>
-        <span class="status-text">AVAILABLE</span>
-      </div>
-      <div class="archive-row">
-        <span class="num">002</span>
-        <span class="label">SPECIMEN DATABASE</span>
-        <span class="status-text">PENDING</span>
-      </div>
-      <div class="archive-row">
-        <span class="num">003</span>
-        <span class="label">RESEARCH NOTES</span>
-        <span class="status-text">PENDING</span>
-      </div>
-      <div class="page-footer mono">
-        END OF RECORD / SUGERROR LAND
-      </div>
+    <div class="detail-footer">
+      AQUA2UMU / EXPERIMENTAL ARCHIVE
     </div>
-  </section>
+  </div>
 </section>
+
 </div>
 
 <script>
-/* VIEWPORT */
-function updateHeight(){
-  document.documentElement.style.setProperty(
-    "--height",window.innerHeight+"px"
-  );
-}
-updateHeight();
-window.addEventListener("resize",updateHeight);
-["gesturestart","gesturechange","gestureend"].forEach(name=>{
-  document.addEventListener(name,e=>e.preventDefault(),{passive:false});
+/* =========================
+   VIEWPORT PROTECTION
+========================= */
+["gesturestart","gesturechange","gestureend"].forEach(type=>{
+  document.addEventListener(type,e=>e.preventDefault(),{
+    passive:false
+  });
 });
 document.addEventListener("touchmove",e=>{
   if(e.touches.length>1)e.preventDefault();
 },{passive:false});
 
-/* 404 */
+/* =========================
+   404 GLITCH
+========================= */
 const entry=document.getElementById("entry");
+const enterButton=document.getElementById("enterButton");
 const world=document.getElementById("world");
 const noise=document.getElementById("noise");
-const nc=noise.getContext("2d");
-let glitch=false,entering=false;
+const noiseCtx=noise.getContext("2d");
+let entering=false;
+let glitchActive=false;
+
 function drawNoise(){
-  if(!glitch)return;
+  if(!glitchActive)return;
   noise.width=150;
   noise.height=250;
-  const img=nc.createImageData(150,250);
+  const img=noiseCtx.createImageData(150,250);
   for(let i=0;i<img.data.length;i+=4){
     const v=Math.random()>.5?255:0;
     img.data[i]=v;
@@ -705,215 +629,35 @@ function drawNoise(){
     img.data[i+2]=v;
     img.data[i+3]=Math.random()*140;
   }
-  nc.putImageData(img,0,0);
+  noiseCtx.putImageData(img,0,0);
   requestAnimationFrame(drawNoise);
 }
-document.getElementById("reload").addEventListener("click",()=>{
+enterButton.addEventListener("click",()=>{
   if(entering)return;
   entering=true;
   entry.classList.add("corrupt");
   noise.classList.add("active");
-  glitch=true;
+  glitchActive=true;
   drawNoise();
+
   setTimeout(()=>{
-    glitch=false;
+    glitchActive=false;
     noise.classList.remove("active");
     entry.style.display="none";
     world.classList.add("visible");
-    startSea();
+    window.dispatchEvent(new Event("aquarium-start"));
   },1100);
 });
 
-/* CANVAS */
-const sea=document.getElementById("sea");
-const c=sea.getContext("2d");
-const TAU=Math.PI*2;
-let w=0,h=0,dpr=1;
-let active=false;
-let rx=-.1,ry=.2,tx=-.1,ty=.2;
-let drag=false,moved=false;
-let downX=0,downY=0,lastX=0,lastY=0;
-let bounce=0,bounceSpeed=0;
-let rise=0,riseSpeed=0;
-let particles=[];
-
-function resize(){
-  w=sea.clientWidth;
-  h=sea.clientHeight;
-  dpr=Math.min(devicePixelRatio||1,2);
-  sea.width=w*dpr;
-  sea.height=h*dpr;
-  c.setTransform(dpr,0,0,dpr,0,0);
-}
-function project(x,y,z){
-  const cy=Math.cos(ry),sy=Math.sin(ry);
-  const cx=Math.cos(rx),sx=Math.sin(rx);
-  const xx=x*cy-z*sy;
-  const zz=x*sy+z*cy;
-  const yy=y*cx-zz*sx;
-  const depth=y*sx+zz*cx;
-  const p=650/(650+depth);
-  return [xx*p,yy*p];
-}
-function line(points,color,width=1){
-  c.beginPath();
-  points.forEach((p,i)=>{
-    if(i===0)c.moveTo(p[0],p[1]);
-    else c.lineTo(p[0],p[1]);
-  });
-  c.strokeStyle=color;c.lineWidth=width;c.stroke();
-}
-function drawJelly(t){
-  const s=Math.min(w*.73,h*.42,340);
-  const radius=s*.46;
-  const height=s*.4;
-  const pulse=1+Math.sin(t*.0016)*.035+bounce;
-  const heightPulse=1-(pulse-1)*.65;
-  c.save();
-  c.translate(w*.5,h*.51+Math.sin(t*.0008)*10+rise);
-
-  const halo=c.createRadialGradient(0,0,0,0,0,s);
-  halo.addColorStop(0,"rgba(66,184,181,.19)");
-  halo.addColorStop(1,"rgba(0,0,0,0)");
-  c.fillStyle=halo;
-  c.beginPath();c.arc(0,0,s,0,TAU);c.fill();
-
-  function bell(a,b){
-    const r=Math.sin(a)*radius*pulse;
-    return project(
-      Math.cos(b)*r,
-      -Math.cos(a)*height*heightPulse,
-      Math.sin(b)*r
-    );
-  }
-
-  for(let j=1;j<=22;j++){
-    const pts=[];
-    for(let i=0;i<=72;i++){
-      pts.push(bell(j/22*1.62,i/72*TAU));
-    }
-    line(pts,"rgba(154,239,224,.25)",.7);
-  }
-  for(let i=0;i<38;i++){
-    const pts=[];
-    for(let j=0;j<=38;j++){
-      pts.push(bell(j/38*1.62,i/38*TAU));
-    }
-    line(pts,"rgba(145,227,220,.26)",.7);
-  }
-
-  const rim=[];
-  for(let i=0;i<=100;i++)rim.push(bell(1.62,i/100*TAU));
-  c.shadowColor="#92e9d8";
-  c.shadowBlur=9;
-  line(rim,"rgba(194,255,228,.85)",1.3);
-  c.shadowBlur=0;
-
-  for(let i=0;i<35;i++){
-    const a=i/35*TAU;
-    const r=radius*(.2+(i%9)/12);
-    const length=s*(.65+(i%7)*.08);
-    const pts=[];
-    for(let j=0;j<=42;j++){
-      const u=j/42;
-      const sway=Math.sin(t*.0014+i*.6+u*5)*u*radius*.15;
-      pts.push(project(
-        Math.cos(a)*r+sway,
-        u*length,
-        Math.sin(a)*r+Math.cos(t*.001+i+u*4)*u*radius*.09
-      ));
-    }
-    line(pts,
-      i%5===0?"rgba(184,246,222,.57)":"rgba(117,204,200,.28)",
-      i%5===0?1.1:.7
-    );
-  }
-  c.restore();
-}
-function draw(t){
-  if(!active)return;
-  const bg=c.createLinearGradient(0,0,0,h);
-  bg.addColorStop(0,"#060c11");
-  bg.addColorStop(.55,"#092831");
-  bg.addColorStop(1,"#05090e");
-  c.fillStyle=bg;c.fillRect(0,0,w,h);
-
-  for(const p of particles){
-    const y=((p.y-t*p.speed)%1+1)%1;
-    c.beginPath();
-    c.arc(p.x*w,y*h,p.r,0,TAU);
-    c.fillStyle=`rgba(177,229,215,${p.alpha})`;
-    c.fill();
-  }
-
-  bounceSpeed+=-bounce*.055;
-  bounceSpeed*=.82;
-  bounce+=bounceSpeed;
-
-  riseSpeed+=-rise*.009;
-  riseSpeed*=.93;
-  rise+=riseSpeed;
-
-  rx+=(tx-rx)*.07;
-  ry+=(ty-ry)*.07;
-
-  drawJelly(t);
-  requestAnimationFrame(draw);
-}
-function startSea(){
-  if(active)return;
-  resize();
-  particles=Array.from({length:100},()=>({
-    x:Math.random(),y:Math.random(),
-    r:.3+Math.random()*1.3,
-    speed:.000006+Math.random()*.00003,
-    alpha:.1+Math.random()*.35
-  }));
-  active=true;
-  requestAnimationFrame(draw);
-}
-window.addEventListener("resize",()=>{
-  if(active)resize();
-});
-
-sea.addEventListener("pointerdown",e=>{
-  drag=true;moved=false;
-  downX=lastX=e.clientX;
-  downY=lastY=e.clientY;
-  sea.setPointerCapture(e.pointerId);
-});
-sea.addEventListener("pointermove",e=>{
-  if(!drag)return;
-  if(Math.hypot(e.clientX-downX,e.clientY-downY)>8)moved=true;
-  if(moved){
-    ty+=(e.clientX-lastX)*.009;
-    tx=Math.max(-.9,Math.min(.9,tx+(e.clientY-lastY)*.007));
-  }
-  lastX=e.clientX;lastY=e.clientY;
-});
-sea.addEventListener("pointerup",e=>{
-  if(!drag)return;
-  if(!moved){
-    const s=Math.min(w*.73,h*.42,340);
-    const x=e.clientX-w*.5;
-    const y=e.clientY-(h*.51+rise);
-    if(Math.abs(x)<s*.53&&y>-s*.6&&y<s*.85){
-      bounceSpeed-=.12;
-      riseSpeed-=7;
-    }
-  }
-  drag=false;
-});
-sea.addEventListener("pointercancel",()=>drag=false);
-
-/* NAVIGATION */
+/* =========================
+   DIRECTORY
+========================= */
 const directory=document.getElementById("directory");
-const page=document.getElementById("page");
-const home=document.getElementById("home");
+const detail=document.getElementById("detail");
 
 function openDirectory(){
-  page.classList.remove("open");
-  page.setAttribute("aria-hidden","true");
+  detail.classList.remove("open");
+  detail.setAttribute("aria-hidden","true");
   directory.classList.add("open");
   directory.setAttribute("aria-hidden","false");
 }
@@ -922,74 +666,322 @@ function closeDirectory(){
   directory.setAttribute("aria-hidden","true");
 }
 document.getElementById("mapButton").onclick=openDirectory;
-document.getElementById("enterMap").onclick=openDirectory;
 document.getElementById("closeDirectory").onclick=closeDirectory;
-document.getElementById("backToMap").onclick=openDirectory;
+document.getElementById("detailBack").onclick=openDirectory;
 
-const pages=[
-  {
-    title:"EXHIBITS",
-    label:"01 / MARINE EXHIBITION",
-    intro:"水面の下に眠る、未知の生物たち。観測された標本と、その記録を公開する展示室。",
-    card:"LUMINOUS JELLY",
-    description:"深海に漂う発光性の標本。その生態は現在も観測が続けられている。"
-  },
-  {
-    title:"CHARACTERS",
-    label:"02 / PERSONAL RECORDS",
-    intro:"ここに存在する、すべての人物の記録。名前、姿、性格、そして彼らを結ぶ関係性。",
-    card:"CHARACTER DATABASE",
-    description:"キャラクターのプロフィールを保管するための展示室。登録機能は今後実装予定。"
-  },
-  {
-    title:"STORIES",
-    label:"03 / NARRATIVE ARCHIVE",
-    intro:"記録された物語を辿る場所。さまざまな世界で起きた出来事が、ここに収められている。",
-    card:"STORY COLLECTION",
-    description:"物語の本文と関連する記録を閲覧するための展示室。"
-  },
-  {
-    title:"WORLDS",
-    label:"04 / WORLD DOCUMENTATION",
-    intro:"世界の成り立ち、地理、歴史、そしてそこに存在する法則を保存する資料室。",
-    card:"WORLD ATLAS",
-    description:"創作世界の設定資料を整理するための展示室。"
-  },
-  {
-    title:"ARCHIVE",
-    label:"05 / STORAGE SYSTEM",
-    intro:"失われないように残された記録。保存された資料やデータを管理するための場所。",
-    card:"DATA STORAGE",
-    description:"データの保存、書き出し、読み込み機能は今後実装予定。"
-  }
+const sections=[
+  ["EXHIBITS","未知の標本と観測記録を収蔵する展示室。"],
+  ["CHARACTERS","キャラクターのプロフィールや関係性を保存する場所。"],
+  ["STORIES","物語と出来事を記録する場所。"],
+  ["WORLDS","世界観や設定資料を整理する場所。"],
+  ["ARCHIVE","保存データや資料を管理する場所。"]
 ];
-
-document.querySelectorAll("[data-page]").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    const i=Number(btn.dataset.page);
-    const data=pages[i];
-    const number=String(i+1).padStart(2,"0");
-
-    document.getElementById("sectorNumber").textContent=number;
-    document.getElementById("pageLabel").textContent=data.label;
-    document.getElementById("pageTitle").textContent=data.title;
-    document.getElementById("pageIntro").textContent=data.intro;
-    document.getElementById("metaSector").textContent="A-"+number;
-    document.getElementById("cardTitle").textContent=data.card;
-    document.getElementById("cardDescription").textContent=data.description;
-
+document.querySelectorAll(".directory-item").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const index=Number(button.dataset.index);
+    document.getElementById("detailCode").textContent=
+      "SECTION "+String(index+1).padStart(2,"0");
+    document.getElementById("detailTitle").textContent=
+      sections[index][0];
+    document.getElementById("detailDescription").textContent=
+      sections[index][1];
     closeDirectory();
-    page.classList.add("open");
-    page.setAttribute("aria-hidden","false");
-    document.querySelector(".page-scroll").scrollTop=0;
+    detail.classList.add("open");
+    detail.setAttribute("aria-hidden","false");
   });
+});
+</script>
+
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js";
+
+const canvas=document.getElementById("liquidCanvas");
+const status=document.getElementById("renderStatus");
+
+let renderer;
+try{
+  renderer=new THREE.WebGLRenderer({
+    canvas,
+    antialias:true,
+    alpha:true,
+    powerPreference:"high-performance"
+  });
+}catch(error){
+  status.textContent="WEBGL IS NOT AVAILABLE";
+  throw error;
+}
+
+renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.7));
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(36,1,.1,100);
+camera.position.set(0,0,7.4);
+
+const geometry=new THREE.IcosahedronGeometry(1.45,64);
+
+const uniforms={
+  uTime:{value:0},
+  uPulse:{value:0},
+  uPointer:{value:new THREE.Vector2(0,0)},
+  uLightColor:{value:new THREE.Color("#c5fff3")},
+  uDeepColor:{value:new THREE.Color("#0c667c")}
+};
+
+const material=new THREE.ShaderMaterial({
+  uniforms,
+  transparent:true,
+  depthWrite:true,
+  side:THREE.FrontSide,
+  vertexShader:`
+    uniform float uTime;
+    uniform float uPulse;
+    uniform vec2 uPointer;
+
+    varying vec3 vNormal;
+    varying vec3 vPosition;
+    varying float vWave;
+
+    float wave(vec3 p){
+      float a=sin(p.x*3.3+uTime*.7);
+      float b=sin(p.y*4.1-uTime*.55);
+      float c=sin(p.z*5.2+uTime*.48);
+      float d=sin((p.x+p.y+p.z)*6.0-uTime*.9);
+      return a*.075+b*.065+c*.045+d*.025;
+    }
+
+    void main(){
+      vec3 p=position;
+      float w=wave(p);
+
+      float pulse=sin(length(p.xy)*8.0-uTime*7.0)
+        *uPulse*.14;
+
+      float pointerWave=sin(
+        length(p.xy-uPointer)*9.0-uTime*9.0
+      )*uPulse*.08;
+
+      p+=normal*(w+pulse+pointerWave);
+
+      vNormal=normalize(normalMatrix*normal);
+      vPosition=p;
+      vWave=w+pulse;
+
+      gl_Position=projectionMatrix*
+        modelViewMatrix*vec4(p,1.0);
+    }
+  `,
+  fragmentShader:`
+    uniform vec3 uLightColor;
+    uniform vec3 uDeepColor;
+    uniform float uTime;
+
+    varying vec3 vNormal;
+    varying vec3 vPosition;
+    varying float vWave;
+
+    void main(){
+      vec3 n=normalize(vNormal);
+
+      vec3 viewDir=normalize(
+        cameraPosition-vPosition
+      );
+
+      float fresnel=pow(
+        1.0-abs(dot(n,viewDir)),2.3
+      );
+
+      float lighting=
+        max(dot(n,normalize(vec3(-.4,.8,1.0))),0.0);
+
+      float secondary=
+        max(dot(n,normalize(vec3(.8,-.4,.5))),0.0);
+
+      float shimmer=sin(
+        vPosition.y*6.0+
+        vPosition.x*4.0+
+        uTime*.65
+      )*.5+.5;
+
+      vec3 color=mix(
+        uDeepColor,
+        uLightColor,
+        lighting*.42+fresnel*.62
+      );
+
+      color+=vec3(.18,.3,.28)*secondary*.3;
+      color+=vec3(.08,.2,.22)*shimmer*.13;
+      color+=fresnel*vec3(.25,.4,.34);
+
+      float alpha=.83+fresnel*.17;
+
+      gl_FragColor=vec4(color,alpha);
+    }
+  `
+});
+
+const liquid=new THREE.Mesh(geometry,material);
+scene.add(liquid);
+
+const outerGeometry=new THREE.IcosahedronGeometry(1.51,32);
+const outerMaterial=new THREE.MeshBasicMaterial({
+  color:0x8ce8df,
+  transparent:true,
+  opacity:.055,
+  wireframe:true,
+  depthWrite:false
+});
+const outer=new THREE.Mesh(outerGeometry,outerMaterial);
+scene.add(outer);
+
+const particlesGeometry=new THREE.BufferGeometry();
+const particleCount=160;
+const positions=new Float32Array(particleCount*3);
+for(let i=0;i<particleCount;i++){
+  positions[i*3]=(Math.random()-.5)*13;
+  positions[i*3+1]=(Math.random()-.5)*11;
+  positions[i*3+2]=(Math.random()-.5)*8;
+}
+particlesGeometry.setAttribute(
+  "position",
+  new THREE.BufferAttribute(positions,3)
+);
+const particleMaterial=new THREE.PointsMaterial({
+  color:0xa9dcd5,
+  size:.018,
+  transparent:true,
+  opacity:.38,
+  sizeAttenuation:true
+});
+const particles=new THREE.Points(
+  particlesGeometry,particleMaterial
+);
+scene.add(particles);
+
+let targetRotX=0,targetRotY=0;
+let velocityX=0,velocityY=0;
+let dragging=false,moved=false;
+let downX=0,downY=0,lastX=0,lastY=0;
+let pulseVelocity=0;
+let pulseValue=0;
+let running=false;
+
+function resize(){
+  const w=canvas.clientWidth;
+  const h=canvas.clientHeight;
+  if(!w||!h)return;
+  renderer.setSize(w,h,false);
+  camera.aspect=w/h;
+  camera.position.z=w<600?8.3:7.4;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener("resize",resize);
+
+canvas.addEventListener("pointerdown",e=>{
+  dragging=true;
+  moved=false;
+  downX=lastX=e.clientX;
+  downY=lastY=e.clientY;
+  velocityX=velocityY=0;
+  canvas.setPointerCapture(e.pointerId);
+});
+canvas.addEventListener("pointermove",e=>{
+  if(!dragging)return;
+  if(Math.hypot(e.clientX-downX,e.clientY-downY)>8){
+    moved=true;
+  }
+  const dx=e.clientX-lastX;
+  const dy=e.clientY-lastY;
+  if(moved){
+    targetRotY+=dx*.009;
+    targetRotX+=dy*.007;
+    targetRotX=THREE.MathUtils.clamp(
+      targetRotX,-1.2,1.2
+    );
+    velocityY=dx*.002;
+    velocityX=dy*.0015;
+  }
+  lastX=e.clientX;
+  lastY=e.clientY;
+});
+canvas.addEventListener("pointerup",e=>{
+  if(!dragging)return;
+  if(!moved){
+    pulseVelocity=Math.min(
+      pulseVelocity+.24,.5
+    );
+    uniforms.uPointer.value.set(
+      (e.clientX/window.innerWidth-.5)*2,
+      (e.clientY/window.innerHeight-.5)*-2
+    );
+  }
+  dragging=false;
+});
+canvas.addEventListener("pointercancel",()=>{
+  dragging=false;
+});
+
+const clock=new THREE.Clock();
+function animate(){
+  if(!running)return;
+  requestAnimationFrame(animate);
+
+  const t=clock.getElapsedTime();
+  uniforms.uTime.value=t;
+
+  if(!dragging){
+    targetRotY+=velocityY;
+    targetRotX+=velocityX;
+    velocityY*=.96;
+    velocityX*=.96;
+  }
+
+  liquid.rotation.x+=(
+    targetRotX-liquid.rotation.x
+  )*.07;
+  liquid.rotation.y+=(
+    targetRotY-liquid.rotation.y
+  )*.07;
+
+  liquid.rotation.y+=.0007;
+
+  pulseVelocity-=pulseValue*.07;
+  pulseVelocity*=.83;
+  pulseValue+=pulseVelocity;
+  uniforms.uPulse.value=Math.abs(pulseValue);
+
+  const breathe=1+Math.sin(t*.8)*.025;
+  liquid.scale.setScalar(breathe);
+  liquid.position.y=Math.sin(t*.5)*.08;
+
+  outer.rotation.copy(liquid.rotation);
+  outer.position.copy(liquid.position);
+  outer.scale.setScalar(breathe);
+
+  particles.rotation.y=t*.006;
+
+  renderer.render(scene,camera);
+}
+
+window.addEventListener("aquarium-start",()=>{
+  resize();
+  status.style.display="none";
+  if(!running){
+    running=true;
+    clock.start();
+    animate();
+  }
 });
 
 document.addEventListener("visibilitychange",()=>{
   if(document.hidden){
-    active=false;
-  }else if(world.classList.contains("visible")&&!active){
-    startSea();
+    running=false;
+  }else if(document.getElementById("world").classList.contains("visible")){
+    if(!running){
+      running=true;
+      clock.start();
+      animate();
+    }
   }
 });
 </script>
