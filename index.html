@@ -6,19 +6,17 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#ffffff">
 <meta name="format-detection" content="telephone=no">
-<title>SUGERROR LAND</title>
-
+<title>SUGERROR LAND — ABYSSAL ARCHIVE</title>
 <style>
 :root{
   --app-height:100dvh;
-  --aqua:#a5f5f3;
-  --cyan:#6de5ed;
-  --blue:#071b30;
-  --muted:#8caebb;
+  --ink:#d9f9ff;
+  --sub:#79a6b5;
+  --aqua:#91e8ec;
+  --line:rgba(148,222,231,.25);
+  --dark:#04121d;
 }
-
 *{box-sizing:border-box}
-
 html,body{
   margin:0;
   padding:0;
@@ -29,9 +27,7 @@ html,body{
   touch-action:manipulation;
   -webkit-text-size-adjust:100%;
 }
-
 html{position:fixed;inset:0}
-
 body{
   position:fixed;
   inset:0;
@@ -40,19 +36,16 @@ body{
   font-family:Arial,Helvetica,sans-serif;
   -webkit-tap-highlight-color:transparent;
 }
-
 button{
   font:inherit;
   cursor:pointer;
   touch-action:manipulation;
   -webkit-tap-highlight-color:transparent;
 }
-
 button:focus-visible{
   outline:2px solid #aa7c99;
   outline-offset:3px;
 }
-
 #app{
   position:fixed;
   top:0;
@@ -63,7 +56,6 @@ button:focus-visible{
   isolation:isolate;
   clip-path:inset(0);
 }
-
 .screen{
   position:absolute;
   inset:0;
@@ -75,7 +67,6 @@ button:focus-visible{
 /* =============================
    ORIGINAL 404 ERROR
 ============================= */
-
 #entry{
   position:absolute;
   inset:0;
@@ -88,20 +79,17 @@ button:focus-visible{
   padding:36px 30px;
   transition:background .15s,color .15s;
 }
-
 .entry-content{
   width:100%;
   max-width:450px;
   transform:translateY(-7%);
 }
-
 .error-icon{
   width:38px;
   height:43px;
   color:#757575;
   margin-bottom:30px;
 }
-
 .error-heading{
   position:relative;
   display:table;
@@ -109,19 +97,16 @@ button:focus-visible{
   letter-spacing:0;
   margin:0 0 18px;
 }
-
 .error-description{
   color:#646464;
   font:13px/1.85 Arial,Helvetica,sans-serif;
   max-width:380px;
 }
-
 .error-code{
   color:#777;
   font:11px/1.8 Arial,Helvetica,sans-serif;
   margin-top:20px;
 }
-
 .entry-button{
   margin-top:35px;
   background:#f7f7f7;
@@ -132,18 +117,14 @@ button:focus-visible{
   font:12px Arial,Helvetica,sans-serif;
   min-height:42px;
 }
-
 .entry-button:active{background:#e8e8e8}
-
 #entry.corrupt{
   color:#f3edf1;
   background:#17151c;
 }
-
 #entry.corrupt .error-heading{
   animation:shake .07s steps(2) infinite;
 }
-
 #entry.corrupt .error-heading::before,
 #entry.corrupt .error-heading::after{
   content:"This page isn't working";
@@ -153,48 +134,40 @@ button:focus-visible{
   pointer-events:none;
   font:inherit;
 }
-
 #entry.corrupt .error-heading::before{
   color:#ff84b9;
   clip-path:inset(0 0 53% 0);
   animation:splitA .09s steps(2) infinite;
 }
-
 #entry.corrupt .error-heading::after{
   color:#83d9e9;
   clip-path:inset(55% 0 0 0);
   animation:splitB .12s steps(2) infinite;
 }
-
 #entry.corrupt .error-description,
 #entry.corrupt .error-code{
   color:#aaa1ad;
 }
-
 #entry.corrupt .entry-button{
   color:#eee;
   background:#26212b;
   border-color:#554a5b;
 }
-
 @keyframes shake{
   0%{transform:translate(-3px,0)}
   50%{transform:translate(5px,1px)}
   100%{transform:translate(-2px,-1px)}
 }
-
 @keyframes splitA{
   0%{transform:translate(-9px,1px)}
   50%{transform:translate(8px,-2px)}
   100%{transform:translate(-4px,2px)}
 }
-
 @keyframes splitB{
   0%{transform:translate(9px,-2px)}
   50%{transform:translate(-7px,2px)}
   100%{transform:translate(4px,0)}
 }
-
 #noise{
   position:absolute;
   inset:0;
@@ -205,29 +178,25 @@ button:focus-visible{
   opacity:0;
   image-rendering:pixelated;
 }
-
 #noise.active{opacity:.65}
 
 /* =============================
-   AQUARIUM WORLD
+   ABYSSAL WORLD
 ============================= */
-
 #world{
   z-index:5;
-  background:#061727;
-  color:#e4fbff;
+  background:#04121d;
+  color:var(--ink);
   opacity:0;
   visibility:hidden;
   pointer-events:none;
 }
-
 #world.visible{
   opacity:1;
   visibility:visible;
   pointer-events:auto;
 }
-
-#oceanCanvas{
+#sea{
   position:absolute;
   inset:0;
   width:100%;
@@ -235,447 +204,606 @@ button:focus-visible{
   display:block;
   touch-action:none;
 }
-
-.ocean-vignette{
+.grain{
   position:absolute;
   inset:0;
   pointer-events:none;
-  background:
-    radial-gradient(
-      ellipse at 50% 45%,
-      transparent 12%,
-      rgba(2,9,21,.13) 55%,
-      rgba(1,7,17,.68) 100%
-    );
+  opacity:.13;
+  background:repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(140,214,230,.1) 4px
+  );
 }
-
-.interface{
+.vignette{
   position:absolute;
   inset:0;
   pointer-events:none;
-  font-family:Arial,Helvetica,sans-serif;
+  background:radial-gradient(
+    ellipse at 50% 48%,
+    transparent 23%,
+    rgba(0,6,14,.12) 62%,
+    rgba(0,5,13,.62) 100%
+  );
 }
-
-.interface button,
-.interface a{
-  pointer-events:auto;
-}
-
-.topbar{
+.frame{
   position:absolute;
-  top:0;
+  inset:12px;
+  border:1px solid rgba(147,215,229,.12);
+  pointer-events:none;
+}
+.frame:before,.frame:after{
+  content:"";
+  position:absolute;
+  width:17px;
+  height:17px;
+  border-color:rgba(158,231,241,.6);
+  border-style:solid;
+}
+.frame:before{
+  top:-1px;left:-1px;
+  border-width:1px 0 0 1px;
+}
+.frame:after{
+  bottom:-1px;right:-1px;
+  border-width:0 1px 1px 0;
+}
+.hud{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+}
+.hud button{pointer-events:auto}
+.top{
+  position:absolute;
   left:0;
   right:0;
-  min-height:88px;
-  padding:
-    max(26px,env(safe-area-inset-top))
-    26px 0;
+  top:0;
   display:flex;
   align-items:flex-start;
   justify-content:space-between;
+  padding:
+    max(30px,env(safe-area-inset-top))
+    27px 0;
 }
-
-.brand{
+.identity{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+}
+.identity-symbol{
+  width:29px;
+  height:29px;
+  border:1px solid rgba(153,232,240,.7);
+  display:grid;
+  place-items:center;
+  font-size:15px;
+  font-weight:300;
+}
+.identity-name{
   font-size:11px;
+  letter-spacing:.18em;
   font-weight:800;
-  letter-spacing:.2em;
   line-height:1.5;
 }
-
-.brand small{
+.identity-name small{
   display:block;
-  margin-top:6px;
-  font-size:8px;
+  margin-top:5px;
+  font-size:7px;
   font-weight:400;
-  letter-spacing:.25em;
-  color:#83b7c9;
+  color:#83aebd;
+  letter-spacing:.23em;
 }
-
-/* MAP BUTTON */
-
-.map-button{
-  width:65px;
-  height:65px;
-  border:1px solid rgba(156,238,245,.55);
+.map-btn{
+  width:64px;
+  height:64px;
+  border:1px solid rgba(155,229,237,.55);
   border-radius:50%;
-  background:rgba(5,25,43,.32);
-  color:#e3ffff;
+  background:rgba(3,19,31,.5);
+  color:#ddfaff;
   display:flex;
   flex-direction:column;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   gap:4px;
-  backdrop-filter:blur(12px);
+  backdrop-filter:blur(8px);
+  transition:background .2s,transform .2s;
 }
-
-.map-button:active{
-  background:rgba(105,218,230,.18);
+.map-btn:active{
+  transform:scale(.95);
+  background:rgba(72,153,168,.3);
 }
-
-.map-icon{
-  width:24px;
-  height:24px;
-  display:block;
+.map-btn svg{
+  width:23px;
+  height:23px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.3;
+  stroke-linejoin:round;
+  stroke-linecap:round;
 }
-
-.map-icon svg{
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-.map-text{
+.map-btn span{
   font-size:9px;
   letter-spacing:.14em;
 }
-
-.side-data{
+.section-no{
   position:absolute;
-  top:30%;
-  left:26px;
+  top:119px;
+  left:27px;
+  font-size:8px;
+  color:#8ac6d0;
+  letter-spacing:.24em;
+}
+.hero{
+  position:absolute;
+  top:17%;
+  left:0;
+  width:100%;
+  text-align:center;
+  padding:0 12px;
+}
+.hero-kicker{
+  font-size:8px;
+  color:#9ccbd6;
+  letter-spacing:.4em;
+  margin-bottom:11px;
+}
+.hero-title{
+  margin:0;
+  font-size:clamp(36px,10.8vw,112px);
+  font-weight:800;
+  letter-spacing:-.085em;
+  line-height:.9;
+  color:rgba(220,251,255,.91);
+  text-shadow:0 0 35px rgba(81,195,216,.12);
+}
+.hero-under{
+  margin-top:14px;
+  font-size:8px;
+  color:#85c3cf;
+  letter-spacing:.32em;
+}
+.left-readout{
+  position:absolute;
+  left:27px;
+  top:34%;
   display:flex;
   flex-direction:column;
   gap:18px;
 }
-
-.data-label{
-  color:#77a7ba;
+.readout-label{
+  color:#75a4b3;
   font-size:8px;
-  letter-spacing:.18em;
+  letter-spacing:.16em;
 }
-
-.data-value{
+.readout-value{
+  color:#e0f9fc;
+  font-size:13px;
+  letter-spacing:.08em;
   margin-top:5px;
-  font-size:12px;
-  font-weight:600;
-  letter-spacing:.09em;
   font-variant-numeric:tabular-nums;
 }
-
-.vertical-label{
+.live-dot{
+  display:inline-block;
+  width:5px;
+  height:5px;
+  background:#8ce6d6;
+  border-radius:50%;
+  margin-right:5px;
+  box-shadow:0 0 8px #8ce6d6;
+  animation:blink 2s infinite;
+}
+@keyframes blink{
+  50%{opacity:.3}
+}
+.right-vertical{
   position:absolute;
-  right:25px;
-  top:35%;
+  right:27px;
+  top:34%;
   writing-mode:vertical-rl;
-  font-size:9px;
-  letter-spacing:.32em;
-  color:#8cc9d7;
+  font-size:8px;
+  color:#7cb7c5;
+  letter-spacing:.35em;
 }
-
-.hero-title{
+.specimen{
   position:absolute;
-  left:50%;
-  top:19%;
-  transform:translateX(-50%);
-  width:100%;
-  text-align:center;
-  white-space:nowrap;
-  font-size:clamp(31px,8.5vw,104px);
-  font-weight:800;
-  letter-spacing:-.075em;
-  line-height:1;
-  color:rgba(229,252,255,.92);
-  mix-blend-mode:screen;
-  text-shadow:0 0 28px rgba(87,213,230,.1);
-}
-
-.hero-subtitle{
-  position:absolute;
-  left:50%;
-  top:calc(19% + clamp(41px,9vw,115px));
-  transform:translateX(-50%);
-  font-size:9px;
-  letter-spacing:.45em;
-  color:#a2dce8;
-  white-space:nowrap;
-}
-
-.specimen-label{
-  position:absolute;
-  right:9%;
-  bottom:29%;
-  width:160px;
-  border-top:1px solid rgba(152,234,245,.65);
+  right:8%;
+  bottom:26%;
+  width:170px;
+  border-top:1px solid rgba(151,226,235,.65);
   padding-top:10px;
 }
-
-.specimen-label .number{
-  font-size:9px;
-  color:#7fc5d5;
+.specimen-code{
+  font-size:8px;
   letter-spacing:.2em;
+  color:#80bcca;
 }
-
-.specimen-label .name{
-  margin-top:7px;
+.specimen-name{
+  margin-top:8px;
   font-size:15px;
   font-weight:700;
-  letter-spacing:.08em;
+  letter-spacing:.06em;
 }
-
-.specimen-label .latin{
-  margin-top:5px;
+.specimen-latin{
   font-size:9px;
-  color:#8cb3c3;
+  color:#8ab6c4;
   font-style:italic;
+  margin-top:5px;
 }
-
-.specimen-label .desc{
-  margin-top:11px;
-  color:#9cc5d2;
+.specimen-description{
+  margin-top:10px;
   font-size:9px;
   line-height:1.8;
+  color:#94b9c5;
 }
-
-.bottom-panel{
+.bottom{
   position:absolute;
-  left:26px;
-  right:26px;
-  bottom:max(24px,env(safe-area-inset-bottom));
+  left:27px;
+  right:27px;
+  bottom:max(26px,env(safe-area-inset-bottom));
+  border-top:1px solid rgba(145,215,227,.35);
+  padding-top:13px;
   display:flex;
-  justify-content:space-between;
   align-items:end;
-  gap:15px;
+  justify-content:space-between;
+  gap:12px;
 }
-
-.bottom-caption{
-  font-size:9px;
-  color:#9ecbd6;
-  letter-spacing:.12em;
-  line-height:1.9;
+.bottom-title{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.18em;
 }
-
-.bottom-caption strong{
-  display:block;
-  font-size:12px;
-  color:#e5fbff;
-  letter-spacing:.2em;
+.bottom-copy{
+  margin-top:7px;
+  font-size:8px;
+  color:#86b0bd;
+  line-height:1.7;
+  letter-spacing:.1em;
 }
-
-.drag-hint{
+.drag-label{
   display:flex;
   align-items:center;
-  gap:8px;
-  font-size:9px;
-  color:#9fc5d1;
+  gap:9px;
+  font-size:8px;
+  color:#a0c9d2;
+  letter-spacing:.1em;
   white-space:nowrap;
 }
-
-.drag-symbol{
-  width:26px;
-  height:26px;
-  border:1px solid rgba(155,220,232,.6);
-  border-radius:50%;
+.drag-circle{
+  width:29px;
+  height:29px;
   display:grid;
   place-items:center;
-  font-size:14px;
+  border:1px solid rgba(152,226,236,.55);
+  border-radius:50%;
+  font-size:15px;
 }
-
-.bottom-line{
+.tickline{
   position:absolute;
-  bottom:82px;
-  left:26px;
-  right:26px;
-  height:1px;
-  background:linear-gradient(
-    90deg,
-    rgba(139,216,229,.6),
-    rgba(139,216,229,.08)
-  );
-}
-
-.coordinates{
-  position:absolute;
-  left:26px;
-  top:54%;
-  font-size:8px;
-  line-height:2.1;
-  letter-spacing:.1em;
-  color:#7ea6b8;
-}
-
-.scan-lines{
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  opacity:.12;
-  background:repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent 3px,
-    rgba(170,230,244,.09) 4px
-  );
-}
-
-/* MAP OVERLAY */
-
-.world-menu{
-  position:absolute;
-  z-index:10;
-  inset:0;
-  background:rgba(3,15,28,.95);
-  backdrop-filter:blur(22px);
+  left:50%;
+  bottom:112px;
+  transform:translateX(-50%);
   display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  gap:15px;
+  gap:4px;
+}
+.tickline i{
+  display:block;
+  width:1px;
+  height:7px;
+  background:rgba(142,214,225,.3);
+}
+.tickline i:nth-child(5n){
+  height:13px;
+  background:rgba(159,233,240,.7);
+}
+.corner-data{
+  position:absolute;
+  left:27px;
+  bottom:24%;
+  font-size:8px;
+  line-height:1.9;
+  letter-spacing:.12em;
+  color:#78a9b7;
+}
+.loading{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:10px;
+  letter-spacing:.3em;
+  color:#c7eff4;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .3s;
+}
+.loading.show{opacity:1}
+
+/* =============================
+   MAP OVERLAY
+============================= */
+#mapOverlay{
+  position:absolute;
+  inset:0;
+  z-index:12;
+  background:rgba(3,15,25,.97);
+  backdrop-filter:blur(18px);
   opacity:0;
   visibility:hidden;
   pointer-events:none;
   transition:opacity .3s,visibility .3s;
+  display:flex;
+  flex-direction:column;
+  padding:
+    max(34px,env(safe-area-inset-top))
+    28px
+    max(32px,env(safe-area-inset-bottom));
 }
-
-.world-menu.open{
+#mapOverlay.open{
   opacity:1;
   visibility:visible;
   pointer-events:auto;
 }
-
-.world-menu h2{
-  font-size:11px;
-  letter-spacing:.35em;
-  color:#81c6d6;
-  margin:0 0 25px;
+.map-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:start;
 }
-
-.world-menu button{
-  width:min(80%,330px);
-  border:0;
-  border-bottom:1px solid rgba(130,208,221,.35);
-  padding:17px 8px;
-  background:transparent;
-  color:#e9ffff;
-  font-size:19px;
-  letter-spacing:.14em;
-  text-align:left;
-}
-
-.world-menu button span{
+.map-heading-small{
   font-size:9px;
-  color:#77aebf;
-  margin-right:17px;
+  color:#80bac6;
+  letter-spacing:.25em;
 }
-
-.world-menu .close-menu{
-  position:absolute;
-  top:max(35px,env(safe-area-inset-top));
-  right:28px;
-  width:52px;
-  border:1px solid #79b8c7;
+.map-heading{
+  font-size:clamp(32px,9vw,74px);
+  letter-spacing:-.06em;
+  font-weight:800;
+  margin:7px 0 0;
+  line-height:1;
+}
+.close-map{
+  width:48px;
+  height:48px;
+  border:1px solid rgba(155,226,236,.5);
   border-radius:50%;
-  padding:17px 0;
-  text-align:center;
-  font-size:10px;
+  background:transparent;
+  color:#e1fbff;
+  font-size:20px;
 }
-
-.toast{
-  position:absolute;
-  left:50%;
-  bottom:120px;
-  transform:translateX(-50%) translateY(10px);
-  border:1px solid rgba(129,214,227,.4);
-  background:rgba(5,26,43,.9);
-  padding:12px 17px;
+.map-body{
+  margin:auto 0;
+  width:100%;
+  max-width:600px;
+  align-self:center;
+}
+.map-guide{
+  position:relative;
+  width:100%;
+  height:180px;
+  border:1px solid rgba(146,215,225,.24);
+  background:
+    linear-gradient(90deg,rgba(141,215,225,.05) 1px,transparent 1px),
+    linear-gradient(rgba(141,215,225,.05) 1px,transparent 1px);
+  background-size:25px 25px;
+  overflow:hidden;
+}
+.map-guide svg{
+  width:100%;
+  height:100%;
+}
+.map-guide path,.map-guide circle{
+  stroke:#83d7df;
+  fill:none;
+  stroke-width:1.3;
+}
+.map-guide .dashed{
+  stroke-dasharray:4 6;
+  opacity:.45;
+}
+.map-guide text{
+  fill:#b7edf2;
+  font-size:9px;
+  letter-spacing:1px;
+}
+.map-list{
+  margin-top:20px;
+  display:flex;
+  flex-direction:column;
+}
+.map-item{
+  width:100%;
+  padding:16px 3px;
+  background:transparent;
+  border:0;
+  border-bottom:1px solid rgba(139,209,220,.23);
+  color:#e2faff;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  transition:color .2s,padding-left .2s;
+}
+.map-item:active{
+  color:#8ef2f2;
+  padding-left:10px;
+}
+.map-index{
+  color:#7cb6c3;
   font-size:10px;
+  min-width:25px;
+}
+.map-name{
+  font-size:17px;
+  font-weight:600;
   letter-spacing:.1em;
-  white-space:nowrap;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity .25s,transform .25s;
+  flex:1;
+}
+.map-arrow{
+  color:#89c9d2;
+  font-size:18px;
+}
+.map-footer{
+  font-size:8px;
+  color:#7baab8;
+  letter-spacing:.18em;
+  line-height:1.8;
 }
 
-.toast.show{
+/* =============================
+   EXHIBITION DETAIL
+============================= */
+#detail{
+  position:absolute;
+  inset:0;
+  z-index:11;
+  background:rgba(3,15,25,.97);
+  backdrop-filter:blur(16px);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .3s,visibility .3s;
+  padding:
+    max(40px,env(safe-area-inset-top))
+    28px
+    max(30px,env(safe-area-inset-bottom));
+  display:flex;
+  flex-direction:column;
+}
+#detail.open{
   opacity:1;
-  transform:translateX(-50%) translateY(0);
+  visibility:visible;
+  pointer-events:auto;
+}
+.detail-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.detail-back{
+  border:0;
+  background:none;
+  color:#bdebf2;
+  font-size:11px;
+  letter-spacing:.16em;
+  padding:10px 0;
+}
+.detail-id{
+  color:#7db4c1;
+  font-size:9px;
+  letter-spacing:.2em;
+}
+.detail-center{
+  margin:auto 0;
+  text-align:center;
+}
+.detail-number{
+  font-size:10px;
+  letter-spacing:.3em;
+  color:#88c6d2;
+}
+.detail-title{
+  font-size:clamp(36px,10vw,75px);
+  font-weight:800;
+  letter-spacing:-.07em;
+  margin:18px 0;
+}
+.detail-description{
+  font-size:12px;
+  line-height:2.1;
+  color:#9bc1cd;
+}
+.detail-line{
+  width:70px;
+  height:1px;
+  background:#8bcbd5;
+  margin:26px auto;
+}
+.detail-note{
+  font-size:9px;
+  letter-spacing:.18em;
+  color:#6d9ba9;
+}
+.detail-bottom{
+  border-top:1px solid rgba(139,213,226,.3);
+  padding-top:14px;
+  font-size:9px;
+  letter-spacing:.16em;
+  color:#8abac6;
 }
 
 @media(max-width:600px){
-  .topbar{
-    padding-left:19px;
-    padding-right:19px;
+  .top{
+    padding-left:20px;
+    padding-right:20px;
   }
-
-  .brand{font-size:10px}
-
-  .map-button{
-    width:58px;
-    height:58px;
+  .identity-symbol{
+    width:25px;
+    height:25px;
   }
-
-  .map-icon{
-    width:22px;
-    height:22px;
+  .identity-name{font-size:10px}
+  .identity-name small{font-size:7px}
+  .map-btn{
+    width:57px;
+    height:57px;
   }
-
-  .side-data{
-    left:19px;
-    top:31%;
-    gap:13px;
-  }
-
-  .data-label{font-size:7px}
-  .data-value{font-size:10px}
-
-  .vertical-label{
-    right:16px;
-    top:37%;
-    font-size:8px;
-  }
-
-  .hero-title{
-    top:21%;
-    font-size:clamp(29px,9vw,55px);
-  }
-
-  .hero-subtitle{
-    top:calc(21% + 45px);
+  .section-no{left:20px;top:114px}
+  .hero{top:20%}
+  .hero-kicker{font-size:7px}
+  .hero-title{font-size:10.2vw}
+  .hero-under{
     font-size:7px;
-    letter-spacing:.25em;
+    letter-spacing:.2em;
   }
-
-  .specimen-label{
+  .left-readout{
+    left:20px;
+    top:35%;
+    gap:14px;
+  }
+  .readout-label{font-size:7px}
+  .readout-value{font-size:10px}
+  .right-vertical{
     right:19px;
-    bottom:25%;
-    width:145px;
-  }
-
-  .specimen-label .name{font-size:13px}
-  .specimen-label .desc{font-size:8px}
-
-  .coordinates{
-    left:19px;
-    top:60%;
     font-size:7px;
   }
-
-  .bottom-panel{
-    left:19px;
-    right:19px;
+  .specimen{
+    right:20px;
+    bottom:24%;
+    width:140px;
   }
-
-  .bottom-line{
-    left:19px;
-    right:19px;
-    bottom:81px;
+  .specimen-name{font-size:12px}
+  .specimen-description{font-size:8px}
+  .corner-data{
+    left:20px;
+    bottom:24%;
+    font-size:7px;
   }
-
-  .bottom-caption{font-size:8px}
-  .bottom-caption strong{font-size:10px}
-  .drag-hint{font-size:8px}
+  .bottom{
+    left:20px;
+    right:20px;
+  }
+  .bottom-title{font-size:10px}
+  .bottom-copy{font-size:7px}
+  .drag-label{font-size:7px}
+  .tickline{bottom:115px}
 }
-
+@media(max-height:650px){
+  .hero{top:15%}
+  .left-readout{top:30%}
+  .specimen{bottom:20%}
+  .corner-data{bottom:20%}
+  .tickline{display:none}
+}
 @media(prefers-reduced-motion:reduce){
   *,
-  *::before,
-  *::after{
+  *:before,
+  *:after{
     animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
     transition-duration:.01ms!important;
   }
 }
 </style>
 </head>
-
 <body>
 <div id="app">
 
@@ -688,134 +816,195 @@ button:focus-visible{
       <path d="M13 20H27M13 26H27" stroke="currentColor" stroke-width="2"/>
       <path d="M15 35H25" stroke="currentColor" stroke-width="2"/>
     </svg>
-
     <h1 class="error-heading">This page isn't working</h1>
-
     <div class="error-description">
       The requested page could not be found.<br>
       Please check the address and try again.
     </div>
-
     <div class="error-code">HTTP ERROR 404</div>
-
     <button id="enterButton" class="entry-button">Reload</button>
   </main>
 </section>
 
 <canvas id="noise" aria-hidden="true"></canvas>
 
-<!-- AQUARIUM -->
+<!-- AQUARIUM WORLD -->
 <section id="world" class="screen" aria-hidden="true">
+  <canvas id="sea"></canvas>
+  <div class="grain"></div>
+  <div class="vignette"></div>
+  <div class="frame"></div>
 
-  <canvas id="oceanCanvas"></canvas>
-
-  <div class="ocean-vignette"></div>
-  <div class="scan-lines"></div>
-
-  <div class="interface">
-
-    <header class="topbar">
-      <div class="brand">
-        SUGERROR LAND
-        <small>ABYSSAL AQUARIUM / EST. 20XX</small>
+  <div class="hud">
+    <header class="top">
+      <div class="identity">
+        <div class="identity-symbol">✳</div>
+        <div class="identity-name">
+          SUGERROR LAND
+          <small>AN INTERACTIVE AQUARIUM ARCHIVE</small>
+        </div>
       </div>
-
-      <button class="map-button" id="mapButton" aria-label="MAP">
-        <span class="map-icon">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M3 5.5L9 3L15 5.5L21 3V18.5L15 21L9 18.5L3 21V5.5Z"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M9 3V18.5M15 5.5V21"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-            />
-          </svg>
-        </span>
-        <span class="map-text">MAP</span>
+      <button id="mapButton" class="map-btn" aria-label="Open map">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 5.5L9 3L15 5.5L21 3V18.5L15 21L9 18.5L3 21Z"/>
+          <path d="M9 3V18.5M15 5.5V21"/>
+        </svg>
+        <span>MAP</span>
       </button>
     </header>
 
-    <div class="hero-title">AQUARIUM</div>
-    <div class="hero-subtitle">THE WORLD BENEATH THE SURFACE</div>
+    <div class="section-no">
+      EXHIBITION 001 / ABYSSAL ZONE
+    </div>
 
-    <div class="side-data">
+    <div class="hero">
+      <div class="hero-kicker">SUGERROR MARINE RESEARCH INSTITUTE</div>
+      <h1 class="hero-title">AQUARIUM</h1>
+      <div class="hero-under">
+        THE UNKNOWN WORLD BENEATH THE SURFACE
+      </div>
+    </div>
+
+    <div class="left-readout">
       <div>
-        <div class="data-label">CURRENT DEPTH</div>
-        <div class="data-value">02,400 M</div>
+        <div class="readout-label">CURRENT DEPTH</div>
+        <div class="readout-value" id="depth">02,400 M</div>
       </div>
-
       <div>
-        <div class="data-label">TEMPERATURE</div>
-        <div class="data-value">02.8 °C</div>
+        <div class="readout-label">WATER TEMP.</div>
+        <div class="readout-value" id="temperature">02.8 °C</div>
       </div>
-
       <div>
-        <div class="data-label">PRESSURE</div>
-        <div class="data-value">24.1 MPa</div>
+        <div class="readout-label">PRESSURE</div>
+        <div class="readout-value">24.1 MPa</div>
       </div>
-
       <div>
-        <div class="data-label">SYSTEM STATUS</div>
-        <div class="data-value" style="color:#8ceee2">● ONLINE</div>
+        <div class="readout-label">OBSERVATION</div>
+        <div class="readout-value">
+          <span class="live-dot"></span>ACTIVE
+        </div>
       </div>
     </div>
 
-    <div class="vertical-label">
-      MARINE OBSERVATION SYSTEM — 001
+    <div class="right-vertical">
+      SPECIMEN MONITORING SYSTEM — SGL / 001
     </div>
 
-    <div class="coordinates">
-      OBSERVATION POINT<br>
-      LAT 35° 42' 11.4"<br>
-      LON 139° 41' 02.8"<br>
-      SECTOR / A-07
+    <div class="corner-data">
+      COORDINATES<br>
+      X / <span id="coordX">+00.000</span><br>
+      Y / <span id="coordY">+00.000</span><br>
+      DATA LINK : STABLE
     </div>
 
-    <div class="specimen-label">
-      <div class="number">SPECIMEN / NO. 001</div>
-      <div class="name">LUMINOUS JELLY</div>
-      <div class="latin">Aurelia imaginaria</div>
-      <div class="desc">
-        A floating specimen observed<br>
-        in the deepest exhibition zone.
+    <div class="specimen">
+      <div class="specimen-code">SPECIMEN / NO. 001</div>
+      <div class="specimen-name">LUMINOUS JELLY</div>
+      <div class="specimen-latin">Aurelia imaginaria</div>
+      <div class="specimen-description">
+        Bioluminescent organism<br>
+        in continuous observation.<br>
+        STATUS — UNCLASSIFIED
       </div>
     </div>
 
-    <div class="bottom-line"></div>
+    <div class="tickline" id="tickline"></div>
 
-    <div class="bottom-panel">
-      <div class="bottom-caption">
-        <strong>DEEP SEA EXHIBITION</strong>
-        INTERACTIVE MARINE ARCHIVE<br>
-        SUGERROR LAND © 2026
+    <footer class="bottom">
+      <div>
+        <div class="bottom-title">ABYSSAL ARCHIVE</div>
+        <div class="bottom-copy">
+          SUGERROR LAND / EXPERIMENTAL EXHIBITION<br>
+          © 2026 — ALL OBSERVATIONS RECORDED
+        </div>
       </div>
-
-      <div class="drag-hint">
-        <span class="drag-symbol">↔</span>
-        DRAG TO EXPLORE
+      <div class="drag-label">
+        <span class="drag-circle">↔</span>
+        DRAG TO ROTATE
       </div>
-    </div>
-
+    </footer>
   </div>
 
-  <div class="world-menu" id="worldMenu">
-    <button class="close-menu" id="closeMenu">✕</button>
-    <h2>AQUARIUM MAP</h2>
-    <button data-page="EXHIBITS"><span>01</span>EXHIBITS</button>
-    <button data-page="CHARACTERS"><span>02</span>CHARACTERS</button>
-    <button data-page="STORIES"><span>03</span>STORIES</button>
-    <button data-page="ARCHIVE"><span>04</span>ARCHIVE</button>
+  <div class="loading" id="loading">INITIALIZING...</div>
+
+  <!-- MAP -->
+  <div id="mapOverlay" aria-hidden="true">
+    <div class="map-head">
+      <div>
+        <div class="map-heading-small">SUGERROR LAND / DIRECTORY</div>
+        <h2 class="map-heading">MAP.</h2>
+      </div>
+      <button class="close-map" id="closeMap" aria-label="Close map">×</button>
+    </div>
+
+    <div class="map-body">
+      <div class="map-guide">
+        <svg viewBox="0 0 320 180" aria-hidden="true">
+          <path class="dashed" d="M0 90H320M160 0V180"/>
+          <path d="M32 110C60 44 111 42 141 87S215 144 287 60"/>
+          <path d="M32 110C80 150 123 144 160 90S235 30 287 60" opacity=".35"/>
+          <circle cx="32" cy="110" r="5"/>
+          <circle cx="141" cy="87" r="5"/>
+          <circle cx="216" cy="103" r="5"/>
+          <circle cx="287" cy="60" r="5"/>
+          <circle cx="160" cy="90" r="63" opacity=".12"/>
+          <circle cx="160" cy="90" r="43" opacity=".18"/>
+          <text x="20" y="130">01</text>
+          <text x="132" y="73">02</text>
+          <text x="220" y="120">03</text>
+          <text x="278" y="49">04</text>
+          <text x="13" y="18">EXHIBITION NETWORK / A-01</text>
+        </svg>
+      </div>
+
+      <div class="map-list">
+        <button class="map-item" data-index="0">
+          <span class="map-index">01</span>
+          <span class="map-name">EXHIBITS</span>
+          <span class="map-arrow">↗</span>
+        </button>
+        <button class="map-item" data-index="1">
+          <span class="map-index">02</span>
+          <span class="map-name">CHARACTERS</span>
+          <span class="map-arrow">↗</span>
+        </button>
+        <button class="map-item" data-index="2">
+          <span class="map-index">03</span>
+          <span class="map-name">STORIES</span>
+          <span class="map-arrow">↗</span>
+        </button>
+        <button class="map-item" data-index="3">
+          <span class="map-index">04</span>
+          <span class="map-name">ARCHIVE</span>
+          <span class="map-arrow">↗</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="map-footer">
+      NAVIGATION SYSTEM / SUGERROR LAND<br>
+      SELECT AN EXHIBITION TO CONTINUE
+    </div>
   </div>
 
-  <div class="toast" id="toast"></div>
-
+  <!-- DETAIL -->
+  <div id="detail" aria-hidden="true">
+    <div class="detail-top">
+      <button class="detail-back" id="detailBack">← BACK TO MAP</button>
+      <span class="detail-id">SGL / DIRECTORY</span>
+    </div>
+    <div class="detail-center">
+      <div class="detail-number" id="detailNumber">EXHIBITION 01</div>
+      <h2 class="detail-title" id="detailTitle">EXHIBITS</h2>
+      <div class="detail-line"></div>
+      <div class="detail-description" id="detailDescription"></div>
+      <div class="detail-line"></div>
+      <div class="detail-note">SECTION UNDER CONSTRUCTION</div>
+    </div>
+    <div class="detail-bottom">
+      SUGERROR LAND / ABYSSAL ARCHIVE
+    </div>
+  </div>
 </section>
 </div>
 
@@ -823,61 +1012,44 @@ button:focus-visible{
 /* =============================
    VIEWPORT / ZOOM
 ============================= */
-
 function updateViewportHeight(){
   const height=window.visualViewport
     ?window.visualViewport.height
     :window.innerHeight;
-
   document.documentElement.style.setProperty(
-    "--app-height",
-    height+"px"
+    "--app-height",height+"px"
   );
 }
-
 updateViewportHeight();
-
 window.addEventListener("resize",updateViewportHeight);
-
 if(window.visualViewport){
   window.visualViewport.addEventListener(
-    "resize",
-    updateViewportHeight
+    "resize",updateViewportHeight
   );
 }
-
 ["gesturestart","gesturechange","gestureend"].forEach(type=>{
-  document.addEventListener(type,event=>{
-    event.preventDefault();
-  },{passive:false});
+  document.addEventListener(type,e=>e.preventDefault(),{
+    passive:false
+  });
 });
-
-document.addEventListener("touchstart",event=>{
-  if(event.touches.length>1)event.preventDefault();
+document.addEventListener("touchstart",e=>{
+  if(e.touches.length>1)e.preventDefault();
 },{passive:false});
-
-document.addEventListener("touchmove",event=>{
-  if(event.touches.length>1)event.preventDefault();
+document.addEventListener("touchmove",e=>{
+  if(e.touches.length>1)e.preventDefault();
 },{passive:false});
-
-let lastTapTime=0;
-let lastTapX=0;
-let lastTapY=0;
-
-document.addEventListener("touchend",event=>{
-  if(event.changedTouches.length!==1)return;
-
-  const touch=event.changedTouches[0];
+let lastTapTime=0,lastTapX=0,lastTapY=0;
+document.addEventListener("touchend",e=>{
+  if(e.changedTouches.length!==1)return;
+  const touch=e.changedTouches[0];
   const now=Date.now();
   const delta=now-lastTapTime;
-
   const distance=Math.hypot(
     touch.clientX-lastTapX,
     touch.clientY-lastTapY
   );
-
   if(delta>0&&delta<300&&distance<30){
-    event.preventDefault();
+    e.preventDefault();
     lastTapTime=0;
   }else{
     lastTapTime=now;
@@ -889,18 +1061,14 @@ document.addEventListener("touchend",event=>{
 /* =============================
    ORIGINAL 404 GLITCH
 ============================= */
-
 const entry=document.getElementById("entry");
 const enterButton=document.getElementById("enterButton");
 const world=document.getElementById("world");
-
 const noise=document.getElementById("noise");
 const ctx=noise.getContext("2d");
-
 const reducedMotion=window.matchMedia(
   "(prefers-reduced-motion: reduce)"
 );
-
 let entering=false;
 let glitchActive=false;
 let frameId=null;
@@ -916,506 +1084,419 @@ function resizeNoise(){
     )
   );
 }
-
 function drawNoise(time){
   if(!glitchActive)return;
-
   if(time-lastFrame>45){
     lastFrame=time;
-
-    const w=noise.width;
-    const h=noise.height;
-
+    const w=noise.width,h=noise.height;
     const data=ctx.createImageData(w,h);
     const p=data.data;
-
     for(let i=0;i<p.length;i+=4){
       const v=Math.random()>.52?255:0;
-
-      p[i]=v;
-      p[i+1]=v;
-      p[i+2]=v;
+      p[i]=v;p[i+1]=v;p[i+2]=v;
       p[i+3]=Math.random()*160;
     }
-
     ctx.putImageData(data,0,0);
-
     for(let i=0;i<8;i++){
       ctx.fillStyle=Math.random()>.5
         ?"rgba(255,120,177,.65)"
         :"rgba(110,210,230,.65)";
-
       ctx.fillRect(
-        0,
-        Math.random()*h,
-        w,
-        Math.random()*5+1
+        0,Math.random()*h,w,Math.random()*5+1
       );
     }
   }
-
   frameId=requestAnimationFrame(drawNoise);
 }
-
 function startNoise(){
   if(reducedMotion.matches||glitchActive)return;
-
   resizeNoise();
   glitchActive=true;
   lastFrame=0;
-
   noise.classList.add("active");
-
   frameId=requestAnimationFrame(drawNoise);
 }
-
 function stopNoise(){
   glitchActive=false;
-
   cancelAnimationFrame(frameId);
   noise.classList.remove("active");
-
-  ctx.clearRect(
-    0,0,noise.width,noise.height
-  );
+  ctx.clearRect(0,0,noise.width,noise.height);
 }
-
 function enterWorld(){
   if(entering)return;
-
   entering=true;
   enterButton.disabled=true;
-
   if(!reducedMotion.matches){
     entry.classList.add("corrupt");
     startNoise();
   }
-
   setTimeout(()=>{
     stopNoise();
-
     entry.style.display="none";
     world.classList.add("visible");
     world.setAttribute("aria-hidden","false");
-
     startAquarium();
-
   },reducedMotion.matches?100:1100);
 }
-
 enterButton.addEventListener("click",enterWorld);
-
 window.addEventListener("resize",()=>{
   if(glitchActive)resizeNoise();
 });
 
-document.addEventListener("visibilitychange",()=>{
-  if(document.hidden)stopNoise();
-});
-
 /* =============================
-   AQUARIUM CANVAS
-   PSEUDO 3D JELLYFISH
+   ABYSSAL RENDER ENGINE
 ============================= */
-
-const ocean=document.getElementById("oceanCanvas");
-const oc=ocean.getContext("2d",{alpha:false});
-
-let W=0;
-let H=0;
-let DPR=1;
-
-let aquariumRunning=false;
-let aquariumFrame=null;
-
-let rotationX=-0.12;
-let rotationY=0.25;
-
-let targetX=-0.12;
-let targetY=0.25;
-
-let dragging=false;
-let previousX=0;
-let previousY=0;
-
-let particles=[];
-let fish=[];
-
+const sea=document.getElementById("sea");
+const c=sea.getContext("2d",{alpha:false});
 const TAU=Math.PI*2;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
 
-function random(min,max){
-  return min+Math.random()*(max-min);
+let W=0,H=0,DPR=1;
+let running=false,animationId=null;
+let rotX=-.14,rotY=.3;
+let targetX=-.14,targetY=.3;
+let velocityX=0,velocityY=0;
+let dragging=false,px=0,py=0;
+let particles=[],fishes=[];
+let lastHudUpdate=0;
+
+function rand(a,b){return a+Math.random()*(b-a)}
+function hash(n){
+  const x=Math.sin(n*127.1+78.233)*43758.5453;
+  return x-Math.floor(x);
 }
-
-function resizeAquarium(){
-  const rect=ocean.getBoundingClientRect();
-
-  W=Math.max(1,rect.width);
-  H=Math.max(1,rect.height);
-
-  DPR=Math.min(window.devicePixelRatio||1,2);
-
-  ocean.width=Math.round(W*DPR);
-  ocean.height=Math.round(H*DPR);
-
-  oc.setTransform(DPR,0,0,DPR,0,0);
+function resizeSea(){
+  const r=sea.getBoundingClientRect();
+  W=Math.max(1,r.width);
+  H=Math.max(1,r.height);
+  DPR=Math.min(devicePixelRatio||1,2);
+  sea.width=Math.round(W*DPR);
+  sea.height=Math.round(H*DPR);
+  c.setTransform(DPR,0,0,DPR,0,0);
 }
-
-function makeParticles(){
-  particles=Array.from({length:85},()=>({
+function initEnvironment(){
+  particles=Array.from({length:130},(_,i)=>({
     x:Math.random(),
     y:Math.random(),
-    size:random(.5,2),
-    speed:random(.00004,.0002),
-    alpha:random(.1,.55)
+    z:rand(.35,1.5),
+    radius:rand(.35,1.65),
+    speed:rand(.000008,.000035),
+    phase:rand(0,TAU),
+    alpha:rand(.08,.42)
   }));
-
-  fish=Array.from({length:16},()=>({
+  fishes=Array.from({length:17},(_,i)=>({
     x:Math.random(),
-    y:random(.16,.85),
-    scale:random(.35,1.1),
-    speed:random(.000025,.000085),
-    alpha:random(.12,.4),
-    direction:Math.random()>.5?1:-1
+    y:rand(.2,.85),
+    depth:rand(.3,1),
+    speed:rand(.000012,.000035),
+    direction:i%2?1:-1,
+    size:rand(.4,1.1),
+    phase:rand(0,TAU)
   }));
 }
-
-function project3D(x,y,z){
-  const cy=Math.cos(rotationY);
-  const sy=Math.sin(rotationY);
-
-  const cx=Math.cos(rotationX);
-  const sx=Math.sin(rotationX);
-
-  const x1=x*cy-z*sy;
-  const z1=x*sy+z*cy;
-
-  const y1=y*cx-z1*sx;
-  const z2=y*sx+z1*cx;
-
-  const perspective=650/(650+z2);
-
-  return {
-    x:x1*perspective,
-    y:y1*perspective,
-    z:z2,
-    scale:perspective
-  };
+function project(x,y,z){
+  const cy=Math.cos(rotY),sy=Math.sin(rotY);
+  const cx=Math.cos(rotX),sx=Math.sin(rotX);
+  const rx=x*cy-z*sy;
+  const rz=x*sy+z*cy;
+  const ry=y*cx-rz*sx;
+  const zz=y*sx+rz*cx;
+  const p=700/(700+zz);
+  return {x:rx*p,y:ry*p,z:zz,p};
 }
+function strokePath(points,color,width=1,glow=0){
+  if(points.length<2)return;
+  c.beginPath();
+  c.moveTo(points[0].x,points[0].y);
+  for(let i=1;i<points.length;i++){
+    c.lineTo(points[i].x,points[i].y);
+  }
+  c.strokeStyle=color;
+  c.lineWidth=width;
+  if(glow){
+    c.shadowColor=color;
+    c.shadowBlur=glow;
+  }
+  c.stroke();
+  c.shadowBlur=0;
+}
+function drawBackground(t){
+  const g=c.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,"#04111f");
+  g.addColorStop(.45,"#082c3f");
+  g.addColorStop(1,"#03111d");
+  c.fillStyle=g;
+  c.fillRect(0,0,W,H);
 
-function drawBackground(time){
-  const bg=oc.createLinearGradient(0,0,0,H);
-
-  bg.addColorStop(0,"#061322");
-  bg.addColorStop(.48,"#092d43");
-  bg.addColorStop(1,"#04111e");
-
-  oc.fillStyle=bg;
-  oc.fillRect(0,0,W,H);
-
-  const glow=oc.createRadialGradient(
-    W*.5,H*.51,0,
-    W*.5,H*.51,Math.max(W,H)*.6
+  const rg=c.createRadialGradient(
+    W*.5,H*.5,10,
+    W*.5,H*.5,Math.max(W,H)*.65
   );
+  rg.addColorStop(0,"rgba(33,141,166,.29)");
+  rg.addColorStop(.5,"rgba(18,83,112,.12)");
+  rg.addColorStop(1,"rgba(0,0,0,0)");
+  c.fillStyle=rg;
+  c.fillRect(0,0,W,H);
 
-  glow.addColorStop(0,"rgba(28,133,159,.30)");
-  glow.addColorStop(.45,"rgba(20,79,110,.13)");
-  glow.addColorStop(1,"rgba(0,0,0,0)");
-
-  oc.fillStyle=glow;
-  oc.fillRect(0,0,W,H);
-
-  const beamShift=Math.sin(time*.00018)*W*.04;
-
-  oc.save();
-  oc.globalAlpha=.045;
-
-  for(let i=0;i<5;i++){
-    const x=W*(i/4)+beamShift;
-
-    const beam=oc.createLinearGradient(
-      x,0,x+W*.15,H
-    );
-
-    beam.addColorStop(0,"rgba(130,237,255,.8)");
-    beam.addColorStop(1,"rgba(130,237,255,0)");
-
-    oc.fillStyle=beam;
-
-    oc.beginPath();
-    oc.moveTo(x,0);
-    oc.lineTo(x+W*.04,0);
-    oc.lineTo(x+W*.23,H);
-    oc.lineTo(x-W*.12,H);
-    oc.closePath();
-    oc.fill();
+  c.save();
+  c.globalAlpha=.035;
+  for(let i=0;i<6;i++){
+    const x=W*(i/5)+Math.sin(t*.00015+i)*20;
+    c.fillStyle="#a2edff";
+    c.beginPath();
+    c.moveTo(x,0);
+    c.lineTo(x+12,0);
+    c.lineTo(x+W*.18,H);
+    c.lineTo(x-W*.06,H);
+    c.closePath();
+    c.fill();
   }
-
-  oc.restore();
+  c.restore();
 }
-
-function drawParticles(time){
+function drawParticles(t){
   for(const p of particles){
-    const y=((p.y-time*p.speed)%1+1)%1;
-
-    oc.beginPath();
-    oc.arc(
-      p.x*W+Math.sin(time*.0005+p.y*12)*8,
-      y*H,
-      p.size,
-      0,TAU
-    );
-
-    oc.fillStyle=`rgba(169,237,246,${p.alpha})`;
-    oc.fill();
+    const y=((p.y-t*p.speed)%1+1)%1;
+    const x=p.x*W+Math.sin(t*.0003+p.phase)*10*p.z;
+    c.beginPath();
+    c.arc(x,y*H,p.radius*p.z,0,TAU);
+    c.fillStyle=`rgba(175,235,243,${p.alpha/p.z})`;
+    c.fill();
   }
 }
-
-function drawFish(time){
-  for(const f of fish){
-    const progress=(
-      f.x+time*f.speed*f.direction
-    )%1;
-
-    const x=((progress+1)%1)*W;
-    const y=f.y*H+Math.sin(time*.0008+f.x*10)*8;
-
-    oc.save();
-    oc.translate(x,y);
-    oc.scale(f.direction*f.scale,f.scale);
-    oc.globalAlpha=f.alpha;
-
-    oc.fillStyle="#b3f2f5";
-
-    oc.beginPath();
-    oc.ellipse(0,0,10,3.2,0,0,TAU);
-    oc.fill();
-
-    oc.beginPath();
-    oc.moveTo(-8,0);
-    oc.lineTo(-17,-6);
-    oc.lineTo(-17,6);
-    oc.closePath();
-    oc.fill();
-
-    oc.restore();
+function drawFishes(t){
+  c.save();
+  for(const f of fishes){
+    const x=(((f.x+t*f.speed*f.direction)%1)+1)%1*W;
+    const y=f.y*H+Math.sin(t*.0006+f.phase)*9;
+    c.save();
+    c.translate(x,y);
+    c.scale(f.direction*f.size,f.size);
+    c.globalAlpha=.13+.22*f.depth;
+    c.fillStyle="#b8eff4";
+    c.beginPath();
+    c.ellipse(0,0,8,2.7,0,0,TAU);
+    c.fill();
+    c.beginPath();
+    c.moveTo(-6,0);
+    c.lineTo(-14,-5);
+    c.lineTo(-14,5);
+    c.closePath();
+    c.fill();
+    c.restore();
   }
+  c.restore();
 }
 
-function drawJellyfish(time){
-  const centerX=W*.5;
-  const centerY=H*.51;
+/* =============================
+   PARAMETRIC JELLYFISH
+============================= */
+function drawJellyfish(t){
+  const size=Math.min(W*.69,H*.45,340);
+  const radius=size*.49;
+  const domeHeight=size*.43;
+  const pulse=1+Math.sin(t*.0014)*.042;
+  const floatY=Math.sin(t*.0007)*10;
 
-  const size=Math.min(W*.57,H*.38,285);
-  const pulse=1+Math.sin(time*.0015)*.035;
-  const floatY=Math.sin(time*.00075)*12;
+  c.save();
+  c.translate(W*.5,H*.49+floatY);
 
-  oc.save();
-  oc.translate(centerX,centerY+floatY);
-
-  const radius=size*.48*pulse;
-  const domeHeight=size*.45;
-
-  // Soft surrounding glow
-  const halo=oc.createRadialGradient(
-    0,-domeHeight*.15,0,
+  const glow=c.createRadialGradient(
+    0,-domeHeight*.2,0,
     0,0,size*.9
   );
+  glow.addColorStop(0,"rgba(117,234,241,.18)");
+  glow.addColorStop(.55,"rgba(70,159,203,.07)");
+  glow.addColorStop(1,"rgba(0,0,0,0)");
+  c.fillStyle=glow;
+  c.beginPath();
+  c.arc(0,0,size*.9,0,TAU);
+  c.fill();
 
-  halo.addColorStop(0,"rgba(117,239,246,.18)");
-  halo.addColorStop(.55,"rgba(80,178,219,.07)");
-  halo.addColorStop(1,"rgba(80,178,219,0)");
+  const domePoint=(theta,phi)=>{
+    const r=Math.sin(theta)*radius*pulse;
+    const y=-Math.cos(theta)*domeHeight/pulse;
+    const scallop=1+Math.pow(theta/(Math.PI*.53),8)*
+      .025*Math.cos(phi*12);
+    return project(
+      Math.cos(phi)*r*scallop,
+      y,
+      Math.sin(phi)*r*scallop
+    );
+  };
 
-  oc.fillStyle=halo;
-  oc.beginPath();
-  oc.arc(0,0,size*.9,0,TAU);
-  oc.fill();
+  // Rear tentacles, sorted by depth
+  const strands=[];
+  for(let i=0;i<42;i++){
+    const a=i/42*TAU;
+    const r=radius*(.18+hash(i+2)*.76);
+    const length=size*(.62+hash(i+40)*.5);
+    const rootZ=Math.sin(a)*r;
+    strands.push({i,a,r,length,rootZ});
+  }
+  strands.sort((a,b)=>b.rootZ-a.rootZ);
 
-  // 3D bell wireframe
-  const rings=17;
-  const segments=56;
-
-  oc.lineWidth=.8;
-
-  for(let ring=1;ring<=rings;ring++){
-    const theta=(ring/rings)*Math.PI*.52;
-
-    const r=Math.sin(theta)*radius;
-    const y=-Math.cos(theta)*domeHeight;
-
-    oc.beginPath();
-
-    for(let i=0;i<=segments;i++){
-      const phi=(i/segments)*TAU;
-
-      const point=project3D(
-        Math.cos(phi)*r,
-        y,
-        Math.sin(phi)*r
-      );
-
-      if(i===0)oc.moveTo(point.x,point.y);
-      else oc.lineTo(point.x,point.y);
+  function drawStrand(s,front){
+    const points=[];
+    for(let j=0;j<=44;j++){
+      const u=j/44;
+      const sway=Math.sin(
+        t*.0012+s.i*.75+u*5.4
+      )*u*radius*.17;
+      const swayZ=Math.cos(
+        t*.001+s.i*.4+u*4
+      )*u*radius*.12;
+      points.push(project(
+        Math.cos(s.a)*s.r+sway,
+        u*s.length,
+        Math.sin(s.a)*s.r+swayZ
+      ));
     }
-
-    oc.strokeStyle=`rgba(126,238,248,${
-      .11+(ring/rings)*.28
-    })`;
-
-    oc.stroke();
+    const bright=s.i%5===0;
+    strokePath(
+      points,
+      bright
+        ?`rgba(180,243,251,${front?.52:.23})`
+        :`rgba(106,203,227,${front?.28:.12})`,
+      bright?1.15:.65,
+      bright&&front?4:0
+    );
   }
 
-  // Longitude curves
-  for(let line=0;line<28;line++){
-    const phi=line/28*TAU;
-
-    oc.beginPath();
-
-    for(let i=0;i<=36;i++){
-      const theta=i/36*Math.PI*.52;
-
-      const r=Math.sin(theta)*radius;
-      const y=-Math.cos(theta)*domeHeight;
-
-      const point=project3D(
-        Math.cos(phi)*r,
-        y,
-        Math.sin(phi)*r
-      );
-
-      if(i===0)oc.moveTo(point.x,point.y);
-      else oc.lineTo(point.x,point.y);
-    }
-
-    oc.strokeStyle="rgba(139,241,247,.22)";
-    oc.stroke();
+  for(const s of strands){
+    if(s.rootZ>=0)drawStrand(s,false);
   }
 
-  // Translucent bell
-  const bell=oc.createRadialGradient(
-    -radius*.25,
-    -domeHeight*.55,
-    radius*.04,
-    0,
-    -domeHeight*.25,
-    radius*1.2
+  // Bell surface shading
+  const bellGradient=c.createRadialGradient(
+    -radius*.2,-domeHeight*.48,0,
+    0,-domeHeight*.2,radius*1.3
   );
-
-  bell.addColorStop(0,"rgba(197,255,255,.24)");
-  bell.addColorStop(.4,"rgba(98,219,236,.13)");
-  bell.addColorStop(1,"rgba(95,144,232,.025)");
-
-  oc.fillStyle=bell;
-  oc.beginPath();
-  oc.ellipse(
-    0,
-    -domeHeight*.38,
-    radius*.98,
-    domeHeight*.62,
+  bellGradient.addColorStop(0,"rgba(210,255,255,.21)");
+  bellGradient.addColorStop(.45,"rgba(112,224,240,.09)");
+  bellGradient.addColorStop(1,"rgba(73,127,196,.015)");
+  c.fillStyle=bellGradient;
+  c.beginPath();
+  c.ellipse(
+    0,-domeHeight*.42,
+    radius*.96,domeHeight*.57,
     0,Math.PI,TAU
   );
-  oc.closePath();
-  oc.fill();
+  c.closePath();
+  c.fill();
 
-  // Rim
-  oc.beginPath();
-
-  for(let i=0;i<=80;i++){
-    const a=i/80*TAU;
-    const point=project3D(
-      Math.cos(a)*radius,
-      0,
-      Math.sin(a)*radius
-    );
-
-    if(i===0)oc.moveTo(point.x,point.y);
-    else oc.lineTo(point.x,point.y);
-  }
-
-  oc.strokeStyle="rgba(159,255,250,.8)";
-  oc.lineWidth=1.4;
-  oc.shadowColor="#7ef5f5";
-  oc.shadowBlur=13;
-  oc.stroke();
-  oc.shadowBlur=0;
-
-  // Tentacles
-  const tentacleCount=24;
-
-  for(let i=0;i<tentacleCount;i++){
-    const angle=i/tentacleCount*TAU;
-
-    const baseRadius=radius*randomStable(i);
-    const baseX=Math.cos(angle)*baseRadius;
-    const baseZ=Math.sin(angle)*baseRadius;
-
-    const length=size*(.65+(i%6)*.075);
-
-    oc.beginPath();
-
-    for(let j=0;j<=42;j++){
-      const t=j/42;
-
-      const sway=Math.sin(
-        time*.0014+i*1.7+t*5
-      )*t*radius*.18;
-
-      const x=baseX+sway;
-      const y=t*length;
-      const z=baseZ+Math.cos(
-        time*.001+i+t*4
-      )*t*radius*.12;
-
-      const point=project3D(x,y,z);
-
-      if(j===0)oc.moveTo(point.x,point.y);
-      else oc.lineTo(point.x,point.y);
+  // Latitude contours
+  for(let j=1;j<=22;j++){
+    const theta=j/22*Math.PI*.53;
+    const pts=[];
+    for(let k=0;k<=96;k++){
+      pts.push(domePoint(theta,k/96*TAU));
     }
-
-    oc.strokeStyle=i%4===0
-      ?"rgba(178,241,255,.54)"
-      :"rgba(105,209,229,.3)";
-
-    oc.lineWidth=i%4===0?1.2:.65;
-    oc.stroke();
-  }
-
-  // Central luminous organs
-  for(let i=0;i<4;i++){
-    const a=i/4*TAU+rotationY*.5;
-
-    oc.beginPath();
-    oc.ellipse(
-      Math.cos(a)*radius*.17,
-      domeHeight*.12,
-      radius*.095,
-      domeHeight*.31,
-      Math.sin(a)*.25,
-      0,TAU
+    strokePath(
+      pts,
+      `rgba(147,237,247,${.09+j/22*.25})`,
+      .65
     );
-
-    oc.strokeStyle="rgba(166,248,255,.38)";
-    oc.lineWidth=2;
-    oc.stroke();
   }
 
-  oc.restore();
+  // Longitude contours
+  for(let i=0;i<42;i++){
+    const phi=i/42*TAU;
+    const pts=[];
+    for(let j=0;j<=45;j++){
+      pts.push(domePoint(j/45*Math.PI*.53,phi));
+    }
+    strokePath(
+      pts,
+      "rgba(150,240,247,.22)",
+      .7
+    );
+  }
+
+  // Secondary fine cross mesh
+  for(let j=4;j<22;j+=3){
+    const theta=j/22*Math.PI*.53;
+    const pts=[];
+    for(let k=0;k<=120;k++){
+      const phi=k/120*TAU;
+      const offset=.012*Math.sin(phi*36+t*.0003);
+      pts.push(domePoint(theta+offset,phi));
+    }
+    strokePath(pts,"rgba(172,244,251,.12)",.5);
+  }
+
+  // Bell rim
+  const rim=[];
+  for(let i=0;i<=128;i++){
+    rim.push(domePoint(Math.PI*.53,i/128*TAU));
+  }
+  strokePath(rim,"rgba(165,252,251,.8)",1.4,9);
+
+  // Internal organs
+  for(let i=0;i<4;i++){
+    const a=i/4*TAU+rotY*.2;
+    const points=[];
+    for(let j=0;j<=35;j++){
+      const u=j/35;
+      points.push(project(
+        Math.cos(a)*radius*.19+
+          Math.sin(u*Math.PI)*radius*.08,
+        domeHeight*.05+u*domeHeight*.58,
+        Math.sin(a)*radius*.19
+      ));
+    }
+    strokePath(points,"rgba(178,247,255,.42)",2,6);
+  }
+
+  // Inner filaments
+  for(let i=0;i<16;i++){
+    const a=i/16*TAU;
+    const pts=[];
+    for(let j=0;j<=30;j++){
+      const u=j/30;
+      pts.push(project(
+        Math.cos(a)*radius*.12+
+          Math.sin(t*.001+i+u*4)*u*radius*.08,
+        u*size*.5,
+        Math.sin(a)*radius*.12
+      ));
+    }
+    strokePath(pts,"rgba(181,244,250,.23)",.8);
+  }
+
+  // Front tentacles
+  for(const s of strands){
+    if(s.rootZ<0)drawStrand(s,true);
+  }
+
+  // Tiny luminous nodes
+  for(let i=0;i<35;i++){
+    const a=hash(i+11)*TAU;
+    const u=hash(i+34);
+    const theta=.12+u*1.42;
+    const p=domePoint(theta,a);
+    c.beginPath();
+    c.arc(p.x,p.y,i%7===0?1.35:.65,0,TAU);
+    c.fillStyle=i%7===0
+      ?"rgba(215,255,255,.75)"
+      :"rgba(180,238,248,.34)";
+    c.fill();
+  }
+
+  c.restore();
 }
 
-function randomStable(i){
-  return .23+((Math.sin(i*91.7)*43758.5453)%1+1)%1*.57;
-}
-
-function drawTargetMarkers(time){
+/* =============================
+   TRACKING GRAPHICS
+============================= */
+function drawTracking(t){
   const x=W*.5;
-  const y=H*.51+Math.sin(time*.00075)*12;
+  const y=H*.49+Math.sin(t*.0007)*10;
+  const r=Math.min(W*.42,H*.36,270);
 
-  oc.save();
-
-  oc.strokeStyle="rgba(150,233,244,.4)";
-  oc.lineWidth=.8;
-
-  const r=Math.min(W*.38,H*.32,230);
+  c.save();
+  c.strokeStyle="rgba(150,224,235,.28)";
+  c.lineWidth=.7;
 
   const corners=[
     [-r,-r*.75,-1,-1],
@@ -1423,125 +1504,188 @@ function drawTargetMarkers(time){
     [-r,r*.75,-1,1],
     [r,r*.75,1,1]
   ];
-
   for(const [cx,cy,sx,sy] of corners){
-    oc.beginPath();
-    oc.moveTo(x+cx,y+cy-sy*12);
-    oc.lineTo(x+cx,y+cy);
-    oc.lineTo(x+cx-sx*12,y+cy);
-    oc.stroke();
+    c.beginPath();
+    c.moveTo(x+cx,y+cy-sy*13);
+    c.lineTo(x+cx,y+cy);
+    c.lineTo(x+cx-sx*13,y+cy);
+    c.stroke();
   }
 
-  oc.restore();
+  // Rotating measurement arc
+  c.beginPath();
+  c.arc(
+    x,y,
+    r*.84,
+    t*.00018,
+    t*.00018+Math.PI*.32
+  );
+  c.strokeStyle="rgba(143,225,234,.25)";
+  c.stroke();
+
+  // Crosshair
+  c.strokeStyle="rgba(165,229,238,.13)";
+  c.beginPath();
+  c.moveTo(x-8,y);
+  c.lineTo(x+8,y);
+  c.moveTo(x,y-8);
+  c.lineTo(x,y+8);
+  c.stroke();
+
+  c.restore();
 }
 
-function renderAquarium(time){
-  if(!aquariumRunning)return;
+/* =============================
+   RENDER LOOP
+============================= */
+function render(t){
+  if(!running)return;
 
-  rotationX+=(targetX-rotationX)*.045;
-  rotationY+=(targetY-rotationY)*.045;
+  if(!dragging){
+    targetY+=velocityY;
+    targetX+=velocityX;
+    velocityY*=.94;
+    velocityX*=.94;
+  }
+  targetX=clamp(targetX,-1.05,1.05);
 
-  drawBackground(time);
-  drawParticles(time);
-  drawFish(time);
-  drawJellyfish(time);
-  drawTargetMarkers(time);
+  rotX=lerp(rotX,targetX,.07);
+  rotY=lerp(rotY,targetY,.07);
 
-  aquariumFrame=requestAnimationFrame(renderAquarium);
+  drawBackground(t);
+  drawParticles(t);
+  drawFishes(t);
+  drawJellyfish(t);
+  drawTracking(t);
+
+  if(t-lastHudUpdate>100){
+    lastHudUpdate=t;
+    document.getElementById("coordX").textContent=
+      (rotY>=0?"+":"")+rotY.toFixed(3);
+    document.getElementById("coordY").textContent=
+      (rotX>=0?"+":"")+rotX.toFixed(3);
+    document.getElementById("temperature").textContent=
+      (2.8+Math.sin(t*.0003)*.08).toFixed(1)+" °C";
+  }
+
+  animationId=requestAnimationFrame(render);
 }
-
 function startAquarium(){
-  if(aquariumRunning)return;
-
-  resizeAquarium();
-  makeParticles();
-
-  aquariumRunning=true;
-  aquariumFrame=requestAnimationFrame(renderAquarium);
+  if(running)return;
+  resizeSea();
+  if(!particles.length)initEnvironment();
+  running=true;
+  animationId=requestAnimationFrame(render);
+}
+function stopAquarium(){
+  running=false;
+  cancelAnimationFrame(animationId);
 }
 
-ocean.addEventListener("pointerdown",event=>{
+sea.addEventListener("pointerdown",e=>{
   dragging=true;
-  previousX=event.clientX;
-  previousY=event.clientY;
-
-  ocean.setPointerCapture(event.pointerId);
+  px=e.clientX;
+  py=e.clientY;
+  velocityX=0;
+  velocityY=0;
+  sea.setPointerCapture(e.pointerId);
 });
-
-ocean.addEventListener("pointermove",event=>{
+sea.addEventListener("pointermove",e=>{
   if(!dragging)return;
-
-  const dx=event.clientX-previousX;
-  const dy=event.clientY-previousY;
-
-  targetY+=dx*.008;
-  targetX+=dy*.006;
-
-  targetX=Math.max(-.8,Math.min(.8,targetX));
-
-  previousX=event.clientX;
-  previousY=event.clientY;
+  const dx=e.clientX-px;
+  const dy=e.clientY-py;
+  const changeY=dx*.008;
+  const changeX=dy*.006;
+  targetY+=changeY;
+  targetX=clamp(targetX+changeX,-1.05,1.05);
+  velocityY=changeY*.35;
+  velocityX=changeX*.35;
+  px=e.clientX;
+  py=e.clientY;
 });
-
-function stopDragging(){
-  dragging=false;
-}
-
-ocean.addEventListener("pointerup",stopDragging);
-ocean.addEventListener("pointercancel",stopDragging);
-
+function endDrag(){dragging=false}
+sea.addEventListener("pointerup",endDrag);
+sea.addEventListener("pointercancel",endDrag);
 window.addEventListener("resize",()=>{
-  if(aquariumRunning)resizeAquarium();
+  if(running)resizeSea();
 });
-
 document.addEventListener("visibilitychange",()=>{
   if(document.hidden){
-    aquariumRunning=false;
-    cancelAnimationFrame(aquariumFrame);
+    stopNoise();
+    stopAquarium();
   }else if(world.classList.contains("visible")){
     startAquarium();
   }
 });
 
 /* =============================
-   MAP MENU
+   MAP / DETAIL
 ============================= */
-
 const mapButton=document.getElementById("mapButton");
-const closeMenu=document.getElementById("closeMenu");
-const worldMenu=document.getElementById("worldMenu");
-const toast=document.getElementById("toast");
+const mapOverlay=document.getElementById("mapOverlay");
+const closeMap=document.getElementById("closeMap");
+const detail=document.getElementById("detail");
+const detailBack=document.getElementById("detailBack");
 
-let toastTimer=null;
-
-mapButton.addEventListener("click",()=>{
-  worldMenu.classList.add("open");
-});
-
-closeMenu.addEventListener("click",()=>{
-  worldMenu.classList.remove("open");
-});
-
-function showToast(message){
-  toast.textContent=message;
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer=setTimeout(()=>{
-    toast.classList.remove("show");
-  },2400);
+function openMap(){
+  mapOverlay.classList.add("open");
+  mapOverlay.setAttribute("aria-hidden","false");
 }
+function hideMap(){
+  mapOverlay.classList.remove("open");
+  mapOverlay.setAttribute("aria-hidden","true");
+}
+mapButton.addEventListener("click",openMap);
+closeMap.addEventListener("click",hideMap);
 
-document.querySelectorAll("[data-page]").forEach(button=>{
+const sections=[
+  {
+    name:"EXHIBITS",
+    description:"水族館の展示エリア。<br>未知の生物や観測記録を収蔵する場所。"
+  },
+  {
+    name:"CHARACTERS",
+    description:"キャラクターたちの記録。<br>プロフィールや関係性を保管する場所。"
+  },
+  {
+    name:"STORIES",
+    description:"物語の記録。<br>世界に存在するさまざまな出来事を辿る場所。"
+  },
+  {
+    name:"ARCHIVE",
+    description:"保存された資料とデータ。<br>記録を管理するための場所。"
+  }
+];
+
+document.querySelectorAll(".map-item").forEach(button=>{
   button.addEventListener("click",()=>{
-    worldMenu.classList.remove("open");
-
-    showToast(
-      button.dataset.page+" — COMING SOON"
-    );
+    const index=Number(button.dataset.index);
+    const section=sections[index];
+    document.getElementById("detailNumber").textContent=
+      "EXHIBITION 0"+(index+1);
+    document.getElementById("detailTitle").textContent=
+      section.name;
+    document.getElementById("detailDescription").innerHTML=
+      section.description;
+    hideMap();
+    detail.classList.add("open");
+    detail.setAttribute("aria-hidden","false");
   });
 });
+
+detailBack.addEventListener("click",()=>{
+  detail.classList.remove("open");
+  detail.setAttribute("aria-hidden","true");
+  openMap();
+});
+
+/* =============================
+   DECORATIVE TICKS
+============================= */
+const tickline=document.getElementById("tickline");
+for(let i=0;i<35;i++){
+  tickline.appendChild(document.createElement("i"));
+}
 </script>
 </body>
 </html>
