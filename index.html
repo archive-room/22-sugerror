@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -6,453 +7,638 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="format-detection" content="telephone=no">
 <title>SUGERROR LAND</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&family=New+Tegomin&display=swap" rel="stylesheet">
 
 <style>
-@font-face{
-  font-family:"Ribel Noise";
-  src:url("./Ribel%20Noise%21.ttf") format("truetype");
-  font-style:normal;font-weight:400;font-display:swap;
-}
 :root{
-  --ivory:#f5efdf;--gold:#b48b43;--gold-light:#dfc58d;
-  --gold-dark:#89652f;--ink:#514435;
-  --rounded:"M PLUS Rounded 1c",sans-serif;
-  --horror:"New Tegomin",serif;
   --app-height:100dvh;
+  --aqua:#a5f5f3;
+  --cyan:#6de5ed;
+  --blue:#071b30;
+  --muted:#8caebb;
 }
-*{box-sizing:border-box;}
+
+*{box-sizing:border-box}
+
 html,body{
-  margin:0;padding:0;width:100%;height:100%;
-  overflow:hidden;overscroll-behavior:none;
-  touch-action:manipulation;-webkit-text-size-adjust:100%;
-}
-html{position:fixed;inset:0;}
-body{
-  position:fixed;inset:0;background:#fff;color:var(--ink);
-  font-family:var(--rounded);font-weight:700;
-  -webkit-tap-highlight-color:transparent;
-}
-button{
-  font:inherit;cursor:pointer;touch-action:manipulation;
-  -webkit-tap-highlight-color:transparent;
-}
-button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px;}
-#app{
-  position:fixed;top:0;left:0;width:100%;
-  height:var(--app-height);overflow:hidden;
-  isolation:isolate;clip-path:inset(0);
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  overscroll-behavior:none;
   touch-action:manipulation;
+  -webkit-text-size-adjust:100%;
 }
+
+html{position:fixed;inset:0}
+
+body{
+  position:fixed;
+  inset:0;
+  background:#fff;
+  color:#303134;
+  font-family:Arial,Helvetica,sans-serif;
+  -webkit-tap-highlight-color:transparent;
+}
+
+button{
+  font:inherit;
+  cursor:pointer;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+}
+
+button:focus-visible{
+  outline:2px solid #aa7c99;
+  outline-offset:3px;
+}
+
+#app{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:var(--app-height);
+  overflow:hidden;
+  isolation:isolate;
+  clip-path:inset(0);
+}
+
 .screen{
-  position:absolute;inset:0;width:100%;height:100%;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
   overflow:hidden;
 }
 
-/* FIXED 404 ERROR — UNCHANGED */
+/* =============================
+   ORIGINAL 404 ERROR
+============================= */
+
 #entry{
-  position:absolute;inset:0;z-index:30;background:#fff;
-  color:#303134;display:flex;align-items:center;
-  justify-content:center;padding:36px 30px;
+  position:absolute;
+  inset:0;
+  z-index:30;
+  background:#fff;
+  color:#303134;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:36px 30px;
   transition:background .15s,color .15s;
 }
-.entry-content{width:100%;max-width:450px;transform:translateY(-7%);}
-.error-icon{width:38px;height:43px;color:#757575;margin-bottom:30px;}
-.error-heading{
-  position:relative;display:table;
-  font:500 clamp(19px,5vw,23px)/1.45 Arial,Helvetica,sans-serif;
-  letter-spacing:0;margin:0 0 18px;
+
+.entry-content{
+  width:100%;
+  max-width:450px;
+  transform:translateY(-7%);
 }
+
+.error-icon{
+  width:38px;
+  height:43px;
+  color:#757575;
+  margin-bottom:30px;
+}
+
+.error-heading{
+  position:relative;
+  display:table;
+  font:500 clamp(19px,5vw,23px)/1.45 Arial,Helvetica,sans-serif;
+  letter-spacing:0;
+  margin:0 0 18px;
+}
+
 .error-description{
-  color:#646464;font:13px/1.85 Arial,Helvetica,sans-serif;
+  color:#646464;
+  font:13px/1.85 Arial,Helvetica,sans-serif;
   max-width:380px;
 }
+
 .error-code{
-  color:#777;font:11px/1.8 Arial,Helvetica,sans-serif;
+  color:#777;
+  font:11px/1.8 Arial,Helvetica,sans-serif;
   margin-top:20px;
 }
+
 .entry-button{
-  margin-top:35px;background:#f7f7f7;border:1px solid #dedede;
-  border-radius:3px;color:#555;padding:11px 20px;
-  font:12px Arial,Helvetica,sans-serif;min-height:42px;
+  margin-top:35px;
+  background:#f7f7f7;
+  border:1px solid #dedede;
+  border-radius:3px;
+  color:#555;
+  padding:11px 20px;
+  font:12px Arial,Helvetica,sans-serif;
+  min-height:42px;
 }
-.entry-button:active{background:#e8e8e8;}
-#entry.corrupt{color:#f3edf1;background:#17151c;}
-#entry.corrupt .error-heading{animation:shake .07s steps(2) infinite;}
+
+.entry-button:active{background:#e8e8e8}
+
+#entry.corrupt{
+  color:#f3edf1;
+  background:#17151c;
+}
+
+#entry.corrupt .error-heading{
+  animation:shake .07s steps(2) infinite;
+}
+
 #entry.corrupt .error-heading::before,
 #entry.corrupt .error-heading::after{
-  content:"This page isn't working";position:absolute;inset:0;
-  white-space:nowrap;pointer-events:none;font:inherit;
+  content:"This page isn't working";
+  position:absolute;
+  inset:0;
+  white-space:nowrap;
+  pointer-events:none;
+  font:inherit;
 }
+
 #entry.corrupt .error-heading::before{
-  color:#ff84b9;clip-path:inset(0 0 53% 0);
+  color:#ff84b9;
+  clip-path:inset(0 0 53% 0);
   animation:splitA .09s steps(2) infinite;
 }
+
 #entry.corrupt .error-heading::after{
-  color:#83d9e9;clip-path:inset(55% 0 0 0);
+  color:#83d9e9;
+  clip-path:inset(55% 0 0 0);
   animation:splitB .12s steps(2) infinite;
 }
+
 #entry.corrupt .error-description,
-#entry.corrupt .error-code{color:#aaa1ad;}
-#entry.corrupt .entry-button{
-  color:#eee;background:#26212b;border-color:#554a5b;
+#entry.corrupt .error-code{
+  color:#aaa1ad;
 }
+
+#entry.corrupt .entry-button{
+  color:#eee;
+  background:#26212b;
+  border-color:#554a5b;
+}
+
 @keyframes shake{
   0%{transform:translate(-3px,0)}
   50%{transform:translate(5px,1px)}
   100%{transform:translate(-2px,-1px)}
 }
+
 @keyframes splitA{
   0%{transform:translate(-9px,1px)}
   50%{transform:translate(8px,-2px)}
   100%{transform:translate(-4px,2px)}
 }
+
 @keyframes splitB{
   0%{transform:translate(9px,-2px)}
   50%{transform:translate(-7px,2px)}
   100%{transform:translate(4px,0)}
 }
 
-/* FIXED NOISE — UNCHANGED */
 #noise{
-  position:absolute;inset:0;width:100%;height:100%;
-  z-index:90;pointer-events:none;opacity:0;
-  image-rendering:pixelated;
-}
-#noise.active{opacity:.65;}
-
-/* ADMISSION — UNCHANGED */
-#admission{
-  z-index:5;background:#f5c6d3;opacity:0;visibility:hidden;
-  pointer-events:none;transition:opacity .55s ease;
-}
-#admission.visible{
-  opacity:1;visibility:visible;pointer-events:auto;
-}
-.admission-stack{
-  position:absolute;top:0;left:0;width:100%;height:200%;
-  transform:translate3d(0,0,0);
-  transition:transform 1.5s cubic-bezier(.42,0,.22,1);
-  will-change:transform;
-}
-#admission.entered .admission-stack{
-  transform:translate3d(0,-50%,0);
-}
-.ticket-scene,.lobby-scene{
-  position:relative;height:50%;width:100%;overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;
-}
-
-/* ORIGINAL PINK TICKET BACKGROUND */
-.ticket-scene{
-  background:radial-gradient(
-    ellipse at 50% 42%,
-    #ffe9e6 0%,
-    #f6cad5 52%,
-    #e9a5ba 100%
-  );
-}
-.ticket-scene::before{
-  content:"";position:absolute;inset:0;opacity:.16;
-  background-image:
-    repeating-linear-gradient(0deg,transparent 0 21px,#fff 22px),
-    repeating-linear-gradient(90deg,transparent 0 21px,#fff 22px);
-  pointer-events:none;
-}
-
-/* HORROR EFFECTS */
-
-/* The scene stays fixed. Only this inner layer shakes. */
-.ticket-motion{
   position:absolute;
   inset:0;
-  z-index:1;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
+  width:100%;
+  height:100%;
+  z-index:90;
   pointer-events:none;
-  will-change:transform;
+  opacity:0;
+  image-rendering:pixelated;
 }
-.ticket-motion .ticket-wrap{
+
+#noise.active{opacity:.65}
+
+/* =============================
+   AQUARIUM WORLD
+============================= */
+
+#world{
+  z-index:5;
+  background:#061727;
+  color:#e4fbff;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+#world.visible{
+  opacity:1;
+  visibility:visible;
   pointer-events:auto;
 }
-.ticket-scene.haunted .ticket-motion{
-  animation:horror-shake-1 .19s steps(2,end) infinite;
-}
-.ticket-scene.haunted.horror-stage-2 .ticket-motion{
-  animation:horror-shake-2 .14s steps(2,end) infinite;
-}
-.ticket-scene.haunted.horror-stage-3 .ticket-motion{
-  animation:horror-shake-3 .1s steps(2,end) infinite;
-}
-.ticket-scene.haunted.horror-stage-4 .ticket-motion{
-  animation:horror-shake-4 .075s steps(2,end) infinite;
-}
-@keyframes horror-shake-1{
-  0%{transform:translate(0,0)}
-  25%{transform:translate(-1px,0)}
-  50%{transform:translate(1px,-1px)}
-  75%{transform:translate(0,1px)}
-  100%{transform:translate(0,0)}
-}
-@keyframes horror-shake-2{
-  0%{transform:translate(-2px,1px)}
-  25%{transform:translate(2px,-2px)}
-  50%{transform:translate(-3px,1px)}
-  75%{transform:translate(2px,2px)}
-  100%{transform:translate(-1px,-2px)}
-}
-@keyframes horror-shake-3{
-  0%{transform:translate(-4px,2px)}
-  25%{transform:translate(4px,-3px)}
-  50%{transform:translate(-5px,-1px)}
-  75%{transform:translate(3px,4px)}
-  100%{transform:translate(-2px,-3px)}
-}
-@keyframes horror-shake-4{
-  0%{transform:translate(-6px,4px)}
-  25%{transform:translate(7px,-5px)}
-  50%{transform:translate(-8px,-2px)}
-  75%{transform:translate(5px,7px)}
-  100%{transform:translate(-4px,-6px)}
+
+#oceanCanvas{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  touch-action:none;
 }
 
-.horror-shade{
-  position:absolute;inset:0;z-index:4;
-  pointer-events:none;opacity:0;
+.ocean-vignette{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
   background:
     radial-gradient(
-      ellipse at 50% 43%,
-      rgba(42,0,0,.57) 0%,
-      rgba(24,0,0,.88) 58%,
-      rgba(3,0,0,.99) 100%
+      ellipse at 50% 45%,
+      transparent 12%,
+      rgba(2,9,21,.13) 55%,
+      rgba(1,7,17,.68) 100%
     );
-  transition:opacity 20s linear;
 }
-.ticket-scene.haunted .horror-shade{
-  opacity:1;
+
+.interface{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  font-family:Arial,Helvetica,sans-serif;
 }
-.ticket-scene.horror-reset .horror-shade{
-  transition:none!important;
-  opacity:0!important;
+
+.interface button,
+.interface a{
+  pointer-events:auto;
 }
-.horror-words{
-  position:absolute;inset:0;z-index:6;
-  overflow:hidden;pointer-events:none;
+
+.topbar{
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  min-height:88px;
+  padding:
+    max(26px,env(safe-area-inset-top))
+    26px 0;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
 }
-.horror-word{
-  position:absolute;max-width:88%;
-  white-space:nowrap;
-  font-family:var(--horror);
+
+.brand{
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.2em;
+  line-height:1.5;
+}
+
+.brand small{
+  display:block;
+  margin-top:6px;
+  font-size:8px;
   font-weight:400;
-  line-height:1.15;
+  letter-spacing:.25em;
+  color:#83b7c9;
+}
+
+.menu-button{
+  width:65px;
+  height:65px;
+  border:1px solid rgba(156,238,245,.55);
+  border-radius:50%;
+  background:rgba(5,25,43,.32);
+  color:#e3ffff;
+  font-size:9px;
+  letter-spacing:.1em;
+  backdrop-filter:blur(12px);
+}
+
+.menu-button:active{
+  background:rgba(105,218,230,.18);
+}
+
+.side-data{
+  position:absolute;
+  top:30%;
+  left:26px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.data-label{
+  color:#77a7ba;
+  font-size:8px;
+  letter-spacing:.18em;
+}
+
+.data-value{
+  margin-top:5px;
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.09em;
+  font-variant-numeric:tabular-nums;
+}
+
+.vertical-label{
+  position:absolute;
+  right:25px;
+  top:35%;
+  writing-mode:vertical-rl;
+  font-size:9px;
+  letter-spacing:.32em;
+  color:#8cc9d7;
+}
+
+.hero-title{
+  position:absolute;
+  left:50%;
+  top:19%;
+  transform:translateX(-50%);
+  width:100%;
+  text-align:center;
+  white-space:nowrap;
+  font-size:clamp(31px,8.5vw,104px);
+  font-weight:800;
+  letter-spacing:-.075em;
+  line-height:1;
+  color:rgba(229,252,255,.92);
+  mix-blend-mode:screen;
+  text-shadow:0 0 28px rgba(87,213,230,.1);
+}
+
+.hero-subtitle{
+  position:absolute;
+  left:50%;
+  top:calc(19% + clamp(41px,9vw,115px));
+  transform:translateX(-50%);
+  font-size:9px;
+  letter-spacing:.45em;
+  color:#a2dce8;
+  white-space:nowrap;
+}
+
+.specimen-label{
+  position:absolute;
+  right:9%;
+  bottom:29%;
+  width:160px;
+  border-top:1px solid rgba(152,234,245,.65);
+  padding-top:10px;
+}
+
+.specimen-label .number{
+  font-size:9px;
+  color:#7fc5d5;
+  letter-spacing:.2em;
+}
+
+.specimen-label .name{
+  margin-top:7px;
+  font-size:15px;
+  font-weight:700;
   letter-spacing:.08em;
-  color:#8d0b16;
+}
+
+.specimen-label .latin{
+  margin-top:5px;
+  font-size:9px;
+  color:#8cb3c3;
+  font-style:italic;
+}
+
+.specimen-label .desc{
+  margin-top:11px;
+  color:#9cc5d2;
+  font-size:9px;
+  line-height:1.8;
+}
+
+.bottom-panel{
+  position:absolute;
+  left:26px;
+  right:26px;
+  bottom:max(24px,env(safe-area-inset-bottom));
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:15px;
+}
+
+.bottom-caption{
+  font-size:9px;
+  color:#9ecbd6;
+  letter-spacing:.12em;
+  line-height:1.9;
+}
+
+.bottom-caption strong{
+  display:block;
+  font-size:12px;
+  color:#e5fbff;
+  letter-spacing:.2em;
+}
+
+.drag-hint{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-size:9px;
+  color:#9fc5d1;
+  white-space:nowrap;
+}
+
+.drag-symbol{
+  width:26px;
+  height:26px;
+  border:1px solid rgba(155,220,232,.6);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  font-size:14px;
+}
+
+.bottom-line{
+  position:absolute;
+  bottom:82px;
+  left:26px;
+  right:26px;
+  height:1px;
+  background:linear-gradient(
+    90deg,
+    rgba(139,216,229,.6),
+    rgba(139,216,229,.08)
+  );
+}
+
+.coordinates{
+  position:absolute;
+  left:26px;
+  top:54%;
+  font-size:8px;
+  line-height:2.1;
+  letter-spacing:.1em;
+  color:#7ea6b8;
+}
+
+.scan-lines{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  opacity:.12;
+  background:repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 3px,
+    rgba(170,230,244,.09) 4px
+  );
+}
+
+.world-menu{
+  position:absolute;
+  z-index:10;
+  inset:0;
+  background:rgba(3,15,28,.95);
+  backdrop-filter:blur(22px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:15px;
   opacity:0;
-  text-shadow:
-    0 0 3px rgba(0,0,0,.6),
-    0 0 14px rgba(65,0,0,.4);
-  animation:horror-word-appear var(--word-duration,850ms) linear forwards;
-}
-@keyframes horror-word-appear{
-  0%{
-    opacity:0;filter:blur(4px);
-    transform:translate(-50%,-50%) scale(.94);
-  }
-  10%{opacity:1;filter:blur(0)}
-  27%{opacity:.82;filter:blur(.2px)}
-  55%{opacity:.35;filter:blur(1px)}
-  100%{
-    opacity:0;filter:blur(5px);
-    transform:translate(-50%,-50%) scale(1.06);
-  }
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .3s,visibility .3s;
 }
 
-/* TICKET LABELS — UNCHANGED */
-.ticket-top{
+.world-menu.open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+
+.world-menu h2{
+  font-size:11px;
+  letter-spacing:.35em;
+  color:#81c6d6;
+  margin:0 0 25px;
+}
+
+.world-menu button{
+  width:min(80%,330px);
+  border:0;
+  border-bottom:1px solid rgba(130,208,221,.35);
+  padding:17px 8px;
+  background:transparent;
+  color:#e9ffff;
+  font-size:19px;
+  letter-spacing:.14em;
+  text-align:left;
+}
+
+.world-menu button span{
+  font-size:9px;
+  color:#77aebf;
+  margin-right:17px;
+}
+
+.world-menu .close-menu{
   position:absolute;
-  top:calc(8% + env(safe-area-inset-top));
-  left:15px;right:15px;text-align:center;
-  font:700 10px/1.9 var(--rounded);
-  letter-spacing:.18em;color:#895d71;
+  top:max(35px,env(safe-area-inset-top));
+  right:28px;
+  width:52px;
+  border:1px solid #79b8c7;
+  border-radius:50%;
+  padding:17px 0;
+  text-align:center;
+  font-size:10px;
 }
-.ticket-hint{
+
+.toast{
   position:absolute;
-  bottom:calc(10% + env(safe-area-inset-bottom));
-  left:15px;right:15px;text-align:center;
-  font:700 10px/2 var(--rounded);
-  letter-spacing:.08em;color:#80546b;
+  left:50%;
+  bottom:120px;
+  transform:translateX(-50%) translateY(10px);
+  border:1px solid rgba(129,214,227,.4);
+  background:rgba(5,26,43,.9);
+  padding:12px 17px;
+  font-size:10px;
+  letter-spacing:.1em;
+  white-space:nowrap;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s,transform .25s;
 }
 
-/* PAPER TICKET — UNCHANGED */
-.ticket-wrap{
-  width:min(94vw,670px);position:relative;
-  transform:translate3d(0,0,0) rotate(-2deg);
-  opacity:1;filter:drop-shadow(0 18px 16px #7d46513b);
-  transition:
-    transform 1.3s cubic-bezier(.45,0,.2,1),
-    opacity 1.3s ease;
-  will-change:transform,opacity;
-}
-.ticket-scene.departing .ticket-wrap{
-  transform:translate3d(0,35px,0) rotate(-5deg);
-  opacity:.35;
-}
-.ticket{
-  position:relative;display:flex;
-  height:clamp(188px,52vw,300px);
-  background:transparent;overflow:visible;
-}
-.ticket-main{
-  width:76%;padding:17px 10px 17px 19px;
-  position:relative;min-width:0;flex-shrink:0;
-  background:var(--ivory);
-  clip-path:polygon(
-    0 0,12% 0,12% 3%,16% 3%,16% 0,
-    100% 0,100% 100%,16% 100%,16% 97%,
-    12% 97%,12% 100%,0 100%
-  );
-  box-shadow:inset 0 0 30px #b5a07b44;
-}
-.ticket.torn-edge .ticket-main{
-  clip-path:polygon(
-    0 0,12% 0,12% 3%,16% 3%,16% 0,
-    100% 0,100% 100%,16% 100%,16% 97%,
-    12% 97%,12% 100%,0 100%
-  );
-}
-.ticket-main::after{
-  content:"";position:absolute;inset:0;
-  pointer-events:none;opacity:.26;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='110' height='110'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.72' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.33'/%3E%3C/svg%3E");
-}
-.ticket-frame{
-  height:100%;border:2px solid var(--gold);
-  outline:1px solid var(--gold-light);
-  outline-offset:-7px;
-  background:linear-gradient(130deg,#fff9e9bb,transparent 55%,#b8a37b22);
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:center;text-align:center;
-  position:relative;padding:8px 3px;
-}
-.ticket-topline{
-  font:700 clamp(8px,1.8vw,11px) var(--rounded);
-  color:#a48755;letter-spacing:.15em;margin-bottom:9px;
-}
-.ticket-title{
-  font-family:"Ribel Noise",Georgia,serif;
-  font-weight:400;font-size:clamp(27px,7.5vw,67px);
-  line-height:1.25;letter-spacing:-.025em;
-  white-space:nowrap;color:#a17a39;
-  text-shadow:0 1px #fff7dc;margin:9px 0 1px;
-}
-.ticket-subtitle{
-  font:700 clamp(7px,1.6vw,11px)/1.5 var(--rounded);
-  letter-spacing:.17em;color:#6d5b47;
-}
-.ticket-micro{
-  margin-top:14px;
-  font:700 clamp(7px,1.4vw,10px)/1.6 var(--rounded);
-  letter-spacing:.05em;color:#947b56;
-}
-.ticket-bottomline{
-  margin-top:12px;
-  font:700 clamp(7px,1.4vw,10px) var(--rounded);
-  letter-spacing:.12em;color:#b08b50;
-}
-.ticket-stub{
-  width:24%;height:100%;flex-shrink:0;
-  position:relative;padding:17px 15px 17px 4px;
-  border:0;border-radius:0;background:var(--ivory);
-  color:var(--ink);cursor:pointer;
-  box-shadow:inset 0 0 25px #b5a07b33;
-  clip-path:polygon(
-    0 0,100% 0,100% 15%,94% 17%,100% 19%,
-    100% 81%,94% 83%,100% 85%,100% 100%,0 100%
-  );
-  transition:
-    transform 1.8s cubic-bezier(.25,.48,.3,1),
-    opacity 1.8s ease-in;
-  touch-action:manipulation;z-index:2;
-}
-.ticket-stub.torn{
-  transform:translate(105px,125px) rotate(38deg);
-  opacity:0;pointer-events:none;
-}
-.ticket-stub::before{
-  content:"";position:absolute;left:0;top:9%;bottom:9%;
-  border-left:2px dashed #ae8d57;
-}
-.stub-inner{
-  height:100%;border:1px solid #bd995a;
-  display:flex;flex-direction:column;align-items:center;
-  justify-content:space-around;padding:8px 2px;
-}
-.stub-label{
-  font:700 clamp(7px,1.4vw,11px) var(--rounded);
-  letter-spacing:.08em;
-}
-.stub-number{
-  font:700 clamp(20px,5vw,37px) var(--rounded);
-  color:#a47d3b;
-}
-.stub-small{
-  font:700 clamp(7px,1.3vw,9px) var(--rounded);
-}
-.tear-arrow{
-  position:absolute;left:-7px;top:50%;
-  transform:translateY(-50%);
-  font:700 20px var(--rounded);
-  color:#b58a51;background:var(--ivory);z-index:2;
+.toast.show{
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
 
-/* LOBBY — UNCHANGED */
-.lobby-scene{
-  background:radial-gradient(
-    ellipse at 50% 15%,#fff4d7,#f5cad2 62%,#e9a2ba
-  );
-  text-align:center;padding:30px 20px;
+@media(max-width:600px){
+  .topbar{
+    padding-left:19px;
+    padding-right:19px;
+  }
+
+  .brand{font-size:10px}
+
+  .menu-button{
+    width:55px;
+    height:55px;
+  }
+
+  .side-data{
+    left:19px;
+    top:31%;
+    gap:13px;
+  }
+
+  .data-label{font-size:7px}
+  .data-value{font-size:10px}
+
+  .vertical-label{
+    right:16px;
+    top:37%;
+    font-size:8px;
+  }
+
+  .hero-title{
+    top:21%;
+    font-size:clamp(29px,9vw,55px);
+  }
+
+  .hero-subtitle{
+    top:calc(21% + 45px);
+    font-size:7px;
+    letter-spacing:.25em;
+  }
+
+  .specimen-label{
+    right:19px;
+    bottom:25%;
+    width:145px;
+  }
+
+  .specimen-label .name{font-size:13px}
+  .specimen-label .desc{font-size:8px}
+
+  .coordinates{
+    left:19px;
+    top:60%;
+    font-size:7px;
+  }
+
+  .bottom-panel{
+    left:19px;
+    right:19px;
+  }
+
+  .bottom-line{
+    left:19px;
+    right:19px;
+    bottom:81px;
+  }
+
+  .bottom-caption{font-size:8px}
+  .bottom-caption strong{font-size:10px}
+  .drag-hint{font-size:8px}
 }
-.lobby-scene::before{
-  content:"";position:absolute;inset:18px;
-  border:2px solid #c59b58;pointer-events:none;
-}
-.lobby-kicker{
-  font:700 11px var(--rounded);
-  letter-spacing:.22em;color:#96744d;
-}
-.lobby-title{
-  font-family:"Ribel Noise",Georgia,serif;
-  font-size:clamp(38px,10vw,94px);
-  line-height:1.2;font-weight:400;
-  color:#9c7639;margin:20px 0;
-}
-.lobby-description{
-  font:700 11px/2 var(--rounded);
-  letter-spacing:.08em;color:#82634b;
-}
-.lobby-note{
-  margin-top:35px;
-  font:700 9px/2 var(--rounded);
-  letter-spacing:.1em;color:#a17d70;
-}
-.replay-button{
-  margin-top:22px;border:1px solid #ac8950;
-  background:#fff5e7aa;color:#86683d;
-  padding:12px 20px;
-  font:700 10px var(--rounded);letter-spacing:.1em;
-}
-@media(min-width:700px){
-  .ticket{height:300px;}
-  .ticket-main{padding:23px;}
-  .ticket-stub{padding:23px 22px 23px 5px;}
-}
+
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
+  *,
+  *::before,
+  *::after{
     animation-duration:.01ms!important;
     animation-iteration-count:1!important;
     transition-duration:.01ms!important;
@@ -464,6 +650,7 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px;}
 <body>
 <div id="app">
 
+<!-- ORIGINAL 404 -->
 <section id="entry" class="screen">
   <main class="entry-content">
     <svg class="error-icon" viewBox="0 0 40 45" fill="none" aria-hidden="true">
@@ -472,332 +659,840 @@ button:focus-visible{outline:2px solid #aa7c99;outline-offset:3px;}
       <path d="M13 20H27M13 26H27" stroke="currentColor" stroke-width="2"/>
       <path d="M15 35H25" stroke="currentColor" stroke-width="2"/>
     </svg>
+
     <h1 class="error-heading">This page isn't working</h1>
+
     <div class="error-description">
       The requested page could not be found.<br>
       Please check the address and try again.
     </div>
+
     <div class="error-code">HTTP ERROR 404</div>
+
     <button id="enterButton" class="entry-button">Reload</button>
   </main>
 </section>
 
 <canvas id="noise" aria-hidden="true"></canvas>
 
-<section id="admission" class="screen" aria-hidden="true">
-  <div class="admission-stack">
+<!-- AQUARIUM -->
+<section id="world" class="screen" aria-hidden="true">
 
-    <div class="ticket-scene" id="ticketScene">
+  <canvas id="oceanCanvas"></canvas>
 
-      <!-- This layer shakes; the background does not. -->
-      <div class="ticket-motion">
+  <div class="ocean-vignette"></div>
+  <div class="scan-lines"></div>
 
-        <div class="ticket-top">
-          SUGERROR LAND<br>OFFICIAL ADMISSION PASS
-        </div>
+  <div class="interface">
 
-        <div class="ticket-wrap">
-          <div class="ticket" id="ticketPaper">
-            <div class="ticket-main">
-              <div class="ticket-frame">
-                <div class="ticket-topline">EST. 0000</div>
-                <h1 class="ticket-title">SUGERROR LAND</h1>
-                <div class="ticket-subtitle">ADMISSION TICKET</div>
-                <div class="ticket-micro">
-                  ONE GUEST · ONE WAY · NO EXPIRATION
-                </div>
-                <div class="ticket-bottomline">OFFICIAL PASS / 001</div>
-              </div>
-            </div>
-
-            <button class="ticket-stub" id="ticketStub" aria-label="半券をタップして入園する">
-              <span class="tear-arrow">›</span>
-              <span class="stub-inner">
-                <span class="stub-label">ENTRY</span>
-                <span class="stub-number">001</span>
-                <span class="stub-small">TEAR HERE</span>
-              </span>
-            </button>
-          </div>
-        </div>
-
-        <div class="ticket-hint">
-          半券をタップして入園<br>TAP THE STUB TO ENTER
-        </div>
-
+    <header class="topbar">
+      <div class="brand">
+        SUGERROR LAND
+        <small>ABYSSAL AQUARIUM / EST. 20XX</small>
       </div>
 
-      <div class="horror-shade" id="horrorShade" aria-hidden="true"></div>
-      <div class="horror-words" id="horrorWords" aria-hidden="true"></div>
+      <button class="menu-button" id="menuButton">MENU</button>
+    </header>
 
+    <div class="hero-title">AQUARIUM</div>
+    <div class="hero-subtitle">THE WORLD BENEATH THE SURFACE</div>
+
+    <div class="side-data">
+      <div>
+        <div class="data-label">CURRENT DEPTH</div>
+        <div class="data-value">02,400 M</div>
+      </div>
+
+      <div>
+        <div class="data-label">TEMPERATURE</div>
+        <div class="data-value">02.8 °C</div>
+      </div>
+
+      <div>
+        <div class="data-label">PRESSURE</div>
+        <div class="data-value">24.1 MPa</div>
+      </div>
+
+      <div>
+        <div class="data-label">SYSTEM STATUS</div>
+        <div class="data-value" style="color:#8ceee2">● ONLINE</div>
+      </div>
     </div>
 
-    <div class="lobby-scene">
-      <div class="lobby-kicker">WELCOME TO</div>
-      <h2 class="lobby-title">SUGERROR LAND</h2>
-      <p class="lobby-description">
-        YOU HAVE BEEN ADMITTED.<br>ENJOY YOUR STAY.
-      </p>
-      <div class="lobby-note">LOBBY / DESIGN IN PROGRESS</div>
-      <button class="replay-button" id="replayButton">
-        REPLAY ADMISSION
-      </button>
+    <div class="vertical-label">
+      MARINE OBSERVATION SYSTEM — 001
+    </div>
+
+    <div class="coordinates">
+      OBSERVATION POINT<br>
+      LAT 35° 42' 11.4"<br>
+      LON 139° 41' 02.8"<br>
+      SECTOR / A-07
+    </div>
+
+    <div class="specimen-label">
+      <div class="number">SPECIMEN / NO. 001</div>
+      <div class="name">LUMINOUS JELLY</div>
+      <div class="latin">Aurelia imaginaria</div>
+      <div class="desc">
+        A floating specimen observed<br>
+        in the deepest exhibition zone.
+      </div>
+    </div>
+
+    <div class="bottom-line"></div>
+
+    <div class="bottom-panel">
+      <div class="bottom-caption">
+        <strong>DEEP SEA EXHIBITION</strong>
+        INTERACTIVE MARINE ARCHIVE<br>
+        SUGERROR LAND © 2026
+      </div>
+
+      <div class="drag-hint">
+        <span class="drag-symbol">↔</span>
+        DRAG TO EXPLORE
+      </div>
     </div>
 
   </div>
+
+  <div class="world-menu" id="worldMenu">
+    <button class="close-menu" id="closeMenu">✕</button>
+    <h2>EXHIBITION DIRECTORY</h2>
+    <button data-page="EXHIBITS"><span>01</span>EXHIBITS</button>
+    <button data-page="CHARACTERS"><span>02</span>CHARACTERS</button>
+    <button data-page="STORIES"><span>03</span>STORIES</button>
+    <button data-page="ARCHIVE"><span>04</span>ARCHIVE</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
 </section>
 </div>
 
 <script>
-/* FULL SCREEN — UNCHANGED */
+/* =============================
+   VIEWPORT / ZOOM
+============================= */
+
 function updateViewportHeight(){
   const height=window.visualViewport
     ?window.visualViewport.height
     :window.innerHeight;
-  document.documentElement.style.setProperty("--app-height",height+"px");
+
+  document.documentElement.style.setProperty(
+    "--app-height",
+    height+"px"
+  );
 }
+
 updateViewportHeight();
+
 window.addEventListener("resize",updateViewportHeight);
+
 if(window.visualViewport){
-  window.visualViewport.addEventListener("resize",updateViewportHeight);
+  window.visualViewport.addEventListener(
+    "resize",
+    updateViewportHeight
+  );
 }
 
-/* ELEMENTS */
-const entry=document.getElementById("entry");
-const enterButton=document.getElementById("enterButton");
-const admission=document.getElementById("admission");
-const ticketStub=document.getElementById("ticketStub");
-const ticketScene=document.getElementById("ticketScene");
-const ticketPaper=document.getElementById("ticketPaper");
-const replayButton=document.getElementById("replayButton");
-const noise=document.getElementById("noise");
-const ctx=noise.getContext("2d");
-const horrorWords=document.getElementById("horrorWords");
-const reducedMotion=window.matchMedia("(prefers-reduced-motion: reduce)");
-
-let entering=false,ticketEntered=false,replaying=false;
-let glitchActive=false,frameId=null,lastFrame=0;
-
-/* ZOOM CONTROL — UNCHANGED */
 ["gesturestart","gesturechange","gestureend"].forEach(type=>{
-  document.addEventListener(type,event=>{event.preventDefault();},{passive:false});
+  document.addEventListener(type,event=>{
+    event.preventDefault();
+  },{passive:false});
 });
+
 document.addEventListener("touchstart",event=>{
   if(event.touches.length>1)event.preventDefault();
 },{passive:false});
+
 document.addEventListener("touchmove",event=>{
   if(event.touches.length>1)event.preventDefault();
 },{passive:false});
-let lastTapTime=0,lastTapX=0,lastTapY=0;
+
+let lastTapTime=0;
+let lastTapX=0;
+let lastTapY=0;
+
 document.addEventListener("touchend",event=>{
   if(event.changedTouches.length!==1)return;
-  const touch=event.changedTouches[0],now=Date.now(),delta=now-lastTapTime;
-  const distance=Math.hypot(touch.clientX-lastTapX,touch.clientY-lastTapY);
+
+  const touch=event.changedTouches[0];
+  const now=Date.now();
+  const delta=now-lastTapTime;
+
+  const distance=Math.hypot(
+    touch.clientX-lastTapX,
+    touch.clientY-lastTapY
+  );
+
   if(delta>0&&delta<300&&distance<30){
-    event.preventDefault();lastTapTime=0;
+    event.preventDefault();
+    lastTapTime=0;
   }else{
-    lastTapTime=now;lastTapX=touch.clientX;lastTapY=touch.clientY;
+    lastTapTime=now;
+    lastTapX=touch.clientX;
+    lastTapY=touch.clientY;
   }
 },{passive:false});
 
-/* NOISE — UNCHANGED */
+/* =============================
+   ORIGINAL 404 GLITCH
+============================= */
+
+const entry=document.getElementById("entry");
+const enterButton=document.getElementById("enterButton");
+const world=document.getElementById("world");
+
+const noise=document.getElementById("noise");
+const ctx=noise.getContext("2d");
+
+const reducedMotion=window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+);
+
+let entering=false;
+let glitchActive=false;
+let frameId=null;
+let lastFrame=0;
+
 function resizeNoise(){
   noise.width=190;
   noise.height=Math.max(
-    180,Math.min(420,Math.round(190*innerHeight/Math.max(innerWidth,1)))
+    180,
+    Math.min(
+      420,
+      Math.round(190*innerHeight/Math.max(innerWidth,1))
+    )
   );
 }
+
 function drawNoise(time){
   if(!glitchActive)return;
+
   if(time-lastFrame>45){
     lastFrame=time;
-    const w=noise.width,h=noise.height,data=ctx.createImageData(w,h),p=data.data;
+
+    const w=noise.width;
+    const h=noise.height;
+
+    const data=ctx.createImageData(w,h);
+    const p=data.data;
+
     for(let i=0;i<p.length;i+=4){
       const v=Math.random()>.52?255:0;
-      p[i]=v;p[i+1]=v;p[i+2]=v;p[i+3]=Math.random()*160;
+
+      p[i]=v;
+      p[i+1]=v;
+      p[i+2]=v;
+      p[i+3]=Math.random()*160;
     }
+
     ctx.putImageData(data,0,0);
+
     for(let i=0;i<8;i++){
-      ctx.fillStyle=Math.random()>.5?"rgba(255,120,177,.65)":"rgba(110,210,230,.65)";
-      ctx.fillRect(0,Math.random()*h,w,Math.random()*5+1);
+      ctx.fillStyle=Math.random()>.5
+        ?"rgba(255,120,177,.65)"
+        :"rgba(110,210,230,.65)";
+
+      ctx.fillRect(
+        0,
+        Math.random()*h,
+        w,
+        Math.random()*5+1
+      );
     }
   }
+
   frameId=requestAnimationFrame(drawNoise);
 }
+
 function startNoise(){
   if(reducedMotion.matches||glitchActive)return;
-  resizeNoise();glitchActive=true;lastFrame=0;
-  noise.classList.add("active");frameId=requestAnimationFrame(drawNoise);
-}
-function stopNoise(){
-  glitchActive=false;cancelAnimationFrame(frameId);
-  noise.classList.remove("active");
-  ctx.clearRect(0,0,noise.width,noise.height);
+
+  resizeNoise();
+  glitchActive=true;
+  lastFrame=0;
+
+  noise.classList.add("active");
+
+  frameId=requestAnimationFrame(drawNoise);
 }
 
-/* ERROR ENTRY — UNCHANGED */
+function stopNoise(){
+  glitchActive=false;
+
+  cancelAnimationFrame(frameId);
+  noise.classList.remove("active");
+
+  ctx.clearRect(
+    0,0,noise.width,noise.height
+  );
+}
+
 function enterWorld(){
   if(entering)return;
-  entering=true;enterButton.disabled=true;
-  if(!reducedMotion.matches){entry.classList.add("corrupt");startNoise();}
+
+  entering=true;
+  enterButton.disabled=true;
+
+  if(!reducedMotion.matches){
+    entry.classList.add("corrupt");
+    startNoise();
+  }
+
   setTimeout(()=>{
-    stopNoise();entry.style.display="none";
-    admission.classList.add("visible");
-    admission.setAttribute("aria-hidden","false");
-    scheduleHorror();
+    stopNoise();
+
+    entry.style.display="none";
+    world.classList.add("visible");
+    world.setAttribute("aria-hidden","false");
+
+    startAquarium();
+
   },reducedMotion.matches?100:1100);
 }
+
 enterButton.addEventListener("click",enterWorld);
-
-/* HORROR — RED & BLACK */
-const horrorMessages=[
-  "入場しろ","タップ","早く","まだ？",
-  "早くして","ここを押せ","入って",
-  "待っている","ENTER","TAP","HURRY",
-  "OPEN","どうして","今すぐ","入場してください"
-];
-
-let horrorStartTimer=null;
-let horrorWordTimer=null;
-let horrorStageTimer=null;
-let horrorStartTime=0;
-let horrorActive=false;
-
-function scheduleHorror(){
-  stopHorror();
-  if(ticketEntered||replaying)return;
-  horrorStartTimer=setTimeout(startHorror,5000);
-}
-
-function startHorror(){
-  if(ticketEntered||replaying)return;
-  horrorActive=true;
-  horrorStartTime=Date.now();
-  ticketScene.classList.add("haunted");
-  spawnHorrorWord();
-  scheduleNextHorrorWord();
-
-  horrorStageTimer=setInterval(()=>{
-    if(!horrorActive)return;
-    const elapsed=Date.now()-horrorStartTime;
-
-    /* Slower escalation: 6s, 12s, 20s */
-    ticketScene.classList.toggle("horror-stage-2",elapsed>=6000);
-    ticketScene.classList.toggle("horror-stage-3",elapsed>=12000);
-    ticketScene.classList.toggle("horror-stage-4",elapsed>=20000);
-  },250);
-}
-
-function spawnHorrorWord(){
-  if(!horrorActive)return;
-  const elapsed=Date.now()-horrorStartTime;
-  const stage=elapsed>=20000?4:
-    elapsed>=12000?3:
-    elapsed>=6000?2:1;
-
-  const word=document.createElement("span");
-  word.className="horror-word";
-  word.textContent=horrorMessages[
-    Math.floor(Math.random()*horrorMessages.length)
-  ];
-
-  word.style.left=(13+Math.random()*74)+"%";
-  word.style.top=(12+Math.random()*76)+"%";
-  word.style.fontSize=(
-    stage===1?22+Math.random()*24:
-    stage===2?25+Math.random()*38:
-    stage===3?29+Math.random()*48:
-    35+Math.random()*54
-  )+"px";
-
-  const reds=["#70000c","#890915","#a20c19","#bb1a26","#510006"];
-  word.style.color=reds[Math.floor(Math.random()*reds.length)];
-
-  const duration=stage===1?1000:stage===2?800:stage===3?650:520;
-  word.style.setProperty("--word-duration",duration+"ms");
-
-  horrorWords.appendChild(word);
-  setTimeout(()=>word.remove(),duration+100);
-}
-
-function scheduleNextHorrorWord(){
-  if(!horrorActive)return;
-  const elapsed=Date.now()-horrorStartTime;
-  const delay=elapsed>=20000?130+Math.random()*110:
-    elapsed>=12000?200+Math.random()*160:
-    elapsed>=6000?350+Math.random()*230:
-    650+Math.random()*350;
-
-  horrorWordTimer=setTimeout(()=>{
-    spawnHorrorWord();
-    scheduleNextHorrorWord();
-  },delay);
-}
-
-function stopHorror(){
-  clearTimeout(horrorStartTimer);
-  clearTimeout(horrorWordTimer);
-  clearInterval(horrorStageTimer);
-  horrorStartTimer=null;
-  horrorWordTimer=null;
-  horrorStageTimer=null;
-  horrorActive=false;
-
-  ticketScene.classList.add("horror-reset");
-  ticketScene.classList.remove(
-    "haunted","horror-stage-2",
-    "horror-stage-3","horror-stage-4"
-  );
-  horrorWords.replaceChildren();
-
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{
-      ticketScene.classList.remove("horror-reset");
-    });
-  });
-}
-
-/* TICKET — UNCHANGED */
-function tearTicket(){
-  if(ticketEntered||replaying)return;
-  stopHorror();
-  ticketEntered=true;
-  ticketStub.disabled=true;
-  ticketPaper.classList.add("torn-edge");
-  ticketStub.classList.add("torn");
-
-  setTimeout(()=>{
-    ticketScene.classList.add("departing");
-    admission.classList.add("entered");
-  },reducedMotion.matches?100:650);
-}
-ticketStub.addEventListener("click",tearTicket);
-
-/* RETURN TO TICKET — UNCHANGED */
-replayButton.addEventListener("click",()=>{
-  if(replaying||!ticketEntered)return;
-  replaying=true;replayButton.disabled=true;
-  admission.classList.remove("entered");
-
-  setTimeout(()=>{
-    ticketScene.classList.remove("departing");
-    setTimeout(()=>{
-      ticketStub.classList.remove("torn");
-      ticketPaper.classList.remove("torn-edge");
-      ticketStub.disabled=false;
-      ticketEntered=false;
-      replaying=false;
-      replayButton.disabled=false;
-      scheduleHorror();
-    },reducedMotion.matches?100:1350);
-  },reducedMotion.matches?100:1550);
-});
 
 window.addEventListener("resize",()=>{
   if(glitchActive)resizeNoise();
 });
+
 document.addEventListener("visibilitychange",()=>{
   if(document.hidden)stopNoise();
+});
+
+/* =============================
+   AQUARIUM CANVAS
+   PSEUDO 3D JELLYFISH
+============================= */
+
+const ocean=document.getElementById("oceanCanvas");
+const oc=ocean.getContext("2d",{alpha:false});
+
+let W=0;
+let H=0;
+let DPR=1;
+
+let aquariumRunning=false;
+let aquariumFrame=null;
+
+let rotationX=-0.12;
+let rotationY=0.25;
+
+let targetX=-0.12;
+let targetY=0.25;
+
+let dragging=false;
+let previousX=0;
+let previousY=0;
+
+let particles=[];
+let fish=[];
+
+const TAU=Math.PI*2;
+
+function random(min,max){
+  return min+Math.random()*(max-min);
+}
+
+function resizeAquarium(){
+  const rect=ocean.getBoundingClientRect();
+
+  W=Math.max(1,rect.width);
+  H=Math.max(1,rect.height);
+
+  DPR=Math.min(window.devicePixelRatio||1,2);
+
+  ocean.width=Math.round(W*DPR);
+  ocean.height=Math.round(H*DPR);
+
+  oc.setTransform(DPR,0,0,DPR,0,0);
+}
+
+function makeParticles(){
+  particles=Array.from({length:85},()=>({
+    x:Math.random(),
+    y:Math.random(),
+    size:random(.5,2),
+    speed:random(.00004,.0002),
+    alpha:random(.1,.55)
+  }));
+
+  fish=Array.from({length:16},()=>({
+    x:Math.random(),
+    y:random(.16,.85),
+    scale:random(.35,1.1),
+    speed:random(.000025,.000085),
+    alpha:random(.12,.4),
+    direction:Math.random()>.5?1:-1
+  }));
+}
+
+function project3D(x,y,z){
+  const cy=Math.cos(rotationY);
+  const sy=Math.sin(rotationY);
+
+  const cx=Math.cos(rotationX);
+  const sx=Math.sin(rotationX);
+
+  const x1=x*cy-z*sy;
+  const z1=x*sy+z*cy;
+
+  const y1=y*cx-z1*sx;
+  const z2=y*sx+z1*cx;
+
+  const perspective=650/(650+z2);
+
+  return {
+    x:x1*perspective,
+    y:y1*perspective,
+    z:z2,
+    scale:perspective
+  };
+}
+
+function drawBackground(time){
+  const bg=oc.createLinearGradient(0,0,0,H);
+
+  bg.addColorStop(0,"#061322");
+  bg.addColorStop(.48,"#092d43");
+  bg.addColorStop(1,"#04111e");
+
+  oc.fillStyle=bg;
+  oc.fillRect(0,0,W,H);
+
+  const glow=oc.createRadialGradient(
+    W*.5,H*.51,0,
+    W*.5,H*.51,Math.max(W,H)*.6
+  );
+
+  glow.addColorStop(0,"rgba(28,133,159,.30)");
+  glow.addColorStop(.45,"rgba(20,79,110,.13)");
+  glow.addColorStop(1,"rgba(0,0,0,0)");
+
+  oc.fillStyle=glow;
+  oc.fillRect(0,0,W,H);
+
+  const beamShift=Math.sin(time*.00018)*W*.04;
+
+  oc.save();
+  oc.globalAlpha=.045;
+
+  for(let i=0;i<5;i++){
+    const x=W*(i/4)+beamShift;
+
+    const beam=oc.createLinearGradient(
+      x,0,x+W*.15,H
+    );
+
+    beam.addColorStop(0,"rgba(130,237,255,.8)");
+    beam.addColorStop(1,"rgba(130,237,255,0)");
+
+    oc.fillStyle=beam;
+
+    oc.beginPath();
+    oc.moveTo(x,0);
+    oc.lineTo(x+W*.04,0);
+    oc.lineTo(x+W*.23,H);
+    oc.lineTo(x-W*.12,H);
+    oc.closePath();
+    oc.fill();
+  }
+
+  oc.restore();
+}
+
+function drawParticles(time){
+  for(const p of particles){
+    const y=((p.y-time*p.speed)%1+1)%1;
+
+    oc.beginPath();
+    oc.arc(
+      p.x*W+Math.sin(time*.0005+p.y*12)*8,
+      y*H,
+      p.size,
+      0,TAU
+    );
+
+    oc.fillStyle=`rgba(169,237,246,${p.alpha})`;
+    oc.fill();
+  }
+}
+
+function drawFish(time){
+  for(const f of fish){
+    const progress=(
+      f.x+time*f.speed*f.direction
+    )%1;
+
+    const x=((progress+1)%1)*W;
+    const y=f.y*H+Math.sin(time*.0008+f.x*10)*8;
+
+    oc.save();
+    oc.translate(x,y);
+    oc.scale(f.direction*f.scale,f.scale);
+    oc.globalAlpha=f.alpha;
+
+    oc.fillStyle="#b3f2f5";
+
+    oc.beginPath();
+    oc.ellipse(0,0,10,3.2,0,0,TAU);
+    oc.fill();
+
+    oc.beginPath();
+    oc.moveTo(-8,0);
+    oc.lineTo(-17,-6);
+    oc.lineTo(-17,6);
+    oc.closePath();
+    oc.fill();
+
+    oc.restore();
+  }
+}
+
+function drawJellyfish(time){
+  const centerX=W*.5;
+  const centerY=H*.51;
+
+  const size=Math.min(W*.57,H*.38,285);
+  const pulse=1+Math.sin(time*.0015)*.035;
+  const floatY=Math.sin(time*.00075)*12;
+
+  oc.save();
+  oc.translate(centerX,centerY+floatY);
+
+  const radius=size*.48*pulse;
+  const domeHeight=size*.45;
+
+  // Soft surrounding glow
+  const halo=oc.createRadialGradient(
+    0,-domeHeight*.15,0,
+    0,0,size*.9
+  );
+
+  halo.addColorStop(0,"rgba(117,239,246,.18)");
+  halo.addColorStop(.55,"rgba(80,178,219,.07)");
+  halo.addColorStop(1,"rgba(80,178,219,0)");
+
+  oc.fillStyle=halo;
+  oc.beginPath();
+  oc.arc(0,0,size*.9,0,TAU);
+  oc.fill();
+
+  // 3D bell wireframe
+  const rings=17;
+  const segments=56;
+
+  oc.lineWidth=.8;
+
+  for(let ring=1;ring<=rings;ring++){
+    const theta=(ring/rings)*Math.PI*.52;
+
+    const r=Math.sin(theta)*radius;
+    const y=-Math.cos(theta)*domeHeight;
+
+    oc.beginPath();
+
+    for(let i=0;i<=segments;i++){
+      const phi=(i/segments)*TAU;
+
+      const point=project3D(
+        Math.cos(phi)*r,
+        y,
+        Math.sin(phi)*r
+      );
+
+      if(i===0)oc.moveTo(point.x,point.y);
+      else oc.lineTo(point.x,point.y);
+    }
+
+    oc.strokeStyle=`rgba(126,238,248,${
+      .11+(ring/rings)*.28
+    })`;
+
+    oc.stroke();
+  }
+
+  // Longitude curves
+  for(let line=0;line<28;line++){
+    const phi=line/28*TAU;
+
+    oc.beginPath();
+
+    for(let i=0;i<=36;i++){
+      const theta=i/36*Math.PI*.52;
+
+      const r=Math.sin(theta)*radius;
+      const y=-Math.cos(theta)*domeHeight;
+
+      const point=project3D(
+        Math.cos(phi)*r,
+        y,
+        Math.sin(phi)*r
+      );
+
+      if(i===0)oc.moveTo(point.x,point.y);
+      else oc.lineTo(point.x,point.y);
+    }
+
+    oc.strokeStyle="rgba(139,241,247,.22)";
+    oc.stroke();
+  }
+
+  // Translucent bell
+  const bell=oc.createRadialGradient(
+    -radius*.25,
+    -domeHeight*.55,
+    radius*.04,
+    0,
+    -domeHeight*.25,
+    radius*1.2
+  );
+
+  bell.addColorStop(0,"rgba(197,255,255,.24)");
+  bell.addColorStop(.4,"rgba(98,219,236,.13)");
+  bell.addColorStop(1,"rgba(95,144,232,.025)");
+
+  oc.fillStyle=bell;
+  oc.beginPath();
+  oc.ellipse(
+    0,
+    -domeHeight*.38,
+    radius*.98,
+    domeHeight*.62,
+    0,Math.PI,TAU
+  );
+  oc.closePath();
+  oc.fill();
+
+  // Rim
+  oc.beginPath();
+
+  for(let i=0;i<=80;i++){
+    const a=i/80*TAU;
+    const point=project3D(
+      Math.cos(a)*radius,
+      0,
+      Math.sin(a)*radius
+    );
+
+    if(i===0)oc.moveTo(point.x,point.y);
+    else oc.lineTo(point.x,point.y);
+  }
+
+  oc.strokeStyle="rgba(159,255,250,.8)";
+  oc.lineWidth=1.4;
+  oc.shadowColor="#7ef5f5";
+  oc.shadowBlur=13;
+  oc.stroke();
+  oc.shadowBlur=0;
+
+  // Tentacles
+  const tentacleCount=24;
+
+  for(let i=0;i<tentacleCount;i++){
+    const angle=i/tentacleCount*TAU;
+
+    const baseRadius=radius*randomStable(i);
+    const baseX=Math.cos(angle)*baseRadius;
+    const baseZ=Math.sin(angle)*baseRadius;
+
+    const length=size*(.65+(i%6)*.075);
+
+    oc.beginPath();
+
+    for(let j=0;j<=42;j++){
+      const t=j/42;
+
+      const sway=Math.sin(
+        time*.0014+i*1.7+t*5
+      )*t*radius*.18;
+
+      const x=baseX+sway;
+      const y=t*length;
+      const z=baseZ+Math.cos(
+        time*.001+i+t*4
+      )*t*radius*.12;
+
+      const point=project3D(x,y,z);
+
+      if(j===0)oc.moveTo(point.x,point.y);
+      else oc.lineTo(point.x,point.y);
+    }
+
+    oc.strokeStyle=i%4===0
+      ?"rgba(178,241,255,.54)"
+      :"rgba(105,209,229,.3)";
+
+    oc.lineWidth=i%4===0?1.2:.65;
+    oc.stroke();
+  }
+
+  // Central luminous organs
+  for(let i=0;i<4;i++){
+    const a=i/4*TAU+rotationY*.5;
+
+    oc.beginPath();
+    oc.ellipse(
+      Math.cos(a)*radius*.17,
+      domeHeight*.12,
+      radius*.095,
+      domeHeight*.31,
+      Math.sin(a)*.25,
+      0,TAU
+    );
+
+    oc.strokeStyle="rgba(166,248,255,.38)";
+    oc.lineWidth=2;
+    oc.stroke();
+  }
+
+  oc.restore();
+}
+
+function randomStable(i){
+  return .23+((Math.sin(i*91.7)*43758.5453)%1+1)%1*.57;
+}
+
+function drawTargetMarkers(time){
+  const x=W*.5;
+  const y=H*.51+Math.sin(time*.00075)*12;
+
+  oc.save();
+
+  oc.strokeStyle="rgba(150,233,244,.4)";
+  oc.lineWidth=.8;
+
+  const r=Math.min(W*.38,H*.32,230);
+
+  const corners=[
+    [-r,-r*.75,-1,-1],
+    [r,-r*.75,1,-1],
+    [-r,r*.75,-1,1],
+    [r,r*.75,1,1]
+  ];
+
+  for(const [cx,cy,sx,sy] of corners){
+    oc.beginPath();
+    oc.moveTo(x+cx,y+cy-sy*12);
+    oc.lineTo(x+cx,y+cy);
+    oc.lineTo(x+cx-sx*12,y+cy);
+    oc.stroke();
+  }
+
+  oc.restore();
+}
+
+function renderAquarium(time){
+  if(!aquariumRunning)return;
+
+  rotationX+=(targetX-rotationX)*.045;
+  rotationY+=(targetY-rotationY)*.045;
+
+  drawBackground(time);
+  drawParticles(time);
+  drawFish(time);
+  drawJellyfish(time);
+  drawTargetMarkers(time);
+
+  aquariumFrame=requestAnimationFrame(renderAquarium);
+}
+
+function startAquarium(){
+  if(aquariumRunning)return;
+
+  resizeAquarium();
+  makeParticles();
+
+  aquariumRunning=true;
+  aquariumFrame=requestAnimationFrame(renderAquarium);
+}
+
+ocean.addEventListener("pointerdown",event=>{
+  dragging=true;
+  previousX=event.clientX;
+  previousY=event.clientY;
+
+  ocean.setPointerCapture(event.pointerId);
+});
+
+ocean.addEventListener("pointermove",event=>{
+  if(!dragging)return;
+
+  const dx=event.clientX-previousX;
+  const dy=event.clientY-previousY;
+
+  targetY+=dx*.008;
+  targetX+=dy*.006;
+
+  targetX=Math.max(-.8,Math.min(.8,targetX));
+
+  previousX=event.clientX;
+  previousY=event.clientY;
+});
+
+function stopDragging(){
+  dragging=false;
+}
+
+ocean.addEventListener("pointerup",stopDragging);
+ocean.addEventListener("pointercancel",stopDragging);
+
+window.addEventListener("resize",()=>{
+  if(aquariumRunning)resizeAquarium();
+});
+
+document.addEventListener("visibilitychange",()=>{
+  if(document.hidden){
+    aquariumRunning=false;
+    cancelAnimationFrame(aquariumFrame);
+  }else if(world.classList.contains("visible")){
+    startAquarium();
+  }
+});
+
+/* =============================
+   MENU
+============================= */
+
+const menuButton=document.getElementById("menuButton");
+const closeMenu=document.getElementById("closeMenu");
+const worldMenu=document.getElementById("worldMenu");
+const toast=document.getElementById("toast");
+
+let toastTimer=null;
+
+menuButton.addEventListener("click",()=>{
+  worldMenu.classList.add("open");
+});
+
+closeMenu.addEventListener("click",()=>{
+  worldMenu.classList.remove("open");
+});
+
+function showToast(message){
+  toast.textContent=message;
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer=setTimeout(()=>{
+    toast.classList.remove("show");
+  },2400);
+}
+
+document.querySelectorAll("[data-page]").forEach(button=>{
+  button.addEventListener("click",()=>{
+    worldMenu.classList.remove("open");
+
+    showToast(
+      button.dataset.page+" — COMING SOON"
+    );
+  });
 });
 </script>
 </body>
