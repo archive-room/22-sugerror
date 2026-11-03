@@ -920,7 +920,7 @@ button:focus-visible{
       </div>
       <div class="drag-label">
         <span class="drag-circle">↔</span>
-        DRAG TO ROTATE
+        TAP TO SWIM / DRAG TO ROTATE
       </div>
     </footer>
   </div>
@@ -1161,6 +1161,81 @@ let dragging=false,px=0,py=0;
 let particles=[],fishes=[];
 let lastHudUpdate=0;
 
+/* =============================
+   JELLYFISH SWIM PHYSICS
+
+   Tap:
+   - Compress bell
+   - Release and expand
+   - Swim upward
+   - Tentacles follow with delay
+   - Settle naturally
+============================= */
+let swimStart=-10000;
+let swimStrength=0;
+let swimOffset=0;
+let swimVelocity=0;
+let bellBounce=0;
+let bellBounceVelocity=0;
+let tentacleLag=0;
+let tentacleLagVelocity=0;
+
+function triggerSwim(){
+  const impulse=reducedMotion.matches?.35:1;
+
+  // Each tap adds an impulse, with limits for repeated taps.
+  swimVelocity=clamp(
+    swimVelocity-8.5*impulse,
+    -17,
+    10
+  );
+
+  bellBounceVelocity=clamp(
+    bellBounceVelocity-.12*impulse,
+    -.22,
+    .2
+  );
+
+  tentacleLagVelocity=clamp(
+    tentacleLagVelocity+.17*impulse,
+    -.35,
+    .35
+  );
+
+  swimStart=performance.now();
+  swimStrength=Math.min(1.5,swimStrength+.85);
+}
+
+function updateSwimPhysics(dt){
+  const step=Math.min(dt/16.667,2);
+
+  // Spring-like movement of the entire jellyfish.
+  swimVelocity+=(-swimOffset*.0075)*step;
+  swimVelocity*=Math.pow(.955,step);
+  swimOffset+=swimVelocity*step;
+
+  swimOffset=clamp(swimOffset,-75,50);
+
+  // Elastic bell deformation.
+  bellBounceVelocity+=(-bellBounce*.065)*step;
+  bellBounceVelocity*=Math.pow(.79,step);
+  bellBounce+=bellBounceVelocity*step;
+
+  bellBounce=clamp(bellBounce,-.18,.18);
+
+  // Delayed tentacle reaction.
+  const lagTarget=-swimVelocity*.012;
+  tentacleLagVelocity+=(
+    lagTarget-tentacleLag
+  )*.045*step;
+  tentacleLagVelocity*=Math.pow(.85,step);
+  tentacleLag+=tentacleLagVelocity*step;
+
+  tentacleLag=clamp(tentacleLag,-.4,.4);
+
+  swimStrength*=Math.pow(.94,step);
+}
+
 function rand(a,b){return a+Math.random()*(b-a)}
 function hash(n){
   const x=Math.sin(n*127.1+78.233)*43758.5453;
@@ -1295,8 +1370,13 @@ function drawJellyfish(t){
   const size=Math.min(W*.69,H*.45,340);
   const radius=size*.49;
   const domeHeight=size*.43;
-  const pulse=1+Math.sin(t*.0014)*.042;
-  const floatY=Math.sin(t*.0007)*10;
+
+  // Ordinary breathing + elastic tap deformation.
+  const breathing=Math.sin(t*.0014)*.035;
+  const bellWidth=1+breathing+bellBounce;
+  const bellHeight=1-breathing*.7-bellBounce*.72;
+
+  const floatY=Math.sin(t*.0007)*10+swimOffset;
 
   c.save();
   c.translate(W*.5,H*.49+floatY);
@@ -1314,8 +1394,8 @@ function drawJellyfish(t){
   c.fill();
 
   const domePoint=(theta,phi)=>{
-    const r=Math.sin(theta)*radius*pulse;
-    const y=-Math.cos(theta)*domeHeight/pulse;
+    const r=Math.sin(theta)*radius*bellWidth;
+    const y=-Math.cos(theta)*domeHeight*bellHeight;
     const scallop=1+Math.pow(theta/(Math.PI*.53),8)*
       .025*Math.cos(phi*12);
     return project(
@@ -1325,7 +1405,6 @@ function drawJellyfish(t){
     );
   };
 
-  // Rear tentacles, sorted by depth
   const strands=[];
   for(let i=0;i<42;i++){
     const a=i/42*TAU;
@@ -1340,14 +1419,28 @@ function drawJellyfish(t){
     const points=[];
     for(let j=0;j<=44;j++){
       const u=j/44;
-      const sway=Math.sin(
-        t*.0012+s.i*.75+u*5.4
-      )*u*radius*.17;
+
+      const wavePhase=
+        t*.0012+s.i*.75+u*5.4;
+
+      const sway=
+        Math.sin(wavePhase)*u*radius*.17;
+
+      const swimSway=
+        Math.sin(
+          wavePhase-u*4.8
+        )*u*radius*.22*swimStrength;
+
+      const lagShift=
+        tentacleLag*u*u*radius*.65;
+
       const swayZ=Math.cos(
         t*.001+s.i*.4+u*4
       )*u*radius*.12;
+
       points.push(project(
-        Math.cos(s.a)*s.r+sway,
+        Math.cos(s.a)*s.r+
+          sway+swimSway+lagShift,
         u*s.length,
         Math.sin(s.a)*s.r+swayZ
       ));
@@ -1367,7 +1460,6 @@ function drawJellyfish(t){
     if(s.rootZ>=0)drawStrand(s,false);
   }
 
-  // Bell surface shading
   const bellGradient=c.createRadialGradient(
     -radius*.2,-domeHeight*.48,0,
     0,-domeHeight*.2,radius*1.3
@@ -1378,14 +1470,14 @@ function drawJellyfish(t){
   c.fillStyle=bellGradient;
   c.beginPath();
   c.ellipse(
-    0,-domeHeight*.42,
-    radius*.96,domeHeight*.57,
+    0,-domeHeight*.42*bellHeight,
+    radius*.96*bellWidth,
+    domeHeight*.57*bellHeight,
     0,Math.PI,TAU
   );
   c.closePath();
   c.fill();
 
-  // Latitude contours
   for(let j=1;j<=22;j++){
     const theta=j/22*Math.PI*.53;
     const pts=[];
@@ -1399,7 +1491,6 @@ function drawJellyfish(t){
     );
   }
 
-  // Longitude contours
   for(let i=0;i<42;i++){
     const phi=i/42*TAU;
     const pts=[];
@@ -1413,7 +1504,6 @@ function drawJellyfish(t){
     );
   }
 
-  // Secondary fine cross mesh
   for(let j=4;j<22;j+=3){
     const theta=j/22*Math.PI*.53;
     const pts=[];
@@ -1425,14 +1515,12 @@ function drawJellyfish(t){
     strokePath(pts,"rgba(172,244,251,.12)",.5);
   }
 
-  // Bell rim
   const rim=[];
   for(let i=0;i<=128;i++){
     rim.push(domePoint(Math.PI*.53,i/128*TAU));
   }
   strokePath(rim,"rgba(165,252,251,.8)",1.4,9);
 
-  // Internal organs
   for(let i=0;i<4;i++){
     const a=i/4*TAU+rotY*.2;
     const points=[];
@@ -1448,7 +1536,6 @@ function drawJellyfish(t){
     strokePath(points,"rgba(178,247,255,.42)",2,6);
   }
 
-  // Inner filaments
   for(let i=0;i<16;i++){
     const a=i/16*TAU;
     const pts=[];
@@ -1464,12 +1551,10 @@ function drawJellyfish(t){
     strokePath(pts,"rgba(181,244,250,.23)",.8);
   }
 
-  // Front tentacles
   for(const s of strands){
     if(s.rootZ<0)drawStrand(s,true);
   }
 
-  // Tiny luminous nodes
   for(let i=0;i<35;i++){
     const a=hash(i+11)*TAU;
     const u=hash(i+34);
@@ -1491,7 +1576,10 @@ function drawJellyfish(t){
 ============================= */
 function drawTracking(t){
   const x=W*.5;
-  const y=H*.49+Math.sin(t*.0007)*10;
+  const y=H*.49+
+    Math.sin(t*.0007)*10+
+    swimOffset;
+
   const r=Math.min(W*.42,H*.36,270);
 
   c.save();
@@ -1512,7 +1600,6 @@ function drawTracking(t){
     c.stroke();
   }
 
-  // Rotating measurement arc
   c.beginPath();
   c.arc(
     x,y,
@@ -1523,7 +1610,6 @@ function drawTracking(t){
   c.strokeStyle="rgba(143,225,234,.25)";
   c.stroke();
 
-  // Crosshair
   c.strokeStyle="rgba(165,229,238,.13)";
   c.beginPath();
   c.moveTo(x-8,y);
@@ -1538,8 +1624,17 @@ function drawTracking(t){
 /* =============================
    RENDER LOOP
 ============================= */
+let previousFrameTime=0;
+
 function render(t){
   if(!running)return;
+
+  const dt=previousFrameTime
+    ?Math.min(t-previousFrameTime,40)
+    :16.667;
+  previousFrameTime=t;
+
+  updateSwimPhysics(dt);
 
   if(!dragging){
     targetY+=velocityY;
@@ -1574,6 +1669,7 @@ function startAquarium(){
   if(running)return;
   resizeSea();
   if(!particles.length)initEnvironment();
+  previousFrameTime=0;
   running=true;
   animationId=requestAnimationFrame(render);
 }
@@ -1582,33 +1678,107 @@ function stopAquarium(){
   cancelAnimationFrame(animationId);
 }
 
+/* =============================
+   TAP TO SWIM / DRAG TO ROTATE
+============================= */
+let pointerDownX=0;
+let pointerDownY=0;
+let pointerDownTime=0;
+let pointerMoved=false;
+
 sea.addEventListener("pointerdown",e=>{
   dragging=true;
+  pointerMoved=false;
+
+  pointerDownX=e.clientX;
+  pointerDownY=e.clientY;
+  pointerDownTime=performance.now();
+
   px=e.clientX;
   py=e.clientY;
+
   velocityX=0;
   velocityY=0;
+
   sea.setPointerCapture(e.pointerId);
 });
+
 sea.addEventListener("pointermove",e=>{
   if(!dragging)return;
+
+  const totalDistance=Math.hypot(
+    e.clientX-pointerDownX,
+    e.clientY-pointerDownY
+  );
+
+  if(totalDistance>9){
+    pointerMoved=true;
+  }
+
   const dx=e.clientX-px;
   const dy=e.clientY-py;
-  const changeY=dx*.008;
-  const changeX=dy*.006;
-  targetY+=changeY;
-  targetX=clamp(targetX+changeX,-1.05,1.05);
-  velocityY=changeY*.35;
-  velocityX=changeX*.35;
+
+  if(pointerMoved){
+    const changeY=dx*.008;
+    const changeX=dy*.006;
+
+    targetY+=changeY;
+    targetX=clamp(
+      targetX+changeX,
+      -1.05,
+      1.05
+    );
+
+    velocityY=changeY*.35;
+    velocityX=changeX*.35;
+  }
+
   px=e.clientX;
   py=e.clientY;
 });
-function endDrag(){dragging=false}
-sea.addEventListener("pointerup",endDrag);
-sea.addEventListener("pointercancel",endDrag);
+
+sea.addEventListener("pointerup",e=>{
+  if(!dragging)return;
+
+  const elapsed=performance.now()-pointerDownTime;
+
+  const distance=Math.hypot(
+    e.clientX-pointerDownX,
+    e.clientY-pointerDownY
+  );
+
+  if(!pointerMoved&&distance<12&&elapsed<500){
+    // Only tapping the jellyfish region triggers swimming.
+    const jellySize=Math.min(W*.69,H*.45,340);
+    const centerX=W*.5;
+    const centerY=H*.49+
+      Math.sin(performance.now()*.0007)*10+
+      swimOffset;
+
+    const relativeX=e.clientX-centerX;
+    const relativeY=e.clientY-centerY;
+
+    const insideJellyfish=
+      Math.abs(relativeX)<jellySize*.58 &&
+      relativeY>-(jellySize*.65) &&
+      relativeY<jellySize*.95;
+
+    if(insideJellyfish){
+      triggerSwim();
+    }
+  }
+
+  dragging=false;
+});
+
+sea.addEventListener("pointercancel",()=>{
+  dragging=false;
+});
+
 window.addEventListener("resize",()=>{
   if(running)resizeSea();
 });
+
 document.addEventListener("visibilitychange",()=>{
   if(document.hidden){
     stopNoise();
